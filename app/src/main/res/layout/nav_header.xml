@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:padding="10dp"
+    android:background="@color/teal_700">
+
+    <TextView
+        android:id="@+id/navHeader_displayName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_display_name"
+        android:textColor="#FFFFFF"
+        android:gravity="bottom"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/navHeader_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:text="@string/sample_email"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+</LinearLayout>
