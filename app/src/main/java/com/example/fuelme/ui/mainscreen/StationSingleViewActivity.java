@@ -3,6 +3,7 @@ package com.example.fuelme.ui.mainscreen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -52,13 +53,42 @@ public class StationSingleViewActivity extends AppCompatActivity {
             String petrolQueueLengthString = String.valueOf(fuelStation.getPetrolQueueLength());
             String dieselQueueLengthString = String.valueOf(fuelStation.getDieselQueueLength());
 
+            //open status
+            String openStatus = "Not Assigned";
+
+            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+                openStatus = "Open";
+            }
+            else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+                openStatus = "Closed";
+            }
+
+            //availability strings
+            String petrolAvailabilityStatus = "Not Assigned";
+            String dieselAvailabilityStatus  = "Not Assigned";
+
+            //set availability strings based on the availability to maintain capitalization
+            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+                petrolAvailabilityStatus = "Available";
+            }
+            else if(fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+                petrolAvailabilityStatus = "Unavailable";
+            }
+
+            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+                dieselAvailabilityStatus = "Available";
+            }
+            else if(fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+                dieselAvailabilityStatus = "Unavailable";
+            }
+
             //set the details of the station in the views
             textViewStationName.setText(fuelStation.getStationName());
             textViewStationAddress.setText(fuelStation.getStationAddress());
-            textViewOpenStatus.setText(fuelStation.getOpenStatus());
-            textViewPetrolAvailabilityStatus.setText(fuelStation.getPetrolStatus());
+            textViewOpenStatus.setText(openStatus);
+            textViewPetrolAvailabilityStatus.setText(petrolAvailabilityStatus);
             textViewPetrolQueueLength.setText(petrolQueueLengthString);
-            textViewDieselAvailabilityStatus.setText(fuelStation.getDieselStatus());
+            textViewDieselAvailabilityStatus.setText(dieselAvailabilityStatus);
             textViewDieselQueueLength.setText(dieselQueueLengthString);
             stationPhoneNumberButton.setText(fuelStation.getStationPhoneNumber());
             stationEmailButton.setText(fuelStation.getStationEmail());
@@ -66,27 +96,32 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             //change station open text view color based on open status
             if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
-                //textViewOpenStatus.setTextColor();
                 //change color to green
+                textViewOpenStatus.setTextColor(Color.parseColor("#0E8921"));
             }
             else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
                 //change color to red
+                textViewOpenStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
             //change petrol status text view color based on petrol availability
             if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
                 //change color to green
+                textViewPetrolAvailabilityStatus.setTextColor(Color.parseColor("#0E8921"));
             }
             else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
                 //change color to red
+                textViewPetrolAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
             //change diesel status text view color based on diesel availability
             if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
                 //change color to green
+                textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#0E8921"));
             }
             else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
                 //change color to red
+                textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
         }
 
