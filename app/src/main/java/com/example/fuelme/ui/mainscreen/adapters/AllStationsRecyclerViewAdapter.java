@@ -1,6 +1,7 @@
 package com.example.fuelme.ui.mainscreen.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fuelme.R; //imported separately. Fragment issue?
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 
 import java.util.ArrayList;
 
@@ -52,10 +54,14 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
 
 
         //set onclick listener for card
+        //this navigates to the single view of the fuel station
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Card Clicked");
+                Intent intent = new Intent(context, StationSingleViewActivity.class);
+                intent.putExtra("selected_fuel_station", currentFuelStation); // put the selected fuel station as an extra into the intent
+                context.startActivity(intent);
             }
         });
     }

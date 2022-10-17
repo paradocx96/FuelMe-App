@@ -4,11 +4,14 @@ package com.example.fuelme.models;
 * IT19014128
 * A.M.W.W.R.L. Wataketiya
 * Model class for fuel station
+* Implements Serializable to be able to be passed as extras objects with Activity intents
 * */
 
 import androidx.annotation.NonNull;
 
-public class FuelStation {
+import java.io.Serializable;
+
+public class FuelStation implements Serializable {
     //unique id
     private String id;
     //station data
