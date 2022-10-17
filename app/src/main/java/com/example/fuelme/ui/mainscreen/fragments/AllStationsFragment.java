@@ -3,6 +3,8 @@ package com.example.fuelme.ui.mainscreen.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.fuelme.R;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.mainscreen.adapters.AllStationsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -71,6 +74,14 @@ public class AllStationsFragment extends Fragment {
 
         //setup the fuel station list
         setupFuelStations();
+
+        //assign recycler view
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_allStations);
+
+        //get activity gets parent context (probably) or try getContext()
+        AllStationsRecyclerViewAdapter adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
     }
