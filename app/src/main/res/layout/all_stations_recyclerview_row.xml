@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,10 +17,14 @@
         app:cardCornerRadius="5dp"
         >
 
+        <!--secondary color from theme is used in the background-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/teal_200">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="?colorSecondary"
+            >
 
             <TextView
                 android:id="@+id/txtView_StationName_asrv_row"
@@ -29,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Eheliyagoda Assotiates"
+                android:text="@string/sample_station_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Address Lines"
+                android:text="@string/sample_station_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView_StationName_asrv_row" />
 
@@ -51,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Open"
+                android:text="@string/open"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Petrol"
+                android:text="@string/petrol"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/txtView_diesel_asrv_row"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -73,7 +76,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:text="Available"
+                android:text="@string/available"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView_petrol_asrv_row" />
@@ -84,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="30dp"
-                android:text="Diesel"
+                android:text="@string/diesel"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/txtView_petrol_asrv_row"
                 app:layout_constraintTop_toBottomOf="@+id/txtView_stationAddress_asrv_row" />
@@ -94,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Available"
+                android:text="@string/available"
                 app:layout_constraintStart_toStartOf="@+id/txtView_diesel_asrv_row"
                 app:layout_constraintTop_toBottomOf="@+id/txtView_diesel_asrv_row" />
         </androidx.constraintlayout.widget.ConstraintLayout>
