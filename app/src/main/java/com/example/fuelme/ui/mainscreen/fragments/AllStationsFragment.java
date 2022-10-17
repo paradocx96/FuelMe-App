@@ -89,21 +89,21 @@ public class AllStationsFragment extends Fragment {
     //method for fetching data and assigning to fuel stations array list
     public void setupFuelStations(){
         FuelStation fuelStation1 = new FuelStation("0001","l001" ,"eheliyagoda",
-                "Eheliyagoda Assotiates","address, adress road.", "01144552",
+                "Eheliyagoda Assotiates","41/8, Sangabo Mawatha, Colombo", "01144552",
                 "ehe@gmail.com","ehe.com","open",
                 10, 2, "avaialble", "avaialble",
                 0, 0 );
 
         FuelStation fuelStation2 = new FuelStation("0002","l089" ,"madura",
-                "Madura Assotiates","address, adress road.", "01144552",
+                "Madura Assotiates","78, Kandy Road, Kiribathgoda", "01144552",
                 "madura@gmail.com","madura.com","open",
                 100, 20, "avaialble", "avaialble",
                 0, 0 );
 
         FuelStation fuelStation3 = new FuelStation("0003","l052" ,"wije",
-                "Wije Assotiates","address, adress road.", "01144552",
+                "Wije Assotiates","65/8/9, Wihara Road, Gampaha", "01144552",
                 "wije@gmail.com","wije.com","open",
-                100, 20, "avaialble", "avaialble",
+                50, 72, "avaialble", "avaialble",
                 0, 0 );
 
         fuelStations.add(fuelStation1);
