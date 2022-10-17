@@ -1,12 +1,14 @@
 package com.example.fuelme.ui.mainscreen.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fuelme.R; //imported separately. Fragment issue?
@@ -18,6 +20,7 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
 
     Context context;
     ArrayList<FuelStation> fuelStations = new ArrayList<>();
+    String TAG = "demo";
 
     public AllStationsRecyclerViewAdapter(Context context, ArrayList<FuelStation> fuelStations){
         this.context = context;
@@ -36,12 +39,25 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
 
     @Override
     public void onBindViewHolder(@NonNull AllStationsRecyclerViewAdapter.MyViewHolder holder, int position) {
+
+        //get the fuel station for the position
+        FuelStation currentFuelStation = fuelStations.get(position);
+
         //assigning values to the text views
         holder.txtViewStationName.setText(fuelStations.get(position).getStationName());
         holder.txtViewStationAddress.setText(fuelStations.get(position).getStationAddress());
         holder.txtViewOpenStatus.setText(fuelStations.get(position).getOpenStatus());
         holder.txtViewPetrolStatus.setText(fuelStations.get(position).getPetrolStatus());
         holder.txtViewDieselStatus.setText(fuelStations.get(position).getDieselStatus());
+
+
+        //set onclick listener for card
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Card Clicked");
+            }
+        });
     }
 
     @Override
@@ -54,6 +70,7 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
 
         //the text views in the row
         TextView txtViewStationName, txtViewStationAddress, txtViewOpenStatus, txtViewPetrolStatus, txtViewDieselStatus;
+        CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +81,7 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
             txtViewOpenStatus = itemView.findViewById(R.id.txtView_stationOpenStatus_asrv_row);
             txtViewPetrolStatus = itemView.findViewById(R.id.txtView_petrolStatus_asrv_row);
             txtViewDieselStatus = itemView.findViewById(R.id.txtView_dieselStatus_asrv_row);
-
+            cardView = itemView.findViewById(R.id.cardView_asrv_row);
 
         }
     }
