@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="btn_feedback_submit">#FB5858</color>
     <color name="yellow">#F3AD25</color>
+    <color name="green">#ED21AC23</color>
+    <color name="blue">#263EC6</color>
 </resources>
