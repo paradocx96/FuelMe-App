@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fuelme.R;
+import com.example.fuelme.models.FuelStation;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +19,9 @@ import com.example.fuelme.R;
  * create an instance of this fragment.
  */
 public class AllStationsFragment extends Fragment {
+
+    private final String TAG = "demo";
+    ArrayList<FuelStation> fuelStations = new ArrayList<>(); //array list for fuel stations
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +67,36 @@ public class AllStationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_stations, container, false);
+        View view =  inflater.inflate(R.layout.fragment_all_stations, container, false);
+
+        //setup the fuel station list
+        setupFuelStations();
+
+        return view;
+    }
+
+    //method for fetching data and assigning to fuel stations array list
+    public void setupFuelStations(){
+        FuelStation fuelStation1 = new FuelStation("0001","l001" ,"eheliyagoda",
+                "Eheliyagoda Assotiates","address, adress road.", "01144552",
+                "ehe@gmail.com","ehe.com","open",
+                10, 2, "avaialble", "avaialble",
+                0, 0 );
+
+        FuelStation fuelStation2 = new FuelStation("0002","l089" ,"madura",
+                "Madura Assotiates","address, adress road.", "01144552",
+                "madura@gmail.com","madura.com","open",
+                100, 20, "avaialble", "avaialble",
+                0, 0 );
+
+        FuelStation fuelStation3 = new FuelStation("0003","l052" ,"wije",
+                "Wije Assotiates","address, adress road.", "01144552",
+                "wije@gmail.com","wije.com","open",
+                100, 20, "avaialble", "avaialble",
+                0, 0 );
+
+        fuelStations.add(fuelStation1);
+        fuelStations.add(fuelStation2);
+        fuelStations.add(fuelStation3);
     }
 }
