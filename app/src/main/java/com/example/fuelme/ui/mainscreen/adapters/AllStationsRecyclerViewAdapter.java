@@ -2,6 +2,7 @@ package com.example.fuelme.ui.mainscreen.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,13 +46,67 @@ public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStat
         //get the fuel station for the position
         FuelStation currentFuelStation = fuelStations.get(position);
 
+        //station open status
+        String stationOpenStatus = currentFuelStation.getOpenStatus();
+
+        //set the open status to support capitalization
+        if (stationOpenStatus.equalsIgnoreCase("open")){
+            stationOpenStatus = "Open";
+        }
+        else if (stationOpenStatus.equalsIgnoreCase("closed")){
+            stationOpenStatus = "Closed";
+        }
+
+        //current fuel station fuel availability in strings
+        String petrolAvailabilityString = currentFuelStation.getPetrolStatus();
+        String dieselAvailabilityString = currentFuelStation.getDieselStatus();
+
+        //set the availability strings to support capitalization
+        if (petrolAvailabilityString.equalsIgnoreCase("available")){
+            petrolAvailabilityString = "Available";
+        }
+        else if(petrolAvailabilityString.equalsIgnoreCase("unavailable")) {
+            petrolAvailabilityString = "Unavailable";
+        }
+
+
+        if (dieselAvailabilityString.equalsIgnoreCase("available")){
+            dieselAvailabilityString = "Available";
+        }
+        else if(dieselAvailabilityString.equalsIgnoreCase("unavailable")) {
+            dieselAvailabilityString = "Unavailable";
+        }
+
         //assigning values to the text views
         holder.txtViewStationName.setText(fuelStations.get(position).getStationName());
         holder.txtViewStationAddress.setText(fuelStations.get(position).getStationAddress());
-        holder.txtViewOpenStatus.setText(fuelStations.get(position).getOpenStatus());
-        holder.txtViewPetrolStatus.setText(fuelStations.get(position).getPetrolStatus());
-        holder.txtViewDieselStatus.setText(fuelStations.get(position).getDieselStatus());
+        holder.txtViewOpenStatus.setText(stationOpenStatus);
+        holder.txtViewPetrolStatus.setText(petrolAvailabilityString);
+        holder.txtViewDieselStatus.setText(dieselAvailabilityString);
 
+        //set the text color based on station open status
+        if (stationOpenStatus.equalsIgnoreCase("open")){
+           holder.txtViewOpenStatus.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if (stationOpenStatus.equalsIgnoreCase("closed")){
+            holder.txtViewOpenStatus.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+        //set text color based on fuel availability
+        if (petrolAvailabilityString.equalsIgnoreCase("available")){
+           holder.txtViewPetrolStatus.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if(petrolAvailabilityString.equalsIgnoreCase("unavailable")) {
+            holder.txtViewPetrolStatus.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+
+        if (dieselAvailabilityString.equalsIgnoreCase("available")){
+            holder.txtViewDieselStatus.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if(dieselAvailabilityString.equalsIgnoreCase("unavailable")) {
+            holder.txtViewDieselStatus.setTextColor(Color.parseColor("#FF0000"));
+        }
 
         //set onclick listener for card
         //this navigates to the single view of the fuel station
