@@ -3,8 +3,10 @@ package com.example.fuelme.ui.feedback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,19 +55,42 @@ public class AddFeedback extends AppCompatActivity {
         editTxtDescription = findViewById(R.id.editTxt_description);
 
         btnSubmit = findViewById(R.id.btn_submit);
-        btnSubmit.setOnClickListener(v -> {
-            try {
+//        btnSubmit.setOnClickListener(v -> {
+//            try {
+//
+//                Feedback feedback = new Feedback();
+//                feedback.setSubject(editTxtSubject.getText().toString());
+//                feedback.setDescription(editTxtDescription.getText().toString());
+//                feedback.setStationId("1");
+//                feedback.setUsername("Gimhan");
+//                feedback.setCreateAt(currentDateTimeString);
+//
+//                addFeedback(feedback);
+//                Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
+//                startActivity(intent);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
 
-                Feedback feedback = new Feedback();
-                feedback.setSubject(editTxtSubject.getText().toString());
-                feedback.setDescription(editTxtDescription.getText().toString());
-                feedback.setStationId("3");
-                feedback.setUsername("Billa");
-                feedback.setCreateAt(currentDateTimeString);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
 
-                addFeedback(feedback);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    Feedback feedback = new Feedback();
+                    feedback.setSubject(editTxtSubject.getText().toString());
+                    feedback.setDescription(editTxtDescription.getText().toString());
+                    feedback.setStationId("1");
+                    feedback.setUsername("Gimhan");
+                    feedback.setCreateAt(currentDateTimeString);
+
+                    addFeedback(feedback);
+                    Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -74,13 +99,13 @@ public class AddFeedback extends AppCompatActivity {
 
     private void addFeedback(Feedback feedback){
 
-        FormBody formBody = new FormBody.Builder()
-                .add("stationId", feedback.getStationId())
-                .add("subject", feedback.getSubject())
-                .add("username", feedback.getUsername())
-                .add("description", feedback.getDescription())
-                .add("createAt", feedback.getCreateAt())
-                .build();
+//        FormBody formBody = new FormBody.Builder()
+//                .add("stationId", feedback.getStationId())
+//                .add("subject", feedback.getSubject())
+//                .add("username", feedback.getUsername())
+//                .add("description", feedback.getDescription())
+//                .add("createAt", feedback.getCreateAt())
+//                .build();
 
         JSONObject jsonObject = new JSONObject();
 
