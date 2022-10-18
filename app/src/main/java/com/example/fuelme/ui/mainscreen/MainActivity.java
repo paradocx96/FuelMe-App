@@ -19,12 +19,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.ui.owner_dashboard_screen.OwnerDashboardActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -123,7 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_ownerDashboard:
                 //navigate to dashboard here
-                Toast.makeText(this, "Dashboard clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, OwnerDashboardActivity.class);
+                startActivity(intent);
                 break;
             case R.id.navMenu_settings:
                 //settings here

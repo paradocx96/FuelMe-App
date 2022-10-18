@@ -13,22 +13,6 @@
         android:theme="@style/Theme.FuelMe.NoActionBar">
 
         <activity
-            android:name=".ui.feedback.FeedbackList"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>        
-
-        <activity
-            android:name=".ui.feedback.AddFeedback"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-
-        <activity
             android:name=".ui.mainscreen.MainActivity"
             android:exported="true">
             <intent-filter>
