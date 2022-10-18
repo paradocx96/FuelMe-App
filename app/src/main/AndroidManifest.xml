@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fuelme">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
+
+<!--         <activity-->
+<!--             android:name=".ui.feedback.AddFeedback"-->
+<!--             android:exported="false"-->
+<!--             android:parentActivityName=".ui.mainscreen.MainActivity">-->
+<!--             <meta-data-->
+<!--             android:name="android.app.lib_name"-->
+<!--             android:value="" />-->
+<!--         </activity>-->
         
         <activity
             android:name=".ui.auth.RegistrationActivity"
@@ -103,8 +114,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
-            android:name=".ui.mainscreen.MainActivity"
+            android:name=".ui.feedback.AddFeedback"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
