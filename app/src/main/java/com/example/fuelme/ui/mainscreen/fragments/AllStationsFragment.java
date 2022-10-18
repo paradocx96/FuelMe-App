@@ -3,12 +3,18 @@ package com.example.fuelme.ui.mainscreen.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fuelme.R;
+import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.mainscreen.adapters.AllStationsRecyclerViewAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +22,9 @@ import com.example.fuelme.R;
  * create an instance of this fragment.
  */
 public class AllStationsFragment extends Fragment {
+
+    private final String TAG = "demo";
+    ArrayList<FuelStation> fuelStations = new ArrayList<>(); //array list for fuel stations
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +70,44 @@ public class AllStationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_stations, container, false);
+        View view =  inflater.inflate(R.layout.fragment_all_stations, container, false);
+
+        //setup the fuel station list
+        setupFuelStations();
+
+        //assign recycler view
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_allStations);
+
+        //get activity gets parent context (probably) or try getContext()
+        AllStationsRecyclerViewAdapter adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        return view;
+    }
+
+    //method for fetching data and assigning to fuel stations array list
+    public void setupFuelStations(){
+        FuelStation fuelStation1 = new FuelStation("0001","l001" ,"eheliyagoda",
+                "Eheliyagoda Assotiates","41/8, Sangabo Mawatha, Colombo", "01144552",
+                "ehe@gmail.com","ehe.com","open",
+                10, 2, "available", "available",
+                0, 0 );
+
+        FuelStation fuelStation2 = new FuelStation("0002","l089" ,"madura",
+                "Madura Assotiates","78, Kandy Road, Kiribathgoda", "01144552",
+                "madura@gmail.com","madura.com","open",
+                100, 20, "unavailable", "available",
+                0, 0 );
+
+        FuelStation fuelStation3 = new FuelStation("0003","l052" ,"wije",
+                "Wije Assotiates","65/8/9, Wihara Road, Gampaha", "01144552",
+                "wije@gmail.com","wije.com","closed",
+                50, 72, "available", "unavailable",
+                0, 0 );
+
+        fuelStations.add(fuelStation1);
+        fuelStations.add(fuelStation2);
+        fuelStations.add(fuelStation3);
     }
 }
