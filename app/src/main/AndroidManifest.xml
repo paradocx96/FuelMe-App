@@ -11,100 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
-<<<<<<< HEAD
+
         <activity
             android:name=".ui.feedback.FeedbackList"
-=======
-
-<!--         <activity-->
-<!--             android:name=".ui.feedback.AddFeedback"-->
-<!--             android:exported="false"-->
-<!--             android:parentActivityName=".ui.mainscreen.MainActivity">-->
-<!--             <meta-data-->
-<!--             android:name="android.app.lib_name"-->
-<!--             android:value="" />-->
-<!--         </activity>-->
-        
-        <activity
-            android:name=".ui.auth.RegistrationActivity"
->>>>>>> feedback
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-<<<<<<< HEAD
-        <!-- <activity -->
-        <!-- android:name=".ui.feedback.AddFeedback" -->
-        <!-- android:exported="false" -->
-        <!-- android:parentActivityName=".ui.mainscreen.MainActivity"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.app.lib_name" -->
-        <!-- android:value="" /> -->
-        <!-- </activity> -->
-=======
-        <activity
-            android:name=".ui.auth.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>        
-        
+
         <activity
-            android:name=".ui.notice.NoticeViewCustomerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.notice.NoticeViewStationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.notice.NoticeListCustomerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.notice.NoticeListStationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.notice.NoticeUpdateActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.notice.NoticeCreateActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        
-        <activity
-            android:name=".ui.mainscreen.StationSingleViewActivity"
+            android:name=".ui.feedback.AddFeedback"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
 
->>>>>>> feedback
         <activity
-            android:name=".ui.feedback.AddFeedback"
+            android:name=".ui.mainscreen.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
