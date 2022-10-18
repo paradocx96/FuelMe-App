@@ -41,4 +41,5 @@
     <string name="view_all_owned_stations">View all your stations</string>
     <string name="view_feedback">View Feedback</string>
     <string name="view_notices">View Notices</string>
+    <string name="post_notice">Post a notice</string>
 </resources>

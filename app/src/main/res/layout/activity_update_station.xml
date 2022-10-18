@@ -246,6 +246,30 @@
             android:text="@string/close_station"
 
             />
+
+        <Button
+            android:id="@+id/btn_postNotice_update_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/post_notice"
+
+            />
+
+        <Button
+            android:id="@+id/btn_viewAllNotices_update_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_notices"
+
+            />
+
+        <Button
+            android:id="@+id/btn_viewFeedback_update_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_feedback"
+
+            />
     </LinearLayout>
 
 </LinearLayout>
