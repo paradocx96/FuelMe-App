@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
         <activity
+            android:name=".ui.update_station_screen.UpdateStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.register_station_screen.RegisterStationActivity"
             android:exported="false">
             <meta-data

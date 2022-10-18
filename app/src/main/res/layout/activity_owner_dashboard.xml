@@ -11,7 +11,7 @@
         android:id="@+id/owner_dashboard_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/teal_200" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,6 +30,7 @@
             android:id="@+id/btn_updateStation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="navigateToUpdateStation"
             android:text="@string/update_station" />
     </LinearLayout>
 

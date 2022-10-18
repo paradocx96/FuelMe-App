@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.example.fuelme.R;
 import com.example.fuelme.ui.register_station_screen.RegisterStationActivity;
+import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
 public class OwnerDashboardActivity extends AppCompatActivity {
 
@@ -32,13 +33,16 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
     }
 
+    //method to navigate to register station activity
     public void navigateToRegisterStation(View view){
         Intent intent = new Intent(this, RegisterStationActivity.class);
         startActivity(intent);
     }
 
-    public void  navigateToUpdate(View view){
-
+    //method to navigate to update station activity
+    public void  navigateToUpdateStation(View view){
+        Intent intent = new Intent(this, UpdateStationActivity.class);
+        startActivity(intent);
     }
 
     //method called when toolbar back button is clicked

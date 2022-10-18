@@ -33,4 +33,9 @@
     <string name="station_email">Station Email</string>
     <string name="station_website_hint">Enter station website</string>
     <string name="station_website">Station Website</string>
+    <string name="edit">Edit</string>
+    <string name="colon_space"> : </string>
+    <string name="mark_petrol_unavailable">Mark Petrol Unavailable</string>
+    <string name="mark_diesel_unavailable">Mark Diesel Unavailable</string>
+    <string name="close_station">Close the station</string>
 </resources>
