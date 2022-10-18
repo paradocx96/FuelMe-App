@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
         <activity
+            android:name=".ui.owner_dashboard_screen.OwnerDashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.mainscreen.StationSingleViewActivity"
             android:exported="false">
             <meta-data
