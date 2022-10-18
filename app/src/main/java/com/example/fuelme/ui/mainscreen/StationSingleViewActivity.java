@@ -17,7 +17,8 @@ public class StationSingleViewActivity extends AppCompatActivity {
     String TAG = "demo";
     TextView textViewStationName, textViewStationAddress, textViewOpenStatus,
             textViewPetrolAvailabilityStatus, textViewDieselAvailabilityStatus, textViewPetrolQueueLength, textViewDieselQueueLength;
-    Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton;
+    Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
+            viewFeedbackButton, viewNoticesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class StationSingleViewActivity extends AppCompatActivity {
         stationPhoneNumberButton = findViewById(R.id.btn_phoneNumber_station_single_view);
         stationEmailButton = findViewById(R.id.btn_email_station_single_view);
         websiteButton = findViewById(R.id.btn_website_station_single_view);
+        viewFeedbackButton = findViewById(R.id.btnViewFeedback_station_single_view);
+        viewNoticesButton = findViewById(R.id.btnViewNotices_station_single_view);
 
         //get the extras
         Bundle extras  = getIntent().getExtras();

@@ -39,4 +39,6 @@
     <string name="mark_diesel_unavailable">Mark Diesel Unavailable</string>
     <string name="close_station">Close the station</string>
     <string name="view_all_owned_stations">View all your stations</string>
+    <string name="view_feedback">View Feedback</string>
+    <string name="view_notices">View Notices</string>
 </resources>
