@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.fuelme.R;
+import com.example.fuelme.ui.register_station_screen.RegisterStationActivity;
 
 public class OwnerDashboardActivity extends AppCompatActivity {
 
@@ -32,7 +33,8 @@ public class OwnerDashboardActivity extends AppCompatActivity {
     }
 
     public void navigateToRegisterStation(View view){
-        //Intent intent = new Intent(this, )
+        Intent intent = new Intent(this, RegisterStationActivity.class);
+        startActivity(intent);
     }
 
     public void  navigateToUpdate(View view){

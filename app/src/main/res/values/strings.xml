@@ -23,4 +23,14 @@
     <string name="open">Open</string>
     <string name="register_station">Register Station</string>
     <string name="update_station">Update Station</string>
+    <string name="license">License</string>
+    <string name="license_hint">Enter your station license</string>
+    <string name="station_name_hint">Enter your station Name</string>
+    <string name="station_name">Station Name</string>
+    <string name="station_address_hint">Enter address of the station</string>
+    <string name="station_address">Station Address</string>
+    <string name="station_email_hint">Enter the contact email for the station</string>
+    <string name="station_email">Station Email</string>
+    <string name="station_website_hint">Enter station website</string>
+    <string name="station_website">Station Website</string>
 </resources>
