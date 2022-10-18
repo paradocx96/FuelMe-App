@@ -45,6 +45,11 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void navigateToViewAllOwnedStations(View view){
+        Intent intent = new Intent(this, OwnerStationsActivity.class);
+        startActivity(intent);
+    }
+
     //method called when toolbar back button is clicked
     @Override
     public boolean onSupportNavigateUp() {
