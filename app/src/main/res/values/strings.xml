@@ -7,7 +7,6 @@
     <string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
 
-
     <!-- Malwatta H.G. -->
     <string name="add_feedback_txt">Add Feedback</string>
     <string name="add_feedback_description">Description</string>
@@ -29,39 +28,25 @@
     <string name="sample_phone_number">0115522331</string>
     <string name="sample_website">eheliyagoda.lk</string>
     <string name="open">Open</string>
-
-    <string name="special_notices">Special Notices</string>
-    <string name="notice_title">Notice Title</string>
-    <string name="description">Description</string>
-    <string name="date_and_time_here">Date and Time Here</string>
-    <string name="author_name">Author Name</string>
-    <string name="station_special_notices">Station Special Notices</string>
-    <string name="notice_description">Notice Description</string>
-    <string name="add">ADD</string>
-    <string name="notice">Notice</string>
-    <string name="_2022_10_18_13_15_00">2022/10/18 13:15:00</string>
-    <string name="notice_description_sample">Notice Description Sample</string>
-    <string name="notice_sample_title">Notice Sample Title</string>
-    <string name="update">Update</string>
-    <string name="delete">Delete</string>
-    <string name="login">Login</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="register">Register</string>
-    <string name="title_activity_auth">AuthActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="registration">Registration</string>
-    <string name="full_name">Full Name</string>
-    <string name="re_password">Re-Password</string>
-    <string name="email">Email</string>
-    <string name="role">Role</string>
-    <string name="cancel">Cancel</string>
-
+    <string name="register_station">Register Station</string>
+    <string name="update_station">Update Station</string>
+    <string name="license">License</string>
+    <string name="license_hint">Enter your station license</string>
+    <string name="station_name_hint">Enter your station Name</string>
+    <string name="station_name">Station Name</string>
+    <string name="station_address_hint">Enter address of the station</string>
+    <string name="station_address">Station Address</string>
+    <string name="station_email_hint">Enter the contact email for the station</string>
+    <string name="station_email">Station Email</string>
+    <string name="station_website_hint">Enter station website</string>
+    <string name="station_website">Station Website</string>
+    <string name="edit">Edit</string>
+    <string name="colon_space"> : </string>
+    <string name="mark_petrol_unavailable">Mark Petrol Unavailable</string>
+    <string name="mark_diesel_unavailable">Mark Diesel Unavailable</string>
+    <string name="close_station">Close the station</string>
+    <string name="view_all_owned_stations">View all your stations</string>
+    <string name="view_feedback">View Feedback</string>
+    <string name="view_notices">View Notices</string>
+    <string name="post_notice">Post a notice</string>
 </resources>

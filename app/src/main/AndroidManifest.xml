@@ -80,6 +80,34 @@
         </activity>
         
         <activity
+            android:name=".ui.owner_dashboard_screen.OwnerStationsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.update_station_screen.UpdateStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.register_station_screen.RegisterStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.owner_dashboard_screen.OwnerDashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.mainscreen.StationSingleViewActivity"
             android:exported="false">
             <meta-data

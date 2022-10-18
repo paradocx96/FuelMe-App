@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.owner_dashboard_screen.OwnerDashboardActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/owner_dashboard_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_registerStation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="navigateToRegisterStation"
+            android:text="@string/register_station" />
+
+        <Button
+            android:id="@+id/btn_updateStation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="navigateToUpdateStation"
+            android:text="@string/update_station" />
+
+        <Button
+            android:id="@+id/btn_viewAllStations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="navigateToViewAllOwnedStations"
+            android:text="@string/view_all_owned_stations" />
+
+    </LinearLayout>
+
+</LinearLayout>
