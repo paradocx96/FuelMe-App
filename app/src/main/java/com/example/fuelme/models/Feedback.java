@@ -21,6 +21,12 @@ public class Feedback {
         this.description = description;
         this.createAt = createAt;
     }
+    public Feedback(String username, String subject,String description, String createAt){
+        this.username = username;
+        this.subject = subject;
+        this.description = description;
+        this.createAt = createAt;
+    }
 
     public String getId() {
         return id;
