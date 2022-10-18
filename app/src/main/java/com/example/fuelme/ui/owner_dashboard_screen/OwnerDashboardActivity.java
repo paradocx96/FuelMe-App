@@ -38,4 +38,17 @@ public class OwnerDashboardActivity extends AppCompatActivity {
     public void  navigateToUpdate(View view){
 
     }
+
+    //method called when toolbar back button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    //handle back press
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
