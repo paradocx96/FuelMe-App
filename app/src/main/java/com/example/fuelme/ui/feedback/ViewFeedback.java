@@ -1,7 +1,9 @@
 package com.example.fuelme.ui.feedback;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,13 +51,13 @@ public class ViewFeedback extends AppCompatActivity {
         dateTime = intent.getStringExtra("feedback_dateTime"); //5 - Get feedback dateTime from intent
 
 
-        if(id != null){
+        if (id != null) {
             //2 - Get feedback from database
-           txtSubjectView.setText(subject);
-           txtDescriptionView.setText(description);
-           txtUsernameView.setText(username);
-           txtDateTimeView.setText(dateTime);
-        }else{
+            txtSubjectView.setText(subject);
+            txtDescriptionView.setText(description);
+            txtUsernameView.setText(username);
+            txtDateTimeView.setText(dateTime);
+        } else {
             //3 - If feedback id is null, then show error message
             txtSubjectView.setText("Error");
             txtDescriptionView.setText("Error");
@@ -77,12 +79,33 @@ public class ViewFeedback extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
+
         btnDeleteFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //4 - Delete feedback from database
-                deleteFeedbackById(id);
+
+                AlertDialog alertDialog = new AlertDialog.Builder(ViewFeedback.this)
+                        .setIcon(R.drawable.ic_warning)
+                        .setTitle("Are you sure ?")
+                        .setMessage("This action cannot be undone! If you click 'Yes', this feedback will be deleted permanently.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Delete feedback
+                                deleteFeedbackById(id);
+                                Toast.makeText(getApplicationContext(), "Successfully deleted!", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                                Toast.makeText(getApplicationContext(), "Feedback delete cancelled!", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show();
+
             }
         });
 
@@ -90,7 +113,7 @@ public class ViewFeedback extends AppCompatActivity {
 
     private void deleteFeedbackById(String id) {
         //6 - Set DELETE_FEEDBACK_URL
-        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/"+id;
+        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/" + id;
 
         HttpUrl url = HttpUrl.parse(DELETE_FEEDBACK_URL).newBuilder().build();
 
