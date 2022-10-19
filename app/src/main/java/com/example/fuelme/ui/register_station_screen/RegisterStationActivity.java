@@ -66,11 +66,35 @@ public class RegisterStationActivity extends AppCompatActivity {
     //button click for register station button
     public void registerStationButtonClick(View view){
         validateLicense();
+        validateStationName();
+        validateStationAddress();
+        validateStationEmail();
+        validateStationWebsite();
     }
 
     //validate the license
     public void validateLicense(){
         isLicenseNotEmpty();
+    }
+
+    //validate the station name
+    public void validateStationName(){
+        isStationNameNotEmpty();
+    }
+
+    //validate the station address
+    public void validateStationAddress(){
+        isStationAddressNotEmpty();
+    }
+
+    //validate the station email
+    public void validateStationEmail(){
+        isStationEmailNotEmpty();
+    }
+
+    //validate the website
+    public void validateStationWebsite(){
+        isStationWebsiteNotEmpty();
     }
 
     //returns whether the license field is empty and performs UI related changes
@@ -87,6 +111,78 @@ public class RegisterStationActivity extends AppCompatActivity {
             //set the default colors for text
 
             setTextViewColorToDefault(textViewLicense);
+            return true;
+        }
+    }
+
+    //check whether the station name is empty and perform related UI changes
+    public boolean isStationNameNotEmpty(){
+        String editTextString= editTextStationName.getText().toString();
+        if (editTextString.isEmpty()){
+            //the text field is empty
+            //handle empty logic
+            setTextViewColorToRed(textViewStationName);
+            return false;
+        }
+        else {
+            //the text field is not empty
+            //set the default colors for text
+
+            setTextViewColorToDefault(textViewStationName);
+            return true;
+        }
+    }
+
+    //check whether the station address is empty and perform related UI changes
+    public boolean isStationAddressNotEmpty(){
+        String editTextString= editTextStationAddress.getText().toString();
+        if (editTextString.isEmpty()){
+            //the text field is empty
+            //handle empty logic
+            setTextViewColorToRed(textViewStationAddress);
+            return false;
+        }
+        else {
+            //the text field is not empty
+            //set the default colors for text
+
+            setTextViewColorToDefault(textViewStationAddress);
+            return true;
+        }
+    }
+
+    //check whether the station email is empty and perform related UI changes
+    public boolean isStationEmailNotEmpty(){
+        String editTextString= editTextStationEmail.getText().toString();
+        if (editTextString.isEmpty()){
+            //the text field is empty
+            //handle empty logic
+            setTextViewColorToRed(textViewStationEmail);
+            return false;
+        }
+        else {
+            //the text field is not empty
+            //set the default colors for text
+
+            setTextViewColorToDefault(textViewStationEmail);
+            return true;
+        }
+    }
+
+    //check whether the station website is empty and perform related UI changes
+    public boolean isStationWebsiteNotEmpty(){
+        String editTextString= editTextStationEmail.getText().toString();
+        if (editTextString.isEmpty()){
+            //the text field is empty
+            //handle empty logic
+            //currently website is not mandatory
+            //therefore do not change color
+            return false;
+        }
+        else {
+            //the text field is not empty
+            //set the default colors for text
+            setTextViewColorToDefault(textViewStationEmail);
             return true;
         }
     }
