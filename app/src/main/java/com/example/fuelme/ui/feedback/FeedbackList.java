@@ -117,7 +117,13 @@ public class FeedbackList extends AppCompatActivity {
                         for (int i = 0; i < feedbackArray.length(); i++) {
                             JSONObject object = feedbackArray.getJSONObject(i);
 
-                            feedback = new Feedback(object.getString("username"), object.getString("subject"),object.getString("description"),object.getString("createAt"));
+                            feedback = new Feedback(
+                                    object.getString("id"),
+                                    object.getString("stationId"),
+                                    object.getString("username"),
+                                    object.getString("subject"),
+                                    object.getString("description"),
+                                    object.getString("createAt"));
                             feedbackArrayList.add(feedback);
                         }
 
