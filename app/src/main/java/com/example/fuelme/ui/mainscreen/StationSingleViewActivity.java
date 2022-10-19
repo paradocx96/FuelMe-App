@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -169,16 +170,39 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 //change the petrol queue button attributes
                 petrolQueueUpdateButton.setText("Leave the queue");
                 petrolQueueUpdateButton.setBackgroundColor(Color.parseColor("#F3AD25"));
+
+                //disable the diesel queue update button
+                dieselQueueUpdateButton.setEnabled(false);
             }
             else if (queueType.equalsIgnoreCase("diesel")){
                 //user is in this station's diesel queue
                 //change the diesel queue button attributes
                 dieselQueueUpdateButton.setText("Leave the queue");
                 dieselQueueUpdateButton.setBackgroundColor(Color.parseColor("#F3AD25"));
+
+                //disabled the petrol queue update button
+                petrolQueueUpdateButton.setEnabled(false);
             }
         }
+        else {
+            // if the currently joined queue's station id is not this view's station id, user is in a different queue
+            //then the user cannot join these queues
+            //disable both queue update buttons
+            petrolQueueUpdateButton.setEnabled(false);
+            dieselQueueUpdateButton.setEnabled(false);
+        }
 
-        // if the currently joined queue's station id is not this view's station id, user is in a different queue
+
+
+    }
+
+    //button click to update the petrol queue
+    public void  petrolQueueUpdateButtonClick(View view){
+
+    }
+
+    //button click to update the diesel queue
+    public void dieselQueueUpdateButtonClick(View view){
 
     }
 
