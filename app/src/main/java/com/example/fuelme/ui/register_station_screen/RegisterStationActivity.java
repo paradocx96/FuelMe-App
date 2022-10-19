@@ -70,18 +70,31 @@ public class RegisterStationActivity extends AppCompatActivity {
 
     //validate the license
     public void validateLicense(){
+        isLicenseNotEmpty();
+    }
+
+    //returns whether the license field is empty and performs UI related changes
+    public boolean isLicenseNotEmpty(){
         String licenseString= editTextLicense.getText().toString();
         if (licenseString.isEmpty()){
             //the text field is empty
             //handle empty logic
             setTextViewColorToRed(textViewLicense);
+            return false;
         }
         else {
             //the text field is not empty
             //set the default colors for text
 
             setTextViewColorToDefault(textViewLicense);
+            return true;
         }
+    }
+
+    //takes an edit text and returns whether it is empty
+    public boolean isTextViewEmpty(EditText editText){
+        String editTextString = editText.getText().toString();
+        return editTextString.isEmpty();
     }
 
     //takes a text view and sets its color to red
