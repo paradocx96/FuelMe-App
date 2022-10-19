@@ -128,8 +128,9 @@ public class EditFeedback extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            Toast.makeText(EditFeedback.this, myResponse, Toast.LENGTH_LONG).show();
+                            Toast.makeText(EditFeedback.this, myResponse, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     });

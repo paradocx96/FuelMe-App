@@ -73,6 +73,7 @@ public class ViewFeedback extends AppCompatActivity {
                 intent.putExtra("feedback_description", description);
                 intent.putExtra("feedback_username", username);
                 intent.putExtra("feedback_dateTime", dateTime);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -116,6 +117,7 @@ public class ViewFeedback extends AppCompatActivity {
                         public void run() {
                             Toast.makeText(ViewFeedback.this, "Successfully Deleted", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ViewFeedback.this, FeedbackList.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     });
