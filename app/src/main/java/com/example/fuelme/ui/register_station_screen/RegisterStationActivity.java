@@ -74,6 +74,11 @@ public class RegisterStationActivity extends AppCompatActivity {
         validateStationWebsite();
     }
 
+    //checks all mandatory fields and checks whether they are empty
+    public boolean isMandatoryFieldsFull(){
+        return isLicenseNotEmpty() && isStationNameNotEmpty() && isStationAddressNotEmpty() && isStationEmailNotEmpty();
+    }
+
     //validate the license
     public void validateLicense(){
         isLicenseNotEmpty();
