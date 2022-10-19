@@ -4,15 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
 
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 public class ViewFeedback extends AppCompatActivity {
+
+    private final OkHttpClient client = new OkHttpClient();
+    private static String DELETE_FEEDBACK_URL;
 
     TextView txtSubjectView, txtDescriptionView, txtUsernameView, txtDateTimeView;
     String id, stationId, subject, description, username, dateTime;
@@ -38,6 +47,7 @@ public class ViewFeedback extends AppCompatActivity {
         description = intent.getStringExtra("feedback_description"); //3 - Get feedback description from intent
         username = intent.getStringExtra("feedback_username"); //4 - Get feedback username from intent
         dateTime = intent.getStringExtra("feedback_dateTime"); //5 - Get feedback dateTime from intent
+
 
         if(id != null){
             //2 - Get feedback from database
@@ -71,13 +81,48 @@ public class ViewFeedback extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //4 - Delete feedback from database
-//                Feedback feedback = new Feedback();
-//                feedback.setId(id);
-//                feedback.delete();
-//                finish();
-                Toast.makeText(ViewFeedback.this, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+                deleteFeedbackById(id);
             }
         });
 
     }
+
+    private void deleteFeedbackById(String id) {
+        //6 - Set DELETE_FEEDBACK_URL
+        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/"+id;
+
+        HttpUrl url = HttpUrl.parse(DELETE_FEEDBACK_URL).newBuilder().build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, java.io.IOException e) {
+                e.printStackTrace();
+                Log.d("API_CALL_DELETE", "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws java.io.IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+                    Log.d("API_CALL_DELETE", "onFailure: " + response);
+
+                    ViewFeedback.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ViewFeedback.this, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ViewFeedback.this, FeedbackList.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 }
