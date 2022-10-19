@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.fuelme.R;
 
@@ -26,6 +27,7 @@ public class RegisterStationActivity extends AppCompatActivity {
             = MediaType.parse("application/json; charset=utf-8");
     final String TAG = "demo";//debug tag
 
+    TextView textViewLicense, textViewStationName, textViewStationAddress, textViewStationEmail, textViewStationWebsite;
     EditText editTextLicense, editTextStationName, editTextStationAddress, editTextStationEmail, editTextStationWebsite;
     Button submitButton;
 
@@ -41,6 +43,11 @@ public class RegisterStationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //register the views
+        textViewLicense = findViewById(R.id.txtView_license_register_station);
+        textViewStationName = findViewById(R.id.txtView_stationName_register_station);
+        textViewStationAddress = findViewById(R.id.txtView_stationAddress_register_station);
+        textViewStationEmail = findViewById(R.id.txtView_email_register_station);
+        textViewStationWebsite = findViewById(R.id.txtView_website_register_station);
         editTextLicense = findViewById(R.id.edtText_license_register_station);
         editTextStationName = findViewById(R.id.edtText_stationName_register_station);
         editTextStationAddress = findViewById(R.id.edtText_stationAddress_register_station);
