@@ -1,5 +1,7 @@
 package com.example.fuelme.ui.auth;
 
+import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_AUTH_LOGIN;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,19 +34,16 @@ import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username, password;
-    Button loginButton, registerButton;
-
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    EditText username, password;
+    Button loginButton, registerButton;
+    Context context;
+    String login_response_message;
+    int toastDuration = Toast.LENGTH_SHORT;
 
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static final String BASE_URL = "https://fuelme.azurewebsites.net/api/Auth/login";
-
-    Context context;
-    int toastDuration = Toast.LENGTH_SHORT;
-    String login_response_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +96,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginUser(RequestBody requestBody) {
-        final String[] res_message = new String[1];
-
         Request request = new Request.Builder()
-                .url(BASE_URL)
+                .url(REMOTE_URL_AUTH_LOGIN)
                 .post(requestBody)
                 .build();
 
@@ -116,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                     ResponseBody responseBody = response.body();
                     if (responseBody != null) {
                         String responseString = responseBody.string();
-                        Log.d("API_CALL", "Login Response : " + responseString);
 
                         try {
                             JSONObject jsonResponse = new JSONObject(responseString);
