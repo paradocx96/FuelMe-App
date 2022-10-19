@@ -231,13 +231,15 @@ public class RegisterStationActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     //handle successful response
 
+                    //run UI updates on UI threads
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             progressDialog.dismiss(); //dismiss the progress dialog on successful response
-
                             //show success
                             getAlertDialog("Success", "Successfully registered the station").show();
+                            //clear all the edit text fields
+                            clearAllEditTextFields();
                         }
                     });
 
@@ -302,6 +304,14 @@ public class RegisterStationActivity extends AppCompatActivity {
         return builder;
     }
 
+    public void clearAllEditTextFields(){
+        editTextLicense.setText("");
+        editTextStationName.setText("");
+        editTextStationAddress.setText("");
+        editTextStationEmail.setText("");
+        editTextPhoneNumber.setText("");
+        editTextStationWebsite.setText("");
+    }
 
 
     //validate the license
