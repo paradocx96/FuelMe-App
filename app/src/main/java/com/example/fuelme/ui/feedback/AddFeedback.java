@@ -2,6 +2,7 @@ package com.example.fuelme.ui.feedback;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
@@ -44,34 +46,27 @@ public class AddFeedback extends AppCompatActivity {
 
     EditText editTxtSubject, editTxtDescription;
     Button btnSubmit;
+    TextView txtToolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_feedback);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //instantiate toolbar and set the back button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_feedback_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_addFeedback);
+        txtToolbarTitle.setText("Add Feedback");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         editTxtSubject = findViewById(R.id.editTxt_subject);
         editTxtDescription = findViewById(R.id.editTxt_description);
 
         btnSubmit = findViewById(R.id.btn_submit);
-//        btnSubmit.setOnClickListener(v -> {
-//            try {
-//
-//                Feedback feedback = new Feedback();
-//                feedback.setSubject(editTxtSubject.getText().toString());
-//                feedback.setDescription(editTxtDescription.getText().toString());
-//                feedback.setStationId("1");
-//                feedback.setUsername("Gimhan");
-//                feedback.setCreateAt(currentDateTimeString);
-//
-//                addFeedback(feedback);
-//                Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
-//                startActivity(intent);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,14 +95,6 @@ public class AddFeedback extends AppCompatActivity {
 
     private void addFeedback(Feedback feedback){
 
-//        FormBody formBody = new FormBody.Builder()
-//                .add("stationId", feedback.getStationId())
-//                .add("subject", feedback.getSubject())
-//                .add("username", feedback.getUsername())
-//                .add("description", feedback.getDescription())
-//                .add("createAt", feedback.getCreateAt())
-//                .build();
-
         JSONObject jsonObject = new JSONObject();
 
         try {
@@ -122,7 +109,6 @@ public class AddFeedback extends AppCompatActivity {
         }
 
         String jsonString = jsonObject.toString();
-        //Log.d("API_CALL","Add_Feedback : " + jsonString);
 
         RequestBody requestBody = RequestBody.create(jsonString, JSON);
 
@@ -150,9 +136,6 @@ public class AddFeedback extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(AddFeedback.this, "Successfully Added!", Toast.LENGTH_LONG).show();
-                               // txtId.setText(responseString);
-//                                responseMessage.setText(responseString);
-//                                responseMessage.show();
                                 editTxtSubject.setText("");
                                 editTxtDescription.setText("");
                             }
@@ -167,83 +150,23 @@ public class AddFeedback extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(AddFeedback.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                            //textView1.setText("Failed posting");
-//                            responseMessage.setText(body);
-//                            responseMessage.show();
                         }
                     });
                 }
             }
         });
-
     }
 
-//    void getEmployees() {
-//
-//
-//
-//        HttpUrl url = HttpUrl.parse(CommonConstants.BASE_URL).newBuilder().build();
-//
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .build();
-//
-//        //client.hostnameVerifier(new NullHostNameVerifier())
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                if (response.isSuccessful()) {
-//                    ResponseBody responseBody = response.body();
-//                    String body = responseBody.string();
-//                    Log.d("API_CALL", "onResponse: " + body);
-//
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(body);
-//                        Feedback feedback = new Feedback();
-//                        feedback.setId(jsonObject.getString("id"));
-//                        feedback.setStationId(jsonObject.getString("stationId"));
-//                        feedback.setUsername(jsonObject.getString("username"));
-//                        feedback.setDescription(jsonObject.getString("description"));
-//                        feedback.setCreateAt(jsonObject.getString("createAt"));
-//
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //textView1.setText("Employee Last Name : " +employee.getLastName() );
-//                                txtId.setText(feedback.getId());
-//                                txtStationId.setText(feedback.getStationId());
-//                                txtUsername.setText(feedback.getUsername());
-//                                txtDescription.setText(feedback.getDescription());
-//                                txtCreateAt.setText(feedback.getCreateAt());
-//                            }
-//                        });
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                } else {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            //textView1.setText("Error getting employee.");
-//                            txtId.setText("Error getting employee.");
-//                            txtStationId.setText("Error getting employee.");
-//                            txtUsername.setText("Error getting employee.");
-//                            txtDescription.setText("Error getting employee.");
-//                            txtCreateAt.setText("Error getting employee.");
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//    }
+    //method called when toolbar back button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-
+    //handle back press
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
