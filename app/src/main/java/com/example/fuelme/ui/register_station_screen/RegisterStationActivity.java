@@ -69,33 +69,42 @@ public class RegisterStationActivity extends AppCompatActivity {
 
     //button click for register station button
     public void registerStationButtonClick(View view){
-        validateLicense();
-        validateStationName();
-        validateStationAddress();
-        validateStationPhoneNumber();;
-        validateStationEmail();
-        validateStationWebsite();
+        boolean licenseNotEmpty = validateLicense();
+        boolean nameNotEmpty = validateStationName();
+        boolean addressNotEmpty = validateStationAddress();
+        boolean phoneNotEmpty = validateStationPhoneNumber();
+        boolean emailNotEmpty = isStationEmailNotEmpty();
+
+        if (licenseNotEmpty && nameNotEmpty && addressNotEmpty && emailNotEmpty && phoneNotEmpty){
+            validateStationEmail();
+            validateStationWebsite(); //actually no need to do if website is optional
+        }
+        else {
+            //one or more fields are missing
+            Toast.makeText(this, "One or more mandatory fields are missing",Toast.LENGTH_SHORT).show(); //show a toast with message
+        }
+
     }
 
 
     //validate the license
-    public void validateLicense(){
-        isLicenseNotEmpty();
+    public boolean validateLicense(){
+        return isLicenseNotEmpty();
     }
 
     //validate the station name
-    public void validateStationName(){
-        isStationNameNotEmpty();
+    public boolean validateStationName(){
+        return isStationNameNotEmpty();
     }
 
     //validate the station address
-    public void validateStationAddress(){
-        isStationAddressNotEmpty();
+    public boolean validateStationAddress(){
+        return isStationAddressNotEmpty();
     }
 
     //validate phone number
-    public void validateStationPhoneNumber(){
-        isStationPhoneNumberNotEmpty();
+    public boolean validateStationPhoneNumber(){
+        return isStationPhoneNumberNotEmpty();
     }
 
     //validate the station email
@@ -122,8 +131,8 @@ public class RegisterStationActivity extends AppCompatActivity {
     }
 
     //validate the website
-    public void validateStationWebsite(){
-        isStationWebsiteNotEmpty();
+    public boolean validateStationWebsite(){
+        return isStationWebsiteNotEmpty();
     }
 
     //returns whether the license field is empty and performs UI related changes
