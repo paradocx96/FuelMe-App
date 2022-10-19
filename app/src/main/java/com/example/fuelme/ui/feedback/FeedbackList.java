@@ -2,6 +2,7 @@ package com.example.fuelme.ui.feedback;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
@@ -49,10 +51,22 @@ public class FeedbackList extends AppCompatActivity {
     private FeedbackListAdapter adapter;
     private ArrayList<Feedback> feedbackArrayList;
 
+    TextView txtToolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_list);
+
+        //instantiate toolbar and set the back button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_feedbackList_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_feedbackList);
+        txtToolbarTitle.setText("All Feedbacks");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerViewFeedback = findViewById(R.id.feedbackList_recycle_view);
         recyclerViewFeedback.setLayoutManager(new LinearLayoutManager(this));
@@ -135,9 +149,6 @@ public class FeedbackList extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            adapter = new FeedbackListAdapter(FeedbackList.this, feedbackArrayList); //passing the arraylist to the adapter
-//                            recyclerViewFeedback.setAdapter(adapter); //setting the adapter to the recyclerview
-//                            recyclerViewFeedback.addItemDecoration(new DividerItemDecoration(FeedbackList.this, LinearLayoutManager.VERTICAL));
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -152,9 +163,18 @@ public class FeedbackList extends AppCompatActivity {
                 }
             }
         });
+    }
 
-//        Feedback feedback = new Feedback("Hirush ", "This is Title", "This is sample description", "2022-10-18 Mon 12:00");
-//        feedbackArrayList.add(feedback);
+    //method called when toolbar back button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    //handle back press
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
