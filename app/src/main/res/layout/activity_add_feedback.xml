@@ -8,19 +8,31 @@
     tools:context=".ui.feedback.AddFeedback">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/add_feedback_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Add Feedback" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtToolbar_title_addFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/toolbar_title"
+            tools:layout_editor_absoluteX="166dp"
+            tools:layout_editor_absoluteY="18dp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+        
+    </androidx.appcompat.widget.Toolbar>    
 
     <EditText
         android:id="@+id/editTxt_subject"
         android:layout_width="340dp"
         android:layout_height="50dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="105dp"
         android:layout_marginEnd="35dp"
         android:background="@drawable/feedback_custom_input"
@@ -32,12 +44,14 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_feedback_toolbar" />
 
     <EditText
         android:id="@+id/editTxt_description"
         android:layout_width="340dp"
         android:layout_height="150dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="35dp"
         android:background="@drawable/feedback_custom_input"
@@ -49,12 +63,14 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTxt_subject" />
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="340dp"
         android:layout_height="60dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="35dp"
         android:backgroundTint="@color/green"
@@ -63,6 +79,7 @@
         android:textSize="16sp"
         app:cornerRadius="@dimen/btn_submit_rounded"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTxt_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
