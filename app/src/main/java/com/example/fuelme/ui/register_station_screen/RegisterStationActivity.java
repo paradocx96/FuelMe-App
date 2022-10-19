@@ -33,8 +33,8 @@ public class RegisterStationActivity extends AppCompatActivity {
             = MediaType.parse("application/json; charset=utf-8");
     final String TAG = "demo";//debug tag
 
-    TextView textViewLicense, textViewStationName, textViewStationAddress, textViewStationEmail, textViewStationWebsite;
-    EditText editTextLicense, editTextStationName, editTextStationAddress, editTextStationEmail, editTextStationWebsite;
+    TextView textViewLicense, textViewStationName, textViewStationAddress, textViewStationEmail, textViewPhoneNumber, textViewStationWebsite;
+    EditText editTextLicense, editTextStationName, editTextStationAddress, editTextStationEmail, editTextPhoneNumber, editTextStationWebsite;
     Button submitButton;
 
     @Override
@@ -55,11 +55,13 @@ public class RegisterStationActivity extends AppCompatActivity {
         textViewLicense = findViewById(R.id.txtView_license_register_station);
         textViewStationName = findViewById(R.id.txtView_stationName_register_station);
         textViewStationAddress = findViewById(R.id.txtView_stationAddress_register_station);
+        textViewPhoneNumber = findViewById(R.id.txtView_stationPhone_register_station);
         textViewStationEmail = findViewById(R.id.txtView_email_register_station);
         textViewStationWebsite = findViewById(R.id.txtView_website_register_station);
         editTextLicense = findViewById(R.id.edtText_license_register_station);
         editTextStationName = findViewById(R.id.edtText_stationName_register_station);
         editTextStationAddress = findViewById(R.id.edtText_stationAddress_register_station);
+        editTextPhoneNumber = findViewById(R.id.edtText_stationPhone_register_station);
         editTextStationEmail = findViewById(R.id.edtText_stationEmail_register_station);
         editTextStationWebsite = findViewById(R.id.edtText_stationWebsite_register_station);
 
@@ -70,14 +72,11 @@ public class RegisterStationActivity extends AppCompatActivity {
         validateLicense();
         validateStationName();
         validateStationAddress();
+        validateStationPhoneNumber();;
         validateStationEmail();
         validateStationWebsite();
     }
 
-    //checks all mandatory fields and checks whether they are empty
-    public boolean isMandatoryFieldsFull(){
-        return isLicenseNotEmpty() && isStationNameNotEmpty() && isStationAddressNotEmpty() && isStationEmailNotEmpty();
-    }
 
     //validate the license
     public void validateLicense(){
@@ -94,6 +93,11 @@ public class RegisterStationActivity extends AppCompatActivity {
         isStationAddressNotEmpty();
     }
 
+    //validate phone number
+    public void validateStationPhoneNumber(){
+        isStationPhoneNumberNotEmpty();
+    }
+
     //validate the station email
     //returns true if valid, false if not
     public boolean validateStationEmail(){
@@ -107,7 +111,7 @@ public class RegisterStationActivity extends AppCompatActivity {
             }
             else {
                 //the string is not a matching email pattern
-                Toast.makeText(this, "Email is invalid",Toast.LENGTH_SHORT).show(); //show a toast with message
+                Toast.makeText(this, "Email format is invalid",Toast.LENGTH_SHORT).show(); //show a toast with message
                 return false;
             }
         }
@@ -172,6 +176,24 @@ public class RegisterStationActivity extends AppCompatActivity {
             //set the default colors for text
 
             setTextViewColorToDefault(textViewStationAddress);
+            return true;
+        }
+    }
+
+    //check whether the station phone number is empty and perform related UI changes
+    public boolean isStationPhoneNumberNotEmpty(){
+        String editTextString= editTextPhoneNumber.getText().toString();
+        if (editTextString.isEmpty()){
+            //the text field is empty
+            //handle empty logic
+            setTextViewColorToRed(textViewPhoneNumber);
+            return false;
+        }
+        else {
+            //the text field is not empty
+            //set the default colors for text
+
+            setTextViewColorToDefault(textViewPhoneNumber);
             return true;
         }
     }
