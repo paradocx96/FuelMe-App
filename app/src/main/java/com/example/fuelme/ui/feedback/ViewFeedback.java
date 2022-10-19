@@ -2,6 +2,7 @@ package com.example.fuelme.ui.feedback;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,11 +31,24 @@ public class ViewFeedback extends AppCompatActivity {
 
     Button btnEditFeedback, btnDeleteFeedback;
 
+    TextView txtToolbarTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feedback);
+
+        //instantiate toolbar and set the back button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_single_feedback_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_singleFeedback);
+        txtToolbarTitle.setText("Feedback");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         txtSubjectView = findViewById(R.id.txtSubjectView);
         txtDescriptionView = findViewById(R.id.txtDescriptionView);
         txtUsernameView = findViewById(R.id.txtUsernameView);
@@ -148,6 +162,17 @@ public class ViewFeedback extends AppCompatActivity {
             }
         });
     }
+    //method called when toolbar back button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    //handle back press
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 }
