@@ -17,11 +17,13 @@
         app:title="View Feedback" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="414dp"
-        android:layout_height="601dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginBottom="33dp"
-        android:background="@drawable/feedback_single_item_shape"
+        android:layout_width="380dp"
+        android:layout_height="600dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/feedback_view_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,22 +33,23 @@
             android:id="@+id/txtSubjectView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="114dp"
-            android:layout_marginEnd="57dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="35dp"
             android:fontFamily="sans-serif-black"
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_editFeedback" />
 
         <TextView
             android:id="@+id/txtDescriptionView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="57dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="35dp"
             android:text="TextView"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSubjectView" />
 
@@ -54,7 +57,7 @@
             android:id="@+id/txtDateTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="57dp"
+            android:layout_marginStart="35dp"
             android:layout_marginBottom="52dp"
             android:text="TextView"
             android:textColor="@color/btn_feedback_submit"
@@ -65,12 +68,36 @@
             android:id="@+id/txtUsernameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="57dp"
+            android:layout_marginEnd="35dp"
             android:layout_marginBottom="52dp"
             android:text="TextView"
             android:textColor="@color/btn_feedback_submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btn_editFeedback"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blue"
+            android:text="Button"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:layout_constraintEnd_toStartOf="@+id/btn_deleteFeedback"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_deleteFeedback"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
+            android:backgroundTint="@color/btn_feedback_submit"
+            android:text="Button"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
