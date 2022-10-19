@@ -87,6 +87,7 @@ public class AddFeedback extends AppCompatActivity {
 
                     addFeedback(feedback);
                     Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();

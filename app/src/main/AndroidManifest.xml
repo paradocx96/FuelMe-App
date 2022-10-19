@@ -124,7 +124,28 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
+         <activity
+            android:name=".ui.feedback.EditFeedback"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.feedback.ViewFeedback"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.feedback.FeedbackList"
+            android:exported="false">
+            <meta-data
+               android:name="android.app.lib_name"
+               android:value="" />
+        </activity>
+    
 
         <!-- Main Activities -->
         <activity

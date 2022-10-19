@@ -72,6 +72,7 @@ public class FeedbackList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(FeedbackList.this, AddFeedback.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -117,7 +118,13 @@ public class FeedbackList extends AppCompatActivity {
                         for (int i = 0; i < feedbackArray.length(); i++) {
                             JSONObject object = feedbackArray.getJSONObject(i);
 
-                            feedback = new Feedback(object.getString("username"), object.getString("subject"),object.getString("description"),object.getString("createAt"));
+                            feedback = new Feedback(
+                                    object.getString("id"),
+                                    object.getString("stationId"),
+                                    object.getString("username"),
+                                    object.getString("subject"),
+                                    object.getString("description"),
+                                    object.getString("createAt"));
                             feedbackArrayList.add(feedback);
                         }
 
