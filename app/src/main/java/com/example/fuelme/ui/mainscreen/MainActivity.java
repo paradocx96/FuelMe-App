@@ -7,6 +7,7 @@
 * */
 
 package com.example.fuelme.ui.mainscreen;
+import com.example.fuelme.ui.auth.LoginActivity;
 import com.example.fuelme.ui.mainscreen.adapters.PageAdapter;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,6 +34,9 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     String TAG = "demo";
 
@@ -48,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Login Data
+        preferences = getSharedPreferences("login_data", MODE_PRIVATE);
+        editor = preferences.edit();
+        Log.d("API_CALL", "SharedPreferences: " + preferences.getAll());
+        Log.d("API_CALL", "SharedPreferences Full Name: " + preferences.getString("user_full_name", ""));
+        Log.d("API_CALL", "SharedPreferences Email: " + preferences.getString("user_email", ""));
 
         //set the toolbar
         Toolbar toolbar = findViewById(R.id.main_toolbar);
@@ -117,7 +129,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_logout:
                 //handle logout here
-                Toast.makeText(this, "Logout clicked", Toast.LENGTH_SHORT).show();
+                editor.clear();
+                editor.commit();
+                Intent intent_login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent_login);
                 break;
             case R.id.navMenu_about:
                 //handle about here

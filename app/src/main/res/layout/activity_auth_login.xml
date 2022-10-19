@@ -25,11 +25,13 @@
         android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="@string/username"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColorHint="#00838F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auth_login_ui_title" />
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_ui_title"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <EditText
         android:id="@+id/auth_login_password"
@@ -42,7 +44,9 @@
         android:textColorHint="#00838F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auth_login_username" />
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_username"
+        android:importantForAutofill="no"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/auth_login_button_login"
