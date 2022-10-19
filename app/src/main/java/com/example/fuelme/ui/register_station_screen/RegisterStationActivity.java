@@ -1,22 +1,43 @@
 package com.example.fuelme.ui.register_station_screen;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.helpers.NightModeHelper;
+import com.example.fuelme.models.FuelStation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /*
 IT19014128
@@ -32,10 +53,13 @@ public class RegisterStationActivity extends AppCompatActivity {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
     final String TAG = "demo";//debug tag
+    SharedPreferences preferences;
 
     TextView textViewLicense, textViewStationName, textViewStationAddress, textViewStationEmail, textViewPhoneNumber, textViewStationWebsite;
     EditText editTextLicense, editTextStationName, editTextStationAddress, editTextStationEmail, editTextPhoneNumber, editTextStationWebsite;
     Button submitButton;
+    AlertDialog.Builder progressDialogBuilder;
+    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,22 +93,215 @@ public class RegisterStationActivity extends AppCompatActivity {
 
     //button click for register station button
     public void registerStationButtonClick(View view){
+
+        boolean validStatus = validateAllFields();
+
+        if (validStatus){
+            //get the currently logged in user
+            preferences = getSharedPreferences("login_data", MODE_PRIVATE); //assign preferences for login data
+            String currentUsername = preferences.getString("user_username", ""); //get the username from shared preferences
+
+            //get the strings from edit texts
+            String licenseString = editTextLicense.getText().toString();
+            String stationNameString = editTextStationName.getText().toString();
+            String stationAddressString = editTextStationAddress.getText().toString();
+            String stationPhoneNumberString = editTextPhoneNumber.getText().toString();
+            String stationEmailString = editTextStationEmail.getText().toString();
+            String stationWebsiteString = editTextStationWebsite.getText().toString();
+
+            //if website is empty reassign it
+            if (stationWebsiteString.isEmpty()){
+                stationWebsiteString = "not-given";
+            }
+
+            //instantiate and set the fuel station instance
+            FuelStation fuelStation = new FuelStation();
+            //set fuel station attributes
+            fuelStation.setId("dummy");
+            fuelStation.setLicense(licenseString);
+            fuelStation.setOwnerUsername(currentUsername);
+            fuelStation.setStationName(stationNameString);
+            fuelStation.setStationAddress(stationAddressString);
+            fuelStation.setStationPhoneNumber(stationPhoneNumberString);
+            fuelStation.setStationEmail(stationEmailString);
+            fuelStation.setStationWebsite(stationWebsiteString);
+
+            //setting other data is not necessary since they are manually set in JSON object
+
+            Log.d(TAG, "All fields are valid. Fuel station object is set.");
+
+
+            //call addStation record method
+            addStationRecord(fuelStation);
+        }
+
+    }
+
+    //method to validate all the fields
+    public boolean validateAllFields(){
         boolean licenseNotEmpty = validateLicense();
         boolean nameNotEmpty = validateStationName();
         boolean addressNotEmpty = validateStationAddress();
         boolean phoneNotEmpty = validateStationPhoneNumber();
         boolean emailNotEmpty = isStationEmailNotEmpty();
 
-        if (licenseNotEmpty && nameNotEmpty && addressNotEmpty && emailNotEmpty && phoneNotEmpty){
-            validateStationEmail();
-            validateStationWebsite(); //actually no need to do if website is optional
+
+        if (licenseNotEmpty && nameNotEmpty && addressNotEmpty && phoneNotEmpty && emailNotEmpty){
+            //all the mandatory fields are filled
+            //validate email
+            boolean isEmailValid = validateStationEmail();
+            return isEmailValid; //if email is valid the form is valid
         }
         else {
-            //one or more fields are missing
+            //one or more mandatory fields are missing
             Toast.makeText(this, "One or more mandatory fields are missing",Toast.LENGTH_SHORT).show(); //show a toast with message
+            return false;
+        }
+    }
+
+    //uses okhttp client to call the remote web API to add the fuel station record
+    public void addStationRecord(FuelStation fuelStation){
+
+        //instantiate a JSON object
+        JSONObject stationJsonObject = new JSONObject();
+        try {
+            //put the data in the JSON object
+            stationJsonObject.put("id", "dummy");
+            stationJsonObject.put("license", fuelStation.getLicense());
+            stationJsonObject.put("ownerUsername", fuelStation.getOwnerUsername());
+            stationJsonObject.put("stationName", fuelStation.getStationName());
+            stationJsonObject.put("stationAddress", fuelStation.getStationAddress());
+            stationJsonObject.put("stationPhoneNumber", fuelStation.getStationPhoneNumber());
+            stationJsonObject.put("stationEmail", fuelStation.getStationEmail());
+            stationJsonObject.put("stationWebsite", fuelStation.getStationWebsite());
+            stationJsonObject.put("openStatus", "closed");
+            stationJsonObject.put("petrolQueueLength", 0);
+            stationJsonObject.put("dieselQueueLength", 0);
+            stationJsonObject.put("petrolStatus", "available");
+            stationJsonObject.put("dieselStatus", "available");
+            stationJsonObject.put("locationLatitude", 0);
+            stationJsonObject.put("locationLongitude", 0);
+
+        }catch (JSONException e){
+            e.printStackTrace();
         }
 
+        String stationJsonString = stationJsonObject.toString(); //get the string of the json object
+        RequestBody requestBody = RequestBody.create(stationJsonString, JSON); //add the json string to request body
+
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL+"api/FuelStations").newBuilder().build();
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        //create and show progress dialog
+        progressDialog = getDialogProgressBar().create();
+        progressDialog.show();
+
+        //make the call with okhttp client
+        client.newCall(request).enqueue(new Callback() {
+
+            //handle the call failure
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss(); //dismiss the progress dialog on failure
+
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+                Log.d(TAG, "onFailure: Creating station record failed." );
+                e.printStackTrace();
+            }
+
+            //handle the received responses for the call
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+                if (response.isSuccessful()){
+                    //handle successful response
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss(); //dismiss the progress dialog on successful response
+
+                            //show success
+                            getAlertDialog("Success", "Successfully registered the station").show();
+                        }
+                    });
+
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+                    Log.d(TAG,"Successfully created station");
+                    Log.d(TAG,"onResponse : " + body);
+                }
+                else {
+                    //handle failed response
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+                    Log.d(TAG, "failed response: " + body);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss(); //dismiss the progress dialog on failed response
+
+                            //show the response error
+                            getAlertDialog("Failure", "Message : " + body);
+                        }
+                    });
+
+
+                }
+
+            }
+        });
+
     }
+
+    //progress bar in an alert dialog
+    public AlertDialog.Builder getDialogProgressBar(){
+        if (progressDialogBuilder == null){
+            progressDialogBuilder = new AlertDialog.Builder(this);
+            progressDialogBuilder.setTitle("Registering Station");
+
+            final ProgressBar progressBar = new ProgressBar(this);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progressBar.setLayoutParams(layoutParams);
+            progressDialogBuilder.setView(progressBar);
+
+        }
+        return progressDialogBuilder;
+    }
+
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
+    }
+
 
 
     //validate the license

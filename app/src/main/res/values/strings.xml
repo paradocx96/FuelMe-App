@@ -78,4 +78,5 @@
     <string name="cancel">Cancel</string>
     <string name="phone_number">Phone Number</string>
     <string name="station_phone_hint">Enter the phone number for the station</string>
+    <string name="ok">OK</string>
 </resources>
