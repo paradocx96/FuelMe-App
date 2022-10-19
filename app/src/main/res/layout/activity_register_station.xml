@@ -46,6 +46,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_license_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/license"
@@ -80,6 +81,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_stationName_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_name"
@@ -114,6 +116,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_stationAddress_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_address"
@@ -149,6 +152,43 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_stationPhone_register_station"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_number"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                >
+                <EditText
+                    android:id="@+id/edtText_stationPhone_register_station"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/slightly_rounded_edittext"
+                    android:hint="@string/station_phone_hint"
+                    android:inputType="textPostalAddress"
+                    android:autofillHints="phone"
+                    android:minHeight="48dp"
+                    android:padding="10dp"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtView_email_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_email"
@@ -183,6 +223,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_website_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_website"
@@ -211,13 +252,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
+            android:paddingTop="20dp"
             android:orientation="vertical">
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register_station"
-                />
+                android:onClick="registerStationButtonClick"
+                android:text="@string/register_station" />
         </LinearLayout>
 
 
