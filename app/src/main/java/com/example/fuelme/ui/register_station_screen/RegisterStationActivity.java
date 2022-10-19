@@ -3,19 +3,15 @@ package com.example.fuelme.ui.register_station_screen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.fuelme.R;
-
-import java.lang.reflect.Method;
+import com.example.fuelme.helpers.NightModeHelper;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -78,29 +74,37 @@ public class RegisterStationActivity extends AppCompatActivity {
         if (licenseString.isEmpty()){
             //the text field is empty
             //handle empty logic
-            textViewLicense.setTextColor(Color.parseColor("#FF0000")); //set the text color to red
+            setTextViewColorToRed(textViewLicense);
         }
         else {
             //the text field is not empty
+            //set the default colors for text
 
+            setTextViewColorToDefault(textViewLicense);
+        }
+    }
 
-            int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK; //set night mode mask
-            //set the text color based on night mode
-            switch (nightModeFlags){
-                case Configuration.UI_MODE_NIGHT_NO:
-                    //night mode is not enabled. handle black text
-                    textViewLicense.setTextColor(Color.parseColor("#FF000000"));
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    //night mode is enabled handle white text
-                    textViewLicense.setTextColor(Color.parseColor("#FFFFFFFF"));
-                    break;
-                default:
-                    //not defined
-                    textViewLicense.setTextColor(Color.parseColor("#FF000000"));
-                    break;
-            }
-            //textViewLicense.setTextColor();
+    //takes a text view and sets its color to red
+    public void setTextViewColorToRed(TextView textView){
+        textView.setTextColor(Color.parseColor("#FF0000")); //set the text color to red
+    }
+
+    //takes a text view and sets its color to default text colors
+    public void setTextViewColorToDefault(TextView textView){
+        String theme = NightModeHelper.getMode(this);
+        switch (theme){
+            case "light":
+                //night mode is not enabled. handle black text
+                textView.setTextColor(Color.parseColor("#FF000000"));
+                break;
+            case "dark":
+                //night mode is enabled handle white text
+                textView.setTextColor(Color.parseColor("#FFFFFFFF"));
+                break;
+            default:
+                //not defined
+                textView.setTextColor(Color.parseColor("#FF000000"));
+                break;
         }
     }
 
