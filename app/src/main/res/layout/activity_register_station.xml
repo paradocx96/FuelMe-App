@@ -46,6 +46,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_license_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/license"
@@ -80,6 +81,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_stationName_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_name"
@@ -114,6 +116,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_stationAddress_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_address"
@@ -149,6 +152,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_email_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_email"
@@ -183,6 +187,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtView_website_register_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/station_website"
