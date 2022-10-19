@@ -1,6 +1,7 @@
 package com.example.fuelme.ui.feedback;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
@@ -32,9 +34,10 @@ public class EditFeedback extends AppCompatActivity {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static String UPDATE_FEEDBACK_URL;
 
-
     EditText txtSubjectEdit, txtDescriptionEdit;
     Button btnUpdateFeedback;
+    TextView txtToolbarTitle;
+
     private String id, stationId, username, subject, description, dateTime;
     private String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
     
@@ -42,6 +45,18 @@ public class EditFeedback extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_feedback);
+
+        //instantiate toolbar and set the back button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.edit_feedback_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_editFeedback);
+        txtToolbarTitle.setText("Edit Feedback");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         txtSubjectEdit = findViewById(R.id.editTxt_subject_edit);
         txtDescriptionEdit = findViewById(R.id.editTxt_description_edit);
         btnUpdateFeedback = findViewById(R.id.btn_submit_edit);
@@ -138,8 +153,19 @@ public class EditFeedback extends AppCompatActivity {
                 }
             }
         });
-
     }
 
+    //method called when toolbar back button is clicked
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    //handle back press
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 }
