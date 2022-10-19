@@ -5,10 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.helpers.NightModeHelper;
@@ -88,8 +90,26 @@ public class RegisterStationActivity extends AppCompatActivity {
     }
 
     //validate the station email
-    public void validateStationEmail(){
-        isStationEmailNotEmpty();
+    //returns true if valid, false if not
+    public boolean validateStationEmail(){
+        //validate that email field is not empty
+        if (isStationEmailNotEmpty()){
+            //validate that email is of valid pattern
+            String emailString = editTextStationEmail.getText().toString();
+            if (Patterns.EMAIL_ADDRESS.matcher(emailString).matches()){
+                //the string is a matching email pattern
+                return true;
+            }
+            else {
+                //the string is not a matching email pattern
+                Toast.makeText(this, "Email is invalid",Toast.LENGTH_SHORT).show(); //show a toast with message
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
     }
 
     //validate the website
