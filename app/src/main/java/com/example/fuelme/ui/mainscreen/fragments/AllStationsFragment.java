@@ -42,9 +42,14 @@ public class AllStationsFragment extends Fragment {
 
     private final String TAG = "demo";
     ArrayList<FuelStation> fuelStations = new ArrayList<>(); //array list for fuel stations
+    ArrayList<FuelStation> fuelStationsList = new ArrayList<>(); //array list for fuel stations
+    ArrayList<FuelStation> sampleFuelStations = new ArrayList<>(); //array list for sample fuel stations
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
+
+    RecyclerView recyclerView;
+    AllStationsRecyclerViewAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,25 +97,35 @@ public class AllStationsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_all_stations, container, false);
 
-        //setup the fuel station list
+        //setup the sample fuel station list
         //setupSampleFuelStations();
 
         //fetch and assign the fuel station list
-        fetchFuelStations();
+        fetchFuelStationsAsync();
+
 
         //assign recycler view
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_allStations);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_allStations);
 
-        //get activity gets parent context (probably) or try getContext()
-        AllStationsRecyclerViewAdapter adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
+
+        adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStationsList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
     }
 
-    //fetch all the stations from remote
-    public void fetchFuelStations(){
+    //method to sync the recycler view
+    //can be used after the remote call is complete
+    public void syncRecyclerView(){
+
+
+    }
+
+
+
+    //fetch all the stations from remote asynchronously
+    public void fetchFuelStationsAsync(){
         String baseUrl = CommonConstants.REMOTE_URL;
 
         //build the url using Url builder
@@ -144,8 +159,8 @@ public class AllStationsFragment extends Fragment {
                         JSONArray jsonArray = new JSONArray(body); //get the json array
                         //iterate through the JSON array
                         for (int i = 0; i < jsonArray.length(); i++){
-                            JSONObject jsonObject = new JSONObject(body);
-                            jsonObject = jsonArray.getJSONObject(i); //get the json object by index
+                            //JSONObject jsonObject = new JSONObject(body);
+                            JSONObject jsonObject = jsonArray.getJSONObject(i); //get the json object by index
 
                             FuelStation fuelStation = new FuelStation();//instantiate fuel station object
 
@@ -170,9 +185,25 @@ public class AllStationsFragment extends Fragment {
                             fuelStations.add(fuelStation);
                         }
 
+                        Log.d(TAG, "Successfully added fuel station array list");
+                        Log.d(TAG, "Fuel station 1 name : " + fuelStations.get(0).getStationName());
+
+                        //update the UI on UI thread
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            }
+                        });
+
+
                     }catch (JSONException e){
+                        Log.d(TAG, "JSON Exception : " + e);
                         e.printStackTrace();
                     }
+
                 }
                 else {
                     //handle unsuccessful response
@@ -186,6 +217,7 @@ public class AllStationsFragment extends Fragment {
         Log.d(TAG, "URL : " +url);
 
     }
+
 
     //method for fetching data and assigning to fuel stations array list
     public void setupSampleFuelStations(){
@@ -207,8 +239,8 @@ public class AllStationsFragment extends Fragment {
                 50, 72, "available", "unavailable",
                 0, 0 );
 
-        fuelStations.add(fuelStation1);
-        fuelStations.add(fuelStation2);
-        fuelStations.add(fuelStation3);
+        sampleFuelStations.add(fuelStation1);
+        sampleFuelStations.add(fuelStation2);
+        sampleFuelStations.add(fuelStation3);
     }
 }
