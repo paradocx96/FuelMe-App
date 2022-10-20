@@ -76,4 +76,7 @@
     <string name="email">Email</string>
     <string name="role">Role</string>
     <string name="cancel">Cancel</string>
+    <string name="icon_plus">+</string>
+    <string name="create_new_notice">Create New Notice</string>
+    <string name="select_station">Select Station</string>
 </resources>
