@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 
 public class StationSingleViewActivity extends AppCompatActivity {
 
@@ -24,6 +26,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton;
     SharedPreferences sharedPreferences;
+    String station_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +156,16 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 }
             };
 
+            station_id = fuelStation.getId();
+
+            viewNoticesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
+                    intent.putExtra("station_id", station_id);
+                    startActivity(intent);
+                }
+            });
         }
 
 
