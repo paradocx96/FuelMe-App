@@ -1,5 +1,7 @@
 package com.example.fuelme.ui.auth;
 
+import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_AUTH_REGISTER;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -113,8 +115,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     void registerUser(RequestBody body) {
-        String REMOTE_URL_AUTH_REGISTER = "https://fuelme.azurewebsites.net/api/Auth/register";
-
         Request request = new Request.Builder()
                 .url(REMOTE_URL_AUTH_REGISTER)
                 .post(body)

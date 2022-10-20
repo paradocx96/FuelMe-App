@@ -40,13 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton, registerButton;
     Context context;
     String login_response_message;
-    int toastDuration = Toast.LENGTH_SHORT;
 
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    Context context;
-    String login_response_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginUser(RequestBody requestBody) {
-        String REMOTE_URL_AUTH_LOGIN = "https://fuelme.azurewebsites.net/api/Auth/login";
-        
         Request request = new Request.Builder()
                 .url(REMOTE_URL_AUTH_LOGIN)
                 .post(requestBody)
