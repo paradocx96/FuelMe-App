@@ -317,6 +317,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
             String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
             String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
+            //make the remote call to increment the diesel queue length
+            incrementDieselQueue();
+
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
         }
         else {
@@ -345,6 +348,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
                     currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
                     queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                    //make the remote call to decrement the diesel queue length
+                    decrementDieselQueue();
 
                     updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
                 }
@@ -490,12 +496,130 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     //method to remote increment diesel queue
     public void incrementDieselQueue(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("IncrementDieselQueueLength")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
 
+        String sampleString = "sample";
+        //empty request body
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //if response is successful handle success logic
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(StationSingleViewActivity.this, "Successfully joined the queue", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //show the response error
+                            getAlertDialog("Failure", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
     //method to remote decrement diesel queue
     public void decrementDieselQueue(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("DecrementDieselQueueLength")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
 
+        String sampleString = "sample";
+        //empty request body
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //if response is successful handle success logic
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(StationSingleViewActivity.this, "Successfully left the queue", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //show the response error
+                            getAlertDialog("Failure", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
     //method to check whether the user is not in a queue
