@@ -13,6 +13,7 @@
     <string name="add_feedback_subject">Subject</string>
     <string name="add_feedback_btn">Submit</string>
     <string name="edit_feedback_btn">Update</string>
+    <string name="toolbar_title">Toolbar Title</string>
 
     <string name="sample_station_name">Eheliyagoda Associates</string>
     <string name="sample_station_address">41/8, Sangabo Mawatha, Colombo.</string>
@@ -41,6 +42,7 @@
     <string name="station_email">Station Email</string>
     <string name="station_website_hint">Enter station website</string>
     <string name="station_website">Station Website</string>
+    <string name="station_website_optional">Station Website (Optional)</string>
     <string name="edit">Edit</string>
     <string name="colon_space"> : </string>
     <string name="mark_petrol_unavailable">Mark Petrol Unavailable</string>
@@ -79,4 +81,9 @@
     <string name="icon_plus">+</string>
     <string name="create_new_notice">Create New Notice</string>
     <string name="select_station">Select Station</string>
+
+    <string name="phone_number">Phone Number</string>
+    <string name="station_phone_hint">Enter the phone number for the station</string>
+    <string name="ok">OK</string>
+
 </resources>
