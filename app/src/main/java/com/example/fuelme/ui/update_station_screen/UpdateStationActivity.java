@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 public class UpdateStationActivity extends AppCompatActivity {
 
     TextView textViewStationName,  textViewOpenStatus, textViewPetrolAvailability, textViewPetrolQueueLength, textViewDieselAvailability, textViewDieselQueueLength;
-    Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton;
+    Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton, deleteStationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class UpdateStationActivity extends AppCompatActivity {
         postNoticeButton = findViewById(R.id.btn_postNotice_update_station);
         viewNoticesButton = findViewById(R.id.btn_viewAllNotices_update_station);
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
+        deleteStationButton = findViewById(R.id.btnDelete_update_station);
 
         //get the extras
         Bundle extras = getIntent().getExtras();
