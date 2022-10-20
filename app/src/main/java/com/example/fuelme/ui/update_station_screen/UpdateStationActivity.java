@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,8 +15,11 @@ import com.google.android.material.tabs.TabLayout;
 
 public class UpdateStationActivity extends AppCompatActivity {
 
+    private final String TAG = "demo";
+
     TextView textViewStationName,  textViewOpenStatus, textViewPetrolAvailability, textViewPetrolQueueLength, textViewDieselAvailability, textViewDieselQueueLength;
     Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton, deleteStationButton;
+    FuelStation fuelStation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,78 +52,137 @@ public class UpdateStationActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             FuelStation fuelStation = (FuelStation) extras.getSerializable("selected_fuel_station"); //get the serializable and cast into fuel station object
+            this.fuelStation = fuelStation; //assign the fuel station to view's fuel station object
+        }
+        syncAllViews();
+    }
 
-            //get string values of queue lengths
-            String petrolQueueLengthString = String.valueOf(fuelStation.getPetrolQueueLength());
-            String dieselQueueLengthString = String.valueOf(fuelStation.getDieselQueueLength());
+    //method to sync all the views
+    public void syncAllViews(){
+        syncTextViews();
+        syncOpenStatusButton();
+        syncPetrolStatusButton();
+        syncDieselStatusButton();
+    }
 
-            //open status
-            String openStatus = "Not Assigned";
+    //sync the text views
+    public void syncTextViews(){
+        //get string values of queue lengths
+        String petrolQueueLengthString = String.valueOf(fuelStation.getPetrolQueueLength());
+        String dieselQueueLengthString = String.valueOf(fuelStation.getDieselQueueLength());
 
-            //Handle the station open status
+        //open status
+        String openStatus = "Not Assigned";
+
+        //Handle the station open status
+        if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+            openStatus = "Open";
+        }
+        else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+            openStatus = "Closed";
+        }
+
+        //availability strings
+        String petrolAvailabilityStatus = "Not Assigned";
+        String dieselAvailabilityStatus  = "Not Assigned";
+
+        //set availability strings based on the availability to maintain capitalization
+        if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+            petrolAvailabilityStatus = "Available";
+        }
+        else if(fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+            petrolAvailabilityStatus = "Unavailable";
+        }
+
+        if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+            dieselAvailabilityStatus = "Available";
+        }
+        else if(fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+            dieselAvailabilityStatus = "Unavailable";
+        }
+
+        //set the details of the station in the views
+        textViewStationName.setText(fuelStation.getStationName());
+        textViewOpenStatus.setText(openStatus);
+        textViewPetrolAvailability.setText(petrolAvailabilityStatus);
+        textViewPetrolQueueLength.setText(petrolQueueLengthString);
+        textViewDieselAvailability.setText(dieselAvailabilityStatus);
+        textViewDieselQueueLength.setText(dieselQueueLengthString);
+
+        //change station open text view color based on open status
+        if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+            //change color to green
+            textViewOpenStatus.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+            //change color to red
+            textViewOpenStatus.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+        //change petrol status text view color based on petrol availability
+        if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+            //change color to green
+            textViewPetrolAvailability.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+            //change color to red
+            textViewPetrolAvailability.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+        //change diesel status text view color based on diesel availability
+        if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+            //change color to green
+            textViewDieselAvailability.setTextColor(Color.parseColor("#0E8921"));
+        }
+        else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+            //change color to red
+            textViewDieselAvailability.setTextColor(Color.parseColor("#FF0000"));
+        }
+    }
+
+    //changes the open status button based on the open status of the station
+    public void syncOpenStatusButton(){
+        if (fuelStation != null){
             if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
-                openStatus = "Open";
+                stationOpenStatusUpdateButton.setText("Close the station");
             }
             else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
-                openStatus = "Closed";
+                stationOpenStatusUpdateButton.setText("Open the station");
             }
+        }
+        else {
+            Log.d(TAG, "FuelStation object is null");
+        }
+    }
 
-            //availability strings
-            String petrolAvailabilityStatus = "Not Assigned";
-            String dieselAvailabilityStatus  = "Not Assigned";
-
-            //set availability strings based on the availability to maintain capitalization
+    //changes the petrol status button based on petrol availability
+    public void syncPetrolStatusButton(){
+        if (fuelStation != null){
             if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
-                petrolAvailabilityStatus = "Available";
+                petrolStatusUpdateButton.setText("Mark Petrol Unavailable");
             }
             else if(fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
-                petrolAvailabilityStatus = "Unavailable";
+                petrolStatusUpdateButton.setText("Mark Petrol Available");
             }
+        }
+        else {
+            Log.d(TAG, "FuelStation object is null");
+        }
 
+    }
+
+    //changes the diesel status button based on petrol availability
+    public void syncDieselStatusButton(){
+        if (fuelStation != null){
             if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
-                dieselAvailabilityStatus = "Available";
-            }
-            else if(fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
-                dieselAvailabilityStatus = "Unavailable";
-            }
-
-            //set the details of the station in the views
-            textViewStationName.setText(fuelStation.getStationName());
-            textViewOpenStatus.setText(openStatus);
-            textViewPetrolAvailability.setText(petrolAvailabilityStatus);
-            textViewPetrolQueueLength.setText(petrolQueueLengthString);
-            textViewDieselAvailability.setText(dieselAvailabilityStatus);
-            textViewDieselQueueLength.setText(dieselQueueLengthString);
-
-            //change station open text view color based on open status
-            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
-                //change color to green
-                textViewOpenStatus.setTextColor(Color.parseColor("#0E8921"));
-            }
-            else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
-                //change color to red
-                textViewOpenStatus.setTextColor(Color.parseColor("#FF0000"));
-            }
-
-            //change petrol status text view color based on petrol availability
-            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
-                //change color to green
-                textViewPetrolAvailability.setTextColor(Color.parseColor("#0E8921"));
-            }
-            else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
-                //change color to red
-                textViewPetrolAvailability.setTextColor(Color.parseColor("#FF0000"));
-            }
-
-            //change diesel status text view color based on diesel availability
-            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
-                //change color to green
-                textViewDieselAvailability.setTextColor(Color.parseColor("#0E8921"));
+                dieselStatusUpdateButton.setText("Mark Diesel Unavailable");
             }
             else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
-                //change color to red
-                textViewDieselAvailability.setTextColor(Color.parseColor("#FF0000"));
+                dieselStatusUpdateButton.setText("Mark Diesel Available");
             }
+        }
+        else {
+            Log.d(TAG, "FuelStation object is null");
         }
     }
 
