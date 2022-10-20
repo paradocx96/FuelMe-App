@@ -132,11 +132,13 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     >
+
                     <Button
                         android:id="@+id/btn_petrolQueueUpdate_station_single_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green"
+                        android:onClick="petrolQueueUpdateButtonClick"
                         android:text="@string/join_queue" />
                 </LinearLayout>
 
@@ -226,11 +228,13 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     >
+
                     <Button
                         android:id="@+id/btn_dieselQueueUpdate_station_single_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green"
+                        android:onClick="dieselQueueUpdateButtonClick"
                         android:text="@string/join_queue" />
                 </LinearLayout>
 

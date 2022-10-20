@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.StationCommonConstants;
@@ -24,6 +25,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton;
     SharedPreferences sharedPreferences;
+    FuelStation fuelStation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
         Bundle extras  = getIntent().getExtras();
         if (extras != null){
             FuelStation fuelStation = (FuelStation) extras.getSerializable("selected_fuel_station"); //get the serializable and cast into fuel station object
+            this.fuelStation = fuelStation;
 
             //get string values of queue lengths
             String petrolQueueLengthString = String.valueOf(fuelStation.getPetrolQueueLength());
@@ -135,23 +138,15 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
-            //set shared preferences listener here
-            SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-                @Override
-                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                    sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
-                    //get the station id of the joined queue from shared preferences
-                    String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
+            Log.d(TAG, "User is in queue type : " + queueType);
+            Log.d(TAG, "User queue station is empty : " + currentlyJoinedQueueStationId.isEmpty());
 
-                    //check if the current station id of the joined queue is not empty
-                    if (!currentlyJoinedQueueStationId.isEmpty()){
-                        //get the queue type
-                        String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE,"");
-                        updateQueueButtons(currentlyJoinedQueueStationId,queueType, fuelStation.getId());
-                    }
-                }
-            };
+            updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
 
         }
 
@@ -188,8 +183,29 @@ public class StationSingleViewActivity extends AppCompatActivity {
             // if the currently joined queue's station id is not this view's station id, user is in a different queue
             //then the user cannot join these queues
             //disable both queue update buttons
-            petrolQueueUpdateButton.setEnabled(false);
-            dieselQueueUpdateButton.setEnabled(false);
+
+            //check if currentlyJoinedQueueStationId is empty
+            if (currentlyJoinedQueueStationId.isEmpty()){
+                //if the currentlyJoinedQueueStationId is empty user is not in a queue
+
+                //reset button attributes
+                //reset the queue button attributes
+                petrolQueueUpdateButton.setText("Join the queue");
+                petrolQueueUpdateButton.setBackgroundColor(Color.parseColor("#0E8921")); //color green
+                dieselQueueUpdateButton.setText("Join the Queue");
+                dieselQueueUpdateButton.setBackgroundColor(Color.parseColor("#0E8921")); //color green
+
+                //enable both the buttons
+                petrolQueueUpdateButton.setEnabled(true);
+                dieselQueueUpdateButton.setEnabled(true);
+            }
+            else {
+                //if the currentlyJoinedQueueStationId is not empty user is in a queue of different station
+                //disable both the buttons
+                petrolQueueUpdateButton.setEnabled(false);
+                dieselQueueUpdateButton.setEnabled(false);
+            }
+
         }
 
 
@@ -198,12 +214,132 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     //button click to update the petrol queue
     public void  petrolQueueUpdateButtonClick(View view){
+        if (isUserNotInAQueue()){
+            //if user is not in a queue user is requesting to and can join this queue
+            sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+            //set the station id and queue type in ths shared preferences
+            SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+            editor.putString(StationCommonConstants.IN_QUEUE_STATION_ID, this.fuelStation.getId()); //get this view's fuel station id
+            editor.putString(StationCommonConstants.QUEUE,"petrol"); //set the queue type
+            editor.apply(); //apply the changes
+
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+            updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+        }
+        else {
+            //the user is already in a queue
+            //check whether it is this station's this queue
+            //if it is this station's this queue, user is leaving
+            //handle the leaving logic
+            sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
+            Log.d(TAG, "User is in queue type : " + queueType);
+            if (currentlyJoinedQueueStationId.equalsIgnoreCase(this.fuelStation.getId())){
+                //user is in a queue of this station
+
+                //check whether the user in this queue
+                queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+                if (queueType.equalsIgnoreCase("petrol")){
+                    //user is in this queue
+                    //user is leaving the queue
+                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                    editor.apply(); //apply the changes
+
+                    currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                    queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                    updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+                }
+            }
+            else {
+                //if the user is not in this station's this queue, user cannot join this queue too
+                //display the related messages
+                Toast.makeText(this, "You are already in a different queue", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
 
     }
 
     //button click to update the diesel queue
     public void dieselQueueUpdateButtonClick(View view){
 
+        if (isUserNotInAQueue()){
+            //if user is not in a queue user is requesting to and can join this queue
+            sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+            //set the station id and queue type in ths shared preferences
+            SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+            editor.putString(StationCommonConstants.IN_QUEUE_STATION_ID, this.fuelStation.getId()); //get this view's fuel station id
+            editor.putString(StationCommonConstants.QUEUE,"diesel"); //set the queue type
+            editor.apply(); //apply the changes
+
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+            updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+        }
+        else {
+            //the user is already in a queue
+            //check whether it is this station's this queue
+            //if it is this station's this queue, user is leaving
+            //handle the leaving logic
+            sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
+            Log.d(TAG, "User is in queue type : " + queueType);
+            if (currentlyJoinedQueueStationId.equalsIgnoreCase(this.fuelStation.getId())){
+                //user is in a queue of this station
+
+                //check whether the user in this queue
+                queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+                if (queueType.equalsIgnoreCase("diesel")){
+                    //user is in this queue
+                    //user is leaving the queue
+                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                    editor.apply(); //apply the changes
+
+                    currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                    queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                    updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+                }
+            }
+            else {
+                //if the user is not in this station's this queue, user cannot join this queue too
+                //display the related messages
+                Toast.makeText(this, "You are already in a different queue", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    //method to check whether the user is not in a queue
+    //returns true of user is not in a queue
+    //returns false if user is in a queue
+    public boolean isUserNotInAQueue(){
+        sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+
+        if (currentlyJoinedQueueStationId.isEmpty()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     //method called when toolbar back button is clicked
