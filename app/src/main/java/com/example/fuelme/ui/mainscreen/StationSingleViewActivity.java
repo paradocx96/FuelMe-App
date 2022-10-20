@@ -263,20 +263,82 @@ public class StationSingleViewActivity extends AppCompatActivity {
             //if it is this station's this queue, user is leaving
             //handle the leaving logic
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
-            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+            final String[] currentlyJoinedQueueStationId = {sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "")};
+            final String[] queueType = {sharedPreferences.getString(StationCommonConstants.QUEUE, "")};
 
-            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
-            Log.d(TAG, "User is in queue type : " + queueType);
-            if (currentlyJoinedQueueStationId.equalsIgnoreCase(this.fuelStation.getId())){
+            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId[0]);
+            Log.d(TAG, "User is in queue type : " + queueType[0]);
+            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())){
                 //user is in a queue of this station
 
                 //check whether the user in this queue
-                queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
-                if (queueType.equalsIgnoreCase("petrol")){
+                queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+                if (queueType[0].equalsIgnoreCase("petrol")){
                     //user is in this queue
                     //user is leaving the queue
-                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+
+
+                    AlertDialog.Builder petrolQueueLeaveDialogBuilder = new AlertDialog.Builder(this);
+                    petrolQueueLeaveDialogBuilder.setCancelable(true);
+                    petrolQueueLeaveDialogBuilder.setTitle("Have you refueled?");
+
+                    //positive button for leaving after refueling
+                    petrolQueueLeaveDialogBuilder.setPositiveButton(
+                            "Yes, I Have refueled",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                                    editor.apply(); //apply the changes
+
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                                    //make the remote call to decrement the petrol queue length
+                                    decrementPetrolQueue();
+
+                                    updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
+                                }
+                            }
+                    );
+
+                    petrolQueueLeaveDialogBuilder.setNegativeButton(
+                            "No, But I am leaving",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                                    editor.apply(); //apply the changes
+
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                                    //make the remote call to decrement the petrol queue length
+                                    decrementPetrolQueue();
+
+                                    updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
+                                }
+                            }
+                    );
+
+                    petrolQueueLeaveDialogBuilder.setNeutralButton(
+                            "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+
+                    AlertDialog petrolQueueLeaveAlert = petrolQueueLeaveDialogBuilder.create(); //create the alert
+                    petrolQueueLeaveAlert.show(); //show the alert
+
+                    /*SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
                     editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
                     editor.remove(StationCommonConstants.QUEUE); //remove queue
                     editor.apply(); //apply the changes
@@ -287,7 +349,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                     //make the remote call to decrement the petrol queue length
                     decrementPetrolQueue();
 
-                    updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+                    updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());*/
                 }
             }
             else {
@@ -298,6 +360,10 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
 
         }
+
+    }
+
+    public void updateSharedPreferences(){
 
     }
 
@@ -328,31 +394,88 @@ public class StationSingleViewActivity extends AppCompatActivity {
             //if it is this station's this queue, user is leaving
             //handle the leaving logic
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
-            String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+            final String[] currentlyJoinedQueueStationId = {sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "")};
+            final String[] queueType = {sharedPreferences.getString(StationCommonConstants.QUEUE, "")};
 
-            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
-            Log.d(TAG, "User is in queue type : " + queueType);
-            if (currentlyJoinedQueueStationId.equalsIgnoreCase(this.fuelStation.getId())){
+            Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId[0]);
+            Log.d(TAG, "User is in queue type : " + queueType[0]);
+            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())){
                 //user is in a queue of this station
 
                 //check whether the user in this queue
-                queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
-                if (queueType.equalsIgnoreCase("diesel")){
+                queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+                if (queueType[0].equalsIgnoreCase("diesel")){
                     //user is in this queue
                     //user is leaving the queue
-                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
-                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
-                    editor.remove(StationCommonConstants.QUEUE); //remove queue
-                    editor.apply(); //apply the changes
 
-                    currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
-                    queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
-                    //make the remote call to decrement the diesel queue length
-                    decrementDieselQueue();
+                    //set the alert dialog
+                    AlertDialog.Builder dieselQueueLeaveDialogBuilder = new AlertDialog.Builder(this);
+                    dieselQueueLeaveDialogBuilder.setCancelable(true);
+                    dieselQueueLeaveDialogBuilder.setTitle("Have you refueled?"); //set the title
 
-                    updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
+                    //set the button for leaving after refueling
+                    dieselQueueLeaveDialogBuilder.setPositiveButton(
+                            "Yes. I have refueled",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                                    editor.apply(); //apply the changes
+
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                                    //make the remote call to decrement the diesel queue length
+                                    decrementDieselQueue();
+
+                                    updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
+
+                                }
+                            }
+                    );
+
+                    //set the button for leaving without refueling
+                    dieselQueueLeaveDialogBuilder.setNegativeButton(
+                            "No. But I am leaving",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
+                                    editor.remove(StationCommonConstants.IN_QUEUE_STATION_ID); //remove station id
+                                    editor.remove(StationCommonConstants.QUEUE); //remove queue
+                                    editor.apply(); //apply the changes
+
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                                    //make the remote call to decrement the diesel queue length
+                                    decrementDieselQueue();
+
+                                    updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
+
+                                }
+                            }
+                    );
+
+
+                    //set the button for cancelling
+                    dieselQueueLeaveDialogBuilder.setNeutralButton(
+                            "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+
+                    AlertDialog dieselQueueLeaveAlert = dieselQueueLeaveDialogBuilder.create(); //create the alert
+                    dieselQueueLeaveAlert.show(); //show the alert
+
+
                 }
             }
             else {
