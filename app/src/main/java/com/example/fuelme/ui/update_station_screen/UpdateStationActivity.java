@@ -3,19 +3,24 @@ package com.example.fuelme.ui.update_station_screen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.fuelme.R;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.notice.NoticeCreateActivity;
+import com.example.fuelme.ui.notice.NoticeListStationActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class UpdateStationActivity extends AppCompatActivity {
 
     TextView textViewStationName,  textViewOpenStatus, textViewPetrolAvailability, textViewPetrolQueueLength, textViewDieselAvailability, textViewDieselQueueLength;
     Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton;
+    String station_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class UpdateStationActivity extends AppCompatActivity {
         postNoticeButton = findViewById(R.id.btn_postNotice_update_station);
         viewNoticesButton = findViewById(R.id.btn_viewAllNotices_update_station);
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
+
+        station_id = "default";
 
         //get the extras
         Bundle extras = getIntent().getExtras();
@@ -119,7 +126,27 @@ public class UpdateStationActivity extends AppCompatActivity {
                 //change color to red
                 textViewDieselAvailability.setTextColor(Color.parseColor("#FF0000"));
             }
+
+            station_id = fuelStation.getId();
         }
+
+        postNoticeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpdateStationActivity.this, NoticeCreateActivity.class);
+                intent.putExtra("station_id", station_id);
+                startActivity(intent);
+            }
+        });
+
+        viewNoticesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpdateStationActivity.this, NoticeListStationActivity.class);
+                intent.putExtra("station_id", station_id);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

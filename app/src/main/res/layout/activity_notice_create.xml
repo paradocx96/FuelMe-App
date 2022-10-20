@@ -9,7 +9,7 @@
         android:id="@+id/toolbar_notice_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,19 +48,21 @@
     <EditText
         android:id="@+id/notice_create_description"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/notice_description"
-        android:inputType="textPersonName"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:minHeight="100dp"
         android:textColorHint="#00838F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notice_create_title"
-        android:autoSizeTextType="uniform" />
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/notice_create_button_add"

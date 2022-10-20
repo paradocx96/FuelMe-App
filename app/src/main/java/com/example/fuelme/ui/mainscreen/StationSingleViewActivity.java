@@ -3,14 +3,20 @@ package com.example.fuelme.ui.mainscreen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 
 public class StationSingleViewActivity extends AppCompatActivity {
 
@@ -19,6 +25,8 @@ public class StationSingleViewActivity extends AppCompatActivity {
             textViewPetrolAvailabilityStatus, textViewDieselAvailabilityStatus, textViewPetrolQueueLength, textViewDieselQueueLength;
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton;
+    SharedPreferences sharedPreferences;
+    String station_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
         websiteButton = findViewById(R.id.btn_website_station_single_view);
         viewFeedbackButton = findViewById(R.id.btnViewFeedback_station_single_view);
         viewNoticesButton = findViewById(R.id.btnViewNotices_station_single_view);
+
+        //instantiate shared preferences
+        //sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         //get the extras
         Bundle extras  = getIntent().getExtras();
@@ -126,8 +137,85 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 //change color to red
                 textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
+
+            //set shared preferences listener here
+            SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                    sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                    //get the station id of the joined queue from shared preferences
+                    String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+
+                    //check if the current station id of the joined queue is not empty
+                    if (!currentlyJoinedQueueStationId.isEmpty()){
+                        //get the queue type
+                        String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE,"");
+                        updateQueueButtons(currentlyJoinedQueueStationId,queueType, fuelStation.getId());
+                    }
+                }
+            };
+
+            station_id = fuelStation.getId();
+
+            viewNoticesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
+                    intent.putExtra("station_id", station_id);
+                    startActivity(intent);
+                }
+            });
         }
 
+
+    }
+
+    //update the queue buttons based on the shared preferences
+    public void updateQueueButtons(String currentlyJoinedQueueStationId, String queueType, String viewFuelStationId){
+
+        //check if the currently joined queue's station id is this view's station id
+        if (viewFuelStationId.equalsIgnoreCase(currentlyJoinedQueueStationId)){
+            //check which is the joined queue
+
+            if (queueType.equalsIgnoreCase("petrol")){
+                //user is in this station's petrol queue
+                //change the petrol queue button attributes
+                petrolQueueUpdateButton.setText("Leave the queue");
+                petrolQueueUpdateButton.setBackgroundColor(Color.parseColor("#F3AD25"));
+
+                //disable the diesel queue update button
+                dieselQueueUpdateButton.setEnabled(false);
+            }
+            else if (queueType.equalsIgnoreCase("diesel")){
+                //user is in this station's diesel queue
+                //change the diesel queue button attributes
+                dieselQueueUpdateButton.setText("Leave the queue");
+                dieselQueueUpdateButton.setBackgroundColor(Color.parseColor("#F3AD25"));
+
+                //disabled the petrol queue update button
+                petrolQueueUpdateButton.setEnabled(false);
+            }
+        }
+        else {
+            // if the currently joined queue's station id is not this view's station id, user is in a different queue
+            //then the user cannot join these queues
+            //disable both queue update buttons
+            petrolQueueUpdateButton.setEnabled(false);
+            dieselQueueUpdateButton.setEnabled(false);
+        }
+
+
+
+    }
+
+    //button click to update the petrol queue
+    public void  petrolQueueUpdateButtonClick(View view){
+
+    }
+
+    //button click to update the diesel queue
+    public void dieselQueueUpdateButtonClick(View view){
 
     }
 

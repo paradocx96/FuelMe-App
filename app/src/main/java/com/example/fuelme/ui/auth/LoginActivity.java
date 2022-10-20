@@ -1,5 +1,7 @@
 package com.example.fuelme.ui.auth;
 
+import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_AUTH_LOGIN;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,11 +34,13 @@ import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username, password;
-    Button loginButton, registerButton;
-
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    EditText username, password;
+    Button loginButton, registerButton;
+    Context context;
+    String login_response_message;
+    int toastDuration = Toast.LENGTH_SHORT;
 
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -97,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void loginUser(RequestBody requestBody) {
         String REMOTE_URL_AUTH_LOGIN = "https://fuelme.azurewebsites.net/api/Auth/login";
-
+        
         Request request = new Request.Builder()
                 .url(REMOTE_URL_AUTH_LOGIN)
                 .post(requestBody)
