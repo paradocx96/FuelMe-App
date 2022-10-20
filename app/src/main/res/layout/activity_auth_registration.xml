@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_auth_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +22,6 @@
             android:id="@+id/auth_registration_ui_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="@string/registration"
             android:textColor="@color/black"
             android:textSize="48sp"
@@ -27,7 +34,7 @@
             android:id="@+id/auth_registration_fullname"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:ems="10"
             android:hint="@string/full_name"
             android:inputType="textPersonName"
@@ -88,38 +95,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_registration_re_password" />
 
-        <EditText
-            android:id="@+id/auth_registration_role"
+        <Spinner
+            android:id="@+id/auth_registration_role_select"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:ems="10"
-            android:hint="@string/role"
-            android:inputType="textPersonName"
-            android:textColorHint="#00838F"
+            android:layout_marginEnd="32dp"
+            android:contentDescription="@string/select_role"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_registration_email" />
 
         <Button
-            android:id="@+id/auth_registration_button_update"
+            android:id="@+id/auth_registration_button_reg"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
-            android:text="@string/update"
+            android:text="@string/auth_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_registration_role" />
+            app:layout_constraintTop_toBottomOf="@+id/auth_registration_role_select" />
 
         <Button
             android:id="@+id/auth_registration_button_cancel"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_registration_button_update" />
+            app:layout_constraintTop_toBottomOf="@+id/auth_registration_button_reg" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
