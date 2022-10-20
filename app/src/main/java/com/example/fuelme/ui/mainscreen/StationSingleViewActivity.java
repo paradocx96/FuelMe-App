@@ -1,23 +1,45 @@
 package com.example.fuelme.ui.mainscreen;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class StationSingleViewActivity extends AppCompatActivity {
+
+    private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     String TAG = "demo";
     TextView textViewStationName, textViewStationAddress, textViewOpenStatus,
@@ -26,6 +48,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
             viewFeedbackButton, viewNoticesButton;
     SharedPreferences sharedPreferences;
     FuelStation fuelStation;
+
+    AlertDialog.Builder progressDialogBuilder;
+    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +240,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     //button click to update the petrol queue
     public void  petrolQueueUpdateButtonClick(View view){
         if (isUserNotInAQueue()){
-            //if user is not in a queue user is requesting to and can join this queue
+            //if user is not in a queue user is requesting to join this queue (the user can join the queue)
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
             //set the station id and queue type in ths shared preferences
@@ -226,6 +251,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
             String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+            //make the remote call to increment the petrol queue length
+            incrementPetrolQueue();
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
         }
@@ -255,6 +283,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
                     currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
                     queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
+
+                    //make the remote call to decrement the petrol queue length
+                    decrementPetrolQueue();
 
                     updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
                 }
@@ -327,6 +358,146 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     }
 
+    //method to remote increment petrol queue
+    public void incrementPetrolQueue(){
+
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("IncrementPetrolQueueLength")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //empty request body
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //if response is successful handle success logic
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(StationSingleViewActivity.this, "Successfully joined the queue", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //show the response error
+                            getAlertDialog("Failure", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+
+    }
+
+    //method to remote decrement petrol queue
+    public void decrementPetrolQueue(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("DecrementPetrolQueueLength")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //empty request body
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //if response is successful handle success logic
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(StationSingleViewActivity.this, "Successfully left the queue", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //show the response error
+                            getAlertDialog("Failure", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    //method to remote increment diesel queue
+    public void incrementDieselQueue(){
+
+    }
+
+    //method to remote decrement diesel queue
+    public void decrementDieselQueue(){
+
+    }
+
     //method to check whether the user is not in a queue
     //returns true of user is not in a queue
     //returns false if user is in a queue
@@ -340,6 +511,36 @@ public class StationSingleViewActivity extends AppCompatActivity {
         else {
             return false;
         }
+    }
+
+    //progress bar in an alert dialog
+    public AlertDialog.Builder getDialogProgressBar(){
+        if (progressDialogBuilder == null){
+            progressDialogBuilder = new AlertDialog.Builder(this);
+            progressDialogBuilder.setTitle("Joining Queue");
+
+            final ProgressBar progressBar = new ProgressBar(this);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progressBar.setLayoutParams(layoutParams);
+            progressDialogBuilder.setView(progressBar);
+
+        }
+        return progressDialogBuilder;
+    }
+
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
     }
 
     //method called when toolbar back button is clicked
