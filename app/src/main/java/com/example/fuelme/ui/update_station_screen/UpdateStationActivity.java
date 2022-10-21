@@ -1,19 +1,41 @@
 package com.example.fuelme.ui.update_station_screen;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class UpdateStationActivity extends AppCompatActivity {
+
+    private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     private final String TAG = "demo";
 
@@ -63,6 +85,164 @@ public class UpdateStationActivity extends AppCompatActivity {
         syncOpenStatusButton();
         syncPetrolStatusButton();
         syncDieselStatusButton();
+    }
+
+    //method to change station open status
+    public void stationOpenStatusUpdateButtonClick(View view){
+        //check whether the station is currently open or closed
+        if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+            //station is currently open
+            //user is requesting to close the station
+
+            //make the remote call to update the open status as closed
+            updateStationsStatusAsClosed();
+        }
+        else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+            //station is currently closed
+            //user is requesting to close the station
+
+            //make the remote call to update the open status as open
+            updateStationAsOpen();
+        }
+    }
+
+    public void updateStationsStatusAsClosed(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkStationAsClosed")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setOpenStatus("closed");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncOpenStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Closed the station", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+
+
+    }
+
+    public void updateStationAsOpen(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkStationAsOpen")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setOpenStatus("open");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncOpenStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Opened the station", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
     //sync the text views
@@ -184,6 +364,19 @@ public class UpdateStationActivity extends AppCompatActivity {
         else {
             Log.d(TAG, "FuelStation object is null");
         }
+    }
+
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
     }
 
     @Override

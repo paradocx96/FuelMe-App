@@ -243,9 +243,9 @@
             android:id="@+id/btn_updateStationOpenStatus_update_station"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/close_station"
+            android:onClick="stationOpenStatusUpdateButtonClick"
 
-            />
+            android:text="@string/close_station" />
 
         <Button
             android:id="@+id/btn_postNotice_update_station"
