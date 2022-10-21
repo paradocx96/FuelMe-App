@@ -25,6 +25,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    TextView textViewNav_username, textViewNav_email;
 
     String TAG = "demo";
 
@@ -57,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Login Data
         preferences = getSharedPreferences("login_data", MODE_PRIVATE);
         editor = preferences.edit();
-        Log.d("API_CALL", "SharedPreferences: " + preferences.getAll());
-        Log.d("API_CALL", "SharedPreferences Full Name: " + preferences.getString("user_full_name", ""));
-        Log.d("API_CALL", "SharedPreferences Email: " + preferences.getString("user_email", ""));
 
         //set the toolbar
         Toolbar toolbar = findViewById(R.id.main_toolbar);
@@ -72,6 +72,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         favouriteStationsItem = findViewById(R.id.favourites_item);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
+
+        // Assign User's name and email in Navigation menu
+        View headerView = navigationView.getHeaderView(0);
+        textViewNav_username = (TextView) headerView.findViewById(R.id.navHeader_displayName);
+        textViewNav_email = (TextView) headerView.findViewById(R.id.navHeader_email);
+        textViewNav_username.setText(preferences.getString("user_full_name", ""));
+        textViewNav_email.setText(preferences.getString("user_email", ""));
 
         //set navigation item selected listener
         navigationView.setNavigationItemSelectedListener(this);
