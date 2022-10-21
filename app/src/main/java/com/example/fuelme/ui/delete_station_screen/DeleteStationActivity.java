@@ -217,7 +217,7 @@ public class DeleteStationActivity extends AppCompatActivity {
                         public void run() {
                             progressDialog.dismiss(); //dismiss the progress dialog
                             navigateToOwnerStationsScreen(); //navigate to owner stations screen
-                            Toast.makeText(DeleteStationActivity.this, "Delted the station", Toast.LENGTH_SHORT).show(); //show toast
+                            Toast.makeText(DeleteStationActivity.this, "Deleted the station", Toast.LENGTH_SHORT).show(); //show toast
                         }
                     });
                 }
