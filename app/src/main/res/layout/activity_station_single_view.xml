@@ -330,14 +330,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
-            android:text="@string/sample_phone_number"
-            />
+            android:onClick="phoneNumberButtonClick"
+            android:text="@string/sample_phone_number" />
 
         <Button
             android:id="@+id/btn_email_station_single_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
+            android:onClick="emailButtonClick"
             android:text="@string/sample_email" />
 
         <Button
@@ -345,6 +346,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
+            android:onClick="websiteButtonClick"
             android:text="@string/sample_website" />
     </LinearLayout>
 

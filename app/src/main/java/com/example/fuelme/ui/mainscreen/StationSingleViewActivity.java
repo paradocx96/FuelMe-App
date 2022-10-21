@@ -13,6 +13,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -203,6 +204,44 @@ public class StationSingleViewActivity extends AppCompatActivity {
         Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
         intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
+    }
+
+    //button click for phone number button
+    public void phoneNumberButtonClick(View view){
+        //get the phone number
+        String phoneNumber = fuelStation.getStationPhoneNumber();
+        //set the intent with ACTION_DIAL since this does not require additional permissions
+        Intent intent  = new Intent(Intent.ACTION_DIAL);
+        //set phone number to intent data with tel prefix
+        intent.setData(Uri.parse("tel:"+phoneNumber));
+        startActivity(intent);
+
+    }
+
+    //button click for email button
+    public void emailButtonClick(View view){
+        //get the email address of the station
+        String email = fuelStation.getStationEmail();
+        String subject = "Subject"; //set the subject
+        String body = "Body"; //set the body
+        //set the intent with ACTION_VIEW
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //parse and set the URI with email address, subject and body
+        Uri data = Uri.parse("mailto:" + email + "?subject=" + Uri.encode(subject) + "&body=" + Uri.encode(body));
+        intent.setData(data);//set the data to the intent
+        startActivity(intent); //start the activity
+    }
+
+    //button click for website button
+    public void websiteButtonClick(View view){
+        //get the station website
+        String website = fuelStation.getStationWebsite();
+        //set the intent with ACTION_VIEW
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //parse and set the URI with the web address
+        Uri data = Uri.parse("http://www." +website);
+        intent.setData(data); //set the data to the intent
+        startActivity(intent); //start activity
     }
 
     //update the queue buttons based on the shared preferences
