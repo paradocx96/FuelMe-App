@@ -9,4 +9,5 @@ public class CommonConstants {
     public static final String REMOTE_URL_NOTICE_STATION = REMOTE_URL + "api/Notice/station/";
     public static final String REMOTE_URL_NOTICE_AUTHOR = REMOTE_URL + "api/Notice/author/";
     public static final String REMOTE_URL_GET_FAVORITE_STATIONS = REMOTE_URL + "api/Favourite/GetAllFavouriteByUsernameWithStationId/";
+    public static final String REMOTE_URL_DELETE_FAVORITE_STATIONS = REMOTE_URL + "api/Favourite/DeleteFavouriteByStaionId/";
 }
