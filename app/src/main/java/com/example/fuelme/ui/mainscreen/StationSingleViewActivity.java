@@ -13,6 +13,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -203,6 +204,18 @@ public class StationSingleViewActivity extends AppCompatActivity {
         Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
         intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
+    }
+
+    //button click for phone number button
+    public void phoneNumberButtonClick(View view){
+        //get the phone number
+        String phoneNumber = fuelStation.getStationPhoneNumber();
+        //set the intent with action_dial since this does not require additional permissions
+        Intent intent  = new Intent(Intent.ACTION_DIAL);
+        //set phone number to intent data with tel prefix
+        intent.setData(Uri.parse("tel:"+phoneNumber));
+        startActivity(intent);
+
     }
 
     //update the queue buttons based on the shared preferences
