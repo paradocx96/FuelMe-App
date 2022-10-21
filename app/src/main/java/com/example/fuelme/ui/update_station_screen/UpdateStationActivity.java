@@ -106,6 +106,45 @@ public class UpdateStationActivity extends AppCompatActivity {
         }
     }
 
+    //method to update petrol status
+    public void petrolStatusUpdateButtonClick(View view){
+        //check whether petrol is currently available or not
+        if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+            //petrol is currently available
+            //user is requesting to mark as unavailable
+
+            //make the remote call to update the petrol status as unavailable
+            updatePetrolStatusAsUnavailable();
+        }
+        else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+            //petrol is currently unavailable
+            //user is requesting to mark as available
+
+            //make the remote call to update the petrol status as available
+            updatePetrolStatusAsAvailable();
+        }
+    }
+
+    //method to update diesel status
+    public void dieselStatusUpdateButtonClick(View view){
+        //check whether diesel is currently available or not
+        if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+            //diesel is currently available
+            //user is requesting to mark as unavailable
+
+            //make the remote call to update the diesel status as unavailable
+            updateDieselStatusAsUnavailable();
+        }
+        else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+            //diesel is currently unavailable
+            //user is requesting to mark as available
+
+            //make the remote call to update the diesel status as available
+            updateDieselStatusAsAvailable();
+        }
+    }
+
+    //method for remote call to mark station as closed
     public void updateStationsStatusAsClosed(){
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
@@ -176,6 +215,7 @@ public class UpdateStationActivity extends AppCompatActivity {
 
     }
 
+    //method for remote call to mark station as open
     public void updateStationAsOpen(){
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
@@ -217,12 +257,297 @@ public class UpdateStationActivity extends AppCompatActivity {
                     //update the open status of fuel station object as closed
                     fuelStation.setOpenStatus("open");
 
+                    //perform related UI updates
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             syncTextViews();
                             syncOpenStatusButton();
                             Toast.makeText(UpdateStationActivity.this, "Opened the station", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    //method for remote call to mark petrol available
+    public void updatePetrolStatusAsAvailable(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkPetrolAsAvailable")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setPetrolStatus("available");
+
+                    //perform related UI updates
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncPetrolStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Updated petrol status", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    //method for remote call to mark petrol unavailable
+    public void updatePetrolStatusAsUnavailable(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkPetrolAsUnavailable")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setPetrolStatus("unavailable");
+
+                    //perform related UI updates
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncPetrolStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Updated petrol status", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    //method for remote call to mark diesel available
+    public void updateDieselStatusAsAvailable(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkDieselAsAvailable")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setDieselStatus("available");
+
+                    //perform related UI updates
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncDieselStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Updated diesel status", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //handle failure response logic
+
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    //method for remote call to mark diesel unavailable
+    public void updateDieselStatusAsUnavailable(){
+        //create an instance of HTTPUrl
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
+                .newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("MarkDieselAsUnavailable")
+                .addPathSegment(fuelStation.getId()) //set this view's station id to path
+                .build();
+
+        String sampleString = "sample";
+        //dummy request body since okhttp requires one for put requests
+        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call").show();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+
+                    //update the open status of fuel station object as closed
+                    fuelStation.setDieselStatus("unavailable");
+
+                    //perform related UI updates
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            syncTextViews();
+                            syncDieselStatusButton();
+                            Toast.makeText(UpdateStationActivity.this, "Updated diesel status", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

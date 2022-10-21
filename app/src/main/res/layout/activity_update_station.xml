@@ -143,9 +143,9 @@
                     android:id="@+id/btn_changePetrolStatus_update_station"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/mark_petrol_unavailable"
+                    android:onClick="petrolStatusUpdateButtonClick"
 
-                    />
+                    android:text="@string/mark_petrol_unavailable" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
@@ -224,9 +224,9 @@
                     android:id="@+id/btn_changeDieselStatus_update_station"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/mark_diesel_unavailable"
+                    android:onClick="dieselStatusUpdateButtonClick"
 
-                    />
+                    android:text="@string/mark_diesel_unavailable" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
