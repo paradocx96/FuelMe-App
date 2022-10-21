@@ -122,6 +122,7 @@ public class UpdateStationActivity extends AppCompatActivity {
     //button click for delete station button click
     public void deleteStationButtonClick(View view){
         Intent intent = new Intent(UpdateStationActivity.this, DeleteStationActivity.class);
+        intent.putExtra("selected_fuel_station", fuelStation);
         startActivity(intent);
     }
 
