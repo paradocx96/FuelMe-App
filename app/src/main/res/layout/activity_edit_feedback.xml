@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/add_feedback"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.feedback.AddFeedback">
+    tools:context=".ui.feedback.EditFeedback">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/add_feedback_toolbar"
+        android:id="@+id/edit_feedback_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/yellow"
@@ -17,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtToolbar_title_addFeedback"
+            android:id="@+id/txtToolbar_title_editFeedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,11 +24,11 @@
             tools:layout_editor_absoluteX="166dp"
             tools:layout_editor_absoluteY="18dp"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
-        
-    </androidx.appcompat.widget.Toolbar>    
+
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/editTxt_subject"
+        android:id="@+id/editTxt_subject_edit"
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginStart="35dp"
@@ -45,10 +44,10 @@
         android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_feedback_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_feedback_toolbar" />
 
     <EditText
-        android:id="@+id/editTxt_description"
+        android:id="@+id/editTxt_description_edit"
         android:layout_width="340dp"
         android:layout_height="150dp"
         android:layout_marginStart="35dp"
@@ -64,22 +63,22 @@
         android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_subject" />
+        app:layout_constraintTop_toBottomOf="@+id/editTxt_subject_edit" />
 
     <Button
-        android:id="@+id/btn_submit"
+        android:id="@+id/btn_submit_edit"
         android:layout_width="340dp"
         android:layout_height="60dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="35dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/blue"
         android:fontFamily="sans-serif-black"
-        android:text="@string/add_feedback_btn"
+        android:text="@string/edit_feedback_btn"
         android:textSize="16sp"
         app:cornerRadius="@dimen/btn_submit_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_description" />
+        app:layout_constraintTop_toBottomOf="@+id/editTxt_description_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

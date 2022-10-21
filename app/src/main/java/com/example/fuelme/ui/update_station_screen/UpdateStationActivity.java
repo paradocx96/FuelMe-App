@@ -5,10 +5,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +23,8 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.notice.NoticeCreateActivity;
+import com.example.fuelme.ui.notice.NoticeListStationActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -40,8 +48,10 @@ public class UpdateStationActivity extends AppCompatActivity {
     private final String TAG = "demo";
 
     TextView textViewStationName,  textViewOpenStatus, textViewPetrolAvailability, textViewPetrolQueueLength, textViewDieselAvailability, textViewDieselQueueLength;
+
     Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton, deleteStationButton;
     FuelStation fuelStation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,8 @@ public class UpdateStationActivity extends AppCompatActivity {
         viewNoticesButton = findViewById(R.id.btn_viewAllNotices_update_station);
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
         deleteStationButton = findViewById(R.id.btnDelete_update_station);
+
+        station_id = "default";
 
         //get the extras
         Bundle extras = getIntent().getExtras();
@@ -703,7 +715,10 @@ public class UpdateStationActivity extends AppCompatActivity {
             else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
                 dieselStatusUpdateButton.setText("Mark Diesel Available");
             }
+
+            station_id = fuelStation.getId();
         }
+
         else {
             Log.d(TAG, "FuelStation object is null");
         }
@@ -720,6 +735,7 @@ public class UpdateStationActivity extends AppCompatActivity {
                     }
                 });
         return builder;
+
     }
 
     @Override
