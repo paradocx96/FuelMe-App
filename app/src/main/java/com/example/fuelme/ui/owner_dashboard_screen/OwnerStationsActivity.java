@@ -1,22 +1,50 @@
 package com.example.fuelme.ui.owner_dashboard_screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
 import com.example.fuelme.ui.owner_dashboard_screen.adapters.OwnerStationsRecyclerViewAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class OwnerStationsActivity extends AppCompatActivity {
 
+    private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
+
     private final String TAG = "demo";
     ArrayList<FuelStation> fuelStations = new ArrayList<>(); //array list for fuel stations
+    SharedPreferences preferences;
+
+    RecyclerView recyclerView;
+    OwnerStationsRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +52,10 @@ public class OwnerStationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_stations);
 
         //setup the fuel station list
-        setupFuelStations();
+        //setupSampleFuelStations();
+
+        //fetch the owner's fuel stations from the list
+        fetchOwnerFuelStationsAsync(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.owner_stations_toolbar);
         setSupportActionBar(toolbar);
@@ -32,11 +63,119 @@ public class OwnerStationsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //assign recycler view
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ownerStations);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ownerStations);
 
-        OwnerStationsRecyclerViewAdapter adapter = new OwnerStationsRecyclerViewAdapter(this, fuelStations);
+        adapter = new OwnerStationsRecyclerViewAdapter(this, fuelStations);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //fetch owner's stations from remote
+    public void fetchOwnerFuelStationsAsync(Context context){
+
+        //get the current user's username
+        preferences = getSharedPreferences("login_data", MODE_PRIVATE); //assign preferences for login data
+        String currentUsername = preferences.getString("user_username", ""); //get the username from shared preferences
+
+        String baseUrl = CommonConstants.REMOTE_URL;
+
+        //build the url using Url builder
+        HttpUrl url = HttpUrl.parse(baseUrl).newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment("GetAllStationsByOwnerUsername")
+                .addPathSegment(currentUsername)
+                .build();
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        //make the client call using okhttp
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "Failed to make call");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //handle successful response
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    //get the body to a JSON object
+                    try {
+                        JSONArray jsonArray = new JSONArray(body); //get the json array
+                        //iterate through the JSON array
+                        for (int i = 0; i < jsonArray.length(); i++){
+                            //JSONObject jsonObject = new JSONObject(body);
+                            JSONObject jsonObject = jsonArray.getJSONObject(i); //get the json object by index
+
+                            FuelStation fuelStation = new FuelStation();//instantiate fuel station object
+
+                            //assign attributes to the fuel station object
+                            fuelStation.setId(jsonObject.getString("id"));
+                            fuelStation.setLicense(jsonObject.getString("license"));
+                            fuelStation.setOwnerUsername(jsonObject.getString("ownerUsername"));
+                            fuelStation.setStationName(jsonObject.getString("stationName"));
+                            fuelStation.setStationAddress(jsonObject.getString("stationAddress"));
+                            fuelStation.setStationPhoneNumber(jsonObject.getString("stationPhoneNumber"));
+                            fuelStation.setStationEmail(jsonObject.getString("stationEmail"));
+                            fuelStation.setStationWebsite(jsonObject.getString("stationWebsite"));
+                            fuelStation.setOpenStatus(jsonObject.getString("openStatus"));
+                            fuelStation.setPetrolQueueLength(jsonObject.getInt("petrolQueueLength"));
+                            fuelStation.setDieselQueueLength(jsonObject.getInt("dieselQueueLength"));
+                            fuelStation.setPetrolStatus(jsonObject.getString("petrolStatus"));
+                            fuelStation.setDieselStatus(jsonObject.getString("dieselStatus"));
+                            fuelStation.setLocationLatitude(jsonObject.getInt("locationLatitude"));
+                            fuelStation.setLocationLongitude(jsonObject.getInt("locationLongitude"));
+
+                            //add the fuel station to fuel stations list
+                            fuelStations.add(fuelStation);
+                        }
+
+                        Log.d(TAG, "Successfully added fuel station array list");
+
+
+                        //update the UI on UI thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (fuelStations.isEmpty()){
+                                    Toast.makeText(context, "You do not have registered any stations yet",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    adapter = new OwnerStationsRecyclerViewAdapter(context, fuelStations);
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                    Log.d(TAG, "Fuel station 1 name : " + fuelStations.get(0).getStationName());
+                                }
+
+                            }
+                        });
+
+
+                    }catch (JSONException e){
+                        Log.d(TAG, "JSON Exception : " + e);
+                        e.printStackTrace();
+                    }
+
+                }
+                else {
+                    //handle unsuccessful response
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+                    Log.d(TAG, "onResponse failure : " + body);
+                }
+            }
+        });
+
+        Log.d(TAG, "URL : " +url);
+
     }
 
     @Override
@@ -51,7 +190,7 @@ public class OwnerStationsActivity extends AppCompatActivity {
     }
 
     //method for fetching data and assigning to fuel stations array list
-    public void setupFuelStations(){
+    public void setupSampleFuelStations(){
         FuelStation fuelStation1 = new FuelStation("0001","l001" ,"eheliyagoda",
                 "Eheliyagoda Assotiates","41/8, Sangabo Mawatha, Colombo", "01144552",
                 "ehe@gmail.com","ehe.com","open",
