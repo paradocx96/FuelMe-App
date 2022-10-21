@@ -41,8 +41,8 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
     //method to navigate to update station activity
     public void  navigateToUpdateStation(View view){
-        Intent intent = new Intent(this, UpdateStationActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, UpdateStationActivity.class);
+        //startActivity(intent);
     }
 
     public void navigateToViewAllOwnedStations(View view){
