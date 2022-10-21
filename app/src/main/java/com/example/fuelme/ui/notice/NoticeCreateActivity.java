@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -65,7 +64,6 @@ public class NoticeCreateActivity extends AppCompatActivity {
         // Defined intent data
         Intent intent = getIntent();
         station_id = intent.getStringExtra("station_id");
-        Log.d("API_CALL", "STATION_ID => " + station_id);
 
         // Setup back button for toolbar
         setSupportActionBar(toolbar);
@@ -91,10 +89,6 @@ public class NoticeCreateActivity extends AppCompatActivity {
 
                 String jsonString = jsonObject.toString();
                 RequestBody body = RequestBody.create(jsonString, JSON);
-
-                Log.d("API_CALL", "NOTICE_CREATE JSON_STRING: " + jsonString);
-                Log.d("API_CALL", "NOTICE_CREATE REQUEST_BODY: " + body);
-
                 createNotice(body);
             }
         });
@@ -109,7 +103,12 @@ public class NoticeCreateActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d("API_CALL", "NOTICE_CREATE onFailure: " + e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(NoticeCreateActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -117,22 +116,19 @@ public class NoticeCreateActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ResponseBody responseBody = response.body();
                     if (responseBody != null) {
-                        String responseString = responseBody.string();
-                        Log.d("API_CALL", "NOTICE_CREATE onResponse: " + responseString);
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 clearTextView();
                                 Toast.makeText(NoticeCreateActivity.this, "Successfully created!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(NoticeCreateActivity.this, NoticeListStationActivity.class);
+                                intent.putExtra("station_id", station_id);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
                         });
                     }
                 } else {
-                    ResponseBody responseBody = response.body();
-                    String res = responseBody.string();
-                    Log.d("API_CALL", "NOTICE_CREATE onResponse Failed: " + res);
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
