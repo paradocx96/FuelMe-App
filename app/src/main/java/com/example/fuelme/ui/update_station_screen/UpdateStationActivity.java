@@ -79,6 +79,24 @@ public class UpdateStationActivity extends AppCompatActivity {
         syncAllViews();
     }
 
+    //button click method for post notice button
+    public void postNoticeButtonClick(View view){
+        Log.d(TAG, "Post notice button click");
+        //handle logic here
+    }
+
+    //button click method for view notices button
+    public  void viewNoticesInUpdateStationButtonClick(View view){
+        Log.d(TAG, "View notices button click");
+        //handle logic here
+    }
+
+    //button click method for view feedback button
+    public void viewFeedbackInUpdateStationButtonClick(View view){
+        Log.d(TAG, "View Feedback button click");
+        //handle logic here
+    }
+
     //method to sync all the views
     public void syncAllViews(){
         syncTextViews();
