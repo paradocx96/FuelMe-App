@@ -11,8 +11,28 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/station_single_view_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-         />
+        android:layout_height="?attr/actionBarSize" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:layout_gravity="right"
+            >
+
+            <Button
+                android:id="@+id/btnFavourite_station_single_view"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="right"
+                android:background="@drawable/favourite_filled_icon"
+                android:contentDescription="@string/add_to_favourites_description"
+                android:onClick="favouriteButtonClick" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -258,13 +278,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btnViewFeedback_station_single_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/view_feedback"
                 android:layout_weight="1"
-                />
+                android:onClick="feedbackButtonClick"
+                android:text="@string/view_feedback" />
         </LinearLayout>
 
         <LinearLayout
@@ -273,13 +294,14 @@
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             >
+
             <Button
                 android:id="@+id/btnViewNotices_station_single_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/view_notices"
                 android:layout_weight="1"
-                />
+                android:onClick="viewNoticesButtonClick"
+                android:text="@string/view_notices" />
         </LinearLayout>
 
 

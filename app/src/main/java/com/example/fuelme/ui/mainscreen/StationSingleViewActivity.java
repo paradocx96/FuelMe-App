@@ -45,7 +45,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     TextView textViewStationName, textViewStationAddress, textViewOpenStatus,
             textViewPetrolAvailabilityStatus, textViewDieselAvailabilityStatus, textViewPetrolQueueLength, textViewDieselQueueLength;
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
-            viewFeedbackButton, viewNoticesButton;
+            viewFeedbackButton, viewNoticesButton, favouriteButton;
     SharedPreferences sharedPreferences;
     FuelStation fuelStation;
 
@@ -78,6 +78,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
         websiteButton = findViewById(R.id.btn_website_station_single_view);
         viewFeedbackButton = findViewById(R.id.btnViewFeedback_station_single_view);
         viewNoticesButton = findViewById(R.id.btnViewNotices_station_single_view);
+        favouriteButton = findViewById(R.id.btnFavourite_station_single_view);
 
         //instantiate shared preferences
         //sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -176,6 +177,21 @@ public class StationSingleViewActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    //button click for favourite button
+    public void favouriteButtonClick(View view){
+        Log.d(TAG, "Favourite Button Clicked");
+    }
+
+    //button click for view feedback button
+    public void feedbackButtonClick(View view){
+        Log.d(TAG, "Feedback Button Clicked");
+    }
+
+    //button click for view notices button
+    public void viewNoticesButtonClick(View view){
+        Log.d(TAG, "Notices Button Clicked");
     }
 
     //update the queue buttons based on the shared preferences
