@@ -66,14 +66,13 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
     }
 
     public static class NoticeListStationHolder extends RecyclerView.ViewHolder {
-        TextView title, description, author, createdAt;
+        TextView title, author, createdAt;
         ConstraintLayout notice_item;
         LinearLayout notice_item_linear;
 
         public NoticeListStationHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.notice_item_title3);
-            description = itemView.findViewById(R.id.notice_item_description3);
             author = itemView.findViewById(R.id.notice_item_author3);
             createdAt = itemView.findViewById(R.id.notice_item_created3);
             notice_item = itemView.findViewById(R.id.notice_item_station);
@@ -82,7 +81,6 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
 
         void setCardViewData(Notice notice) {
             title.setText(notice.getTitle());
-            description.setText(notice.getDescription());
             author.setText(notice.getAuthor());
             createdAt.setText(notice.getCreateAt());
         }

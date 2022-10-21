@@ -64,13 +64,12 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
     }
 
     public static class NoticeListCustomerHolder extends RecyclerView.ViewHolder {
-        TextView title, description, author, createdAt;
+        TextView title, author, createdAt;
         ConstraintLayout notice_item;
 
         public NoticeListCustomerHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.notice_item_title2);
-            description = itemView.findViewById(R.id.notice_item_description2);
             author = itemView.findViewById(R.id.notice_item_author2);
             createdAt = itemView.findViewById(R.id.notice_item_created2);
             notice_item = itemView.findViewById(R.id.notice_item_customer);
@@ -78,7 +77,6 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
 
         void setCardViewData(Notice notice) {
             title.setText(notice.getTitle());
-            description.setText(notice.getDescription());
             author.setText(notice.getAuthor());
             createdAt.setText(notice.getCreateAt());
         }

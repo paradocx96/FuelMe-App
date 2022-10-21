@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class NoticeListCustomerActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewNotice;
     NoticeListCustomerAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
     String station_id;
 
     private final OkHttpClient client = new OkHttpClient();
@@ -48,6 +51,7 @@ public class NoticeListCustomerActivity extends AppCompatActivity {
         // Defined Layout objects of this activity
         setContentView(R.layout.activity_notice_list_customer);
         recyclerViewNotice = findViewById(R.id.notice_list_customer);
+        swipeRefreshLayout = findViewById(R.id.swipe_notice_list_customer);
 
         // Defined toolbar and set the back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_notice_list_customer);
@@ -58,7 +62,6 @@ public class NoticeListCustomerActivity extends AppCompatActivity {
         // Defined intent data
         Intent intent = getIntent();
         station_id = intent.getStringExtra("station_id");
-        Log.d("API_CALL", "STATION_ID => " + station_id);
 
         noticeArrayList = new ArrayList<>();
 
@@ -66,6 +69,15 @@ public class NoticeListCustomerActivity extends AppCompatActivity {
         recyclerViewNotice.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         getNotices();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                noticeArrayList.clear();
+                getNotices();
+            }
+        });
     }
 
     private void getNotices() {
