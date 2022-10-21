@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton, registerButton;
     Context context;
     String login_response_message;
-    int toastDuration = Toast.LENGTH_SHORT;
 
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -89,7 +88,8 @@ public class LoginActivity extends AppCompatActivity {
             registerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -154,22 +154,18 @@ public class LoginActivity extends AppCompatActivity {
     void responseHandler(String message) {
         switch (message) {
             case "User or Username Not Found":
-                Toast toast1 = Toast.makeText(context, "Incorrect Username", toastDuration);
-                toast1.show();
+                Toast.makeText(LoginActivity.this, "Incorrect Username!", Toast.LENGTH_LONG).show();
                 break;
             case "Incorrect Password":
-                Toast toast2 = Toast.makeText(context, "Incorrect Password", toastDuration);
-                toast2.show();
+                Toast.makeText(LoginActivity.this, "Incorrect Password!", Toast.LENGTH_LONG).show();
                 break;
             case "Correct Username and Password":
-                Toast toast = Toast.makeText(context, "Login Successes", toastDuration);
-                toast.show();
+                Toast.makeText(LoginActivity.this, "Welcome!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
             case "default":
-                Toast toast4 = Toast.makeText(context, "Error", toastDuration);
-                toast4.show();
+                Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_LONG).show();
                 break;
         }
     }

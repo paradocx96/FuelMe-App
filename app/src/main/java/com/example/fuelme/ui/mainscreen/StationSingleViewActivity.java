@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+
 import android.content.DialogInterface;
+
+import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +26,7 @@ import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 
 import java.io.IOException;
 
@@ -47,10 +52,12 @@ public class StationSingleViewActivity extends AppCompatActivity {
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton, favouriteButton;
     SharedPreferences sharedPreferences;
+
     FuelStation fuelStation;
 
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +181,16 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
 
+            station_id = fuelStation.getId();
+
+            viewNoticesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
+                    intent.putExtra("station_id", station_id);
+                    startActivity(intent);
+                }
+            });
         }
 
 
