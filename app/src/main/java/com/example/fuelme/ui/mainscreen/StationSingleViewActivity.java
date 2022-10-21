@@ -232,6 +232,18 @@ public class StationSingleViewActivity extends AppCompatActivity {
         startActivity(intent); //start the activity
     }
 
+    //button click for website button
+    public void websiteButtonClick(View view){
+        //get the station website
+        String website = fuelStation.getStationWebsite();
+        //set the intent with ACTION_VIEW
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //parse and set the URI with the web address
+        Uri data = Uri.parse("http://www." +website);
+        intent.setData(data); //set the data to the intent
+        startActivity(intent); //start activity
+    }
+
     //update the queue buttons based on the shared preferences
     public void updateQueueButtons(String currentlyJoinedQueueStationId, String queueType, String viewFuelStationId){
 
