@@ -89,4 +89,5 @@
     <string name="ok">OK</string>
     <string name="add_to_favourites">Add to favourites</string>
     <string name="add_to_favourites_description">Add this station to your favourites</string>
+    <string name="special_notice">Special Notice</string>
 </resources>
