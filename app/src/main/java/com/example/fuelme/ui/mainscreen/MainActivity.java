@@ -137,8 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navMenu_logout:
                 //handle logout here
                 editor.clear();
-                editor.commit();
+                editor.apply();
                 Intent intent_login = new Intent(MainActivity.this, LoginActivity.class);
+                intent_login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent_login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent_login);
                 break;
             case R.id.navMenu_about:
