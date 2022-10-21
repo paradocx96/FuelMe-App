@@ -23,7 +23,9 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 import com.example.fuelme.ui.notice.NoticeCreateActivity;
+import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 import com.example.fuelme.ui.notice.NoticeListStationActivity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -80,8 +82,6 @@ public class UpdateStationActivity extends AppCompatActivity {
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
         deleteStationButton = findViewById(R.id.btnDelete_update_station);
 
-        station_id = "default";
-
         //get the extras
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -100,7 +100,9 @@ public class UpdateStationActivity extends AppCompatActivity {
     //button click method for view notices button
     public  void viewNoticesInUpdateStationButtonClick(View view){
         Log.d(TAG, "View notices button click");
-        //handle logic here
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeListCustomerActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
+        startActivity(intent);
     }
 
     //button click method for view feedback button
@@ -716,7 +718,7 @@ public class UpdateStationActivity extends AppCompatActivity {
                 dieselStatusUpdateButton.setText("Mark Diesel Available");
             }
 
-            station_id = fuelStation.getId();
+            //station_id = fuelStation.getId();
         }
 
         else {

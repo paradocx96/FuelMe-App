@@ -181,16 +181,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
 
-            station_id = fuelStation.getId();
 
-            viewNoticesButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
-                    intent.putExtra("station_id", station_id);
-                    startActivity(intent);
-                }
-            });
         }
 
 
@@ -209,6 +200,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
     //button click for view notices button
     public void viewNoticesButtonClick(View view){
         Log.d(TAG, "Notices Button Clicked");
+        Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
+        startActivity(intent);
     }
 
     //update the queue buttons based on the shared preferences
