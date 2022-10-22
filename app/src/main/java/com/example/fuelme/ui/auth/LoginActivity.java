@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (preferences.contains("user_id")) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         } else {
@@ -130,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("user_full_name", jsonResponse.getString("FullName"));
                                     editor.putString("user_email", jsonResponse.getString("Email"));
                                     editor.putString("user_role", jsonResponse.getString("Role"));
-                                    editor.commit();
+                                    editor.apply();
                                     break;
                             }
 
@@ -162,6 +164,8 @@ public class LoginActivity extends AppCompatActivity {
             case "Correct Username and Password":
                 Toast.makeText(LoginActivity.this, "Welcome!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
             case "default":

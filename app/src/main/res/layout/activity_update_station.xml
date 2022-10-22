@@ -279,12 +279,13 @@
         android:paddingRight="10dp"
         android:paddingTop="20dp"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/btnDelete_update_station"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
-            />
+            android:onClick="deleteStationButtonClick"
+            android:text="@string/delete" />
     </LinearLayout>
 
 </LinearLayout>

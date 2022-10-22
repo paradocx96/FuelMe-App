@@ -109,6 +109,8 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 clearTextView();
                 Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -163,6 +165,8 @@ public class RegistrationActivity extends AppCompatActivity {
             clearTextView();
             Toast.makeText(RegistrationActivity.this, "Registration Successfully!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(RegistrationActivity.this, message, Toast.LENGTH_LONG).show();

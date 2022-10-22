@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.delete_station_screen.DeleteStationActivity;
 import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 import com.example.fuelme.ui.notice.NoticeCreateActivity;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
@@ -40,6 +41,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+/*
+* IT19014128
+* A.M.W.W.R.L. Wataketiya
+* Activity class for updating a station
+*
+* */
 
 public class UpdateStationActivity extends AppCompatActivity {
 
@@ -109,6 +117,13 @@ public class UpdateStationActivity extends AppCompatActivity {
     public void viewFeedbackInUpdateStationButtonClick(View view){
         Log.d(TAG, "View Feedback button click");
         //handle logic here
+    }
+
+    //button click for delete station button click
+    public void deleteStationButtonClick(View view){
+        Intent intent = new Intent(UpdateStationActivity.this, DeleteStationActivity.class);
+        intent.putExtra("selected_fuel_station", fuelStation);
+        startActivity(intent);
     }
 
     //method to sync all the views
