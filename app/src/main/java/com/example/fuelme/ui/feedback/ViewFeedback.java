@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,9 @@ public class ViewFeedback extends AppCompatActivity {
 
     TextView txtToolbarTitle;
 
+    SharedPreferences sharedPreferences;
+    private String currentUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,10 @@ public class ViewFeedback extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //Get current logged username
+        sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
+        currentUsername = sharedPreferences.getString("user_username", "");
 
         txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_singleFeedback);
         txtToolbarTitle.setText("Feedback");
@@ -79,6 +87,12 @@ public class ViewFeedback extends AppCompatActivity {
             txtDescriptionView.setText("Error");
             txtUsernameView.setText("Error");
             txtDateTimeView.setText("Error");
+        }
+
+        //If the current logged user is not the owner of the feedback, then hide the edit and delete buttons
+        if (!currentUsername.equals(username)) {
+            btnEditFeedback.setVisibility(View.GONE);
+            btnDeleteFeedback.setVisibility(View.GONE);
         }
 
         btnEditFeedback.setOnClickListener(new View.OnClickListener() {
