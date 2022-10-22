@@ -89,6 +89,9 @@
     <string name="ok">OK</string>
     <string name="add_to_favourites">Add to favourites</string>
     <string name="add_to_favourites_description">Add this station to your favourites</string>
+
+    <string name="special_notice">Special Notice</string>
+
     <string name="danger_zone">Danger Zone</string>
     <string name="sample_license">l0001</string>
     <string name="sample_id">esae51254sawe151</string>
@@ -98,4 +101,5 @@
     <string name="delete_station">Delete Station</string>
     <string name="license_with_colon">License : </string>
     <string name="station_id_with_colon">ID : </string>
+
 </resources>

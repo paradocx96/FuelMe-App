@@ -13,7 +13,7 @@
         android:layout_marginBottom="5dp"
         android:outlineAmbientShadowColor="#000000"
         app:cardBackgroundColor="#FFECB3"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/notice_item_customer"
@@ -36,29 +36,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/notice_item_description2"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notice_item_title2" />
-
-            <TextView
                 android:id="@+id/notice_item_created2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/date_and_time_here"
                 android:textColor="@color/purple_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notice_item_description2" />
+                app:layout_constraintTop_toBottomOf="@+id/notice_item_title2" />
 
             <TextView
                 android:id="@+id/notice_item_author2"

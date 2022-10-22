@@ -101,14 +101,14 @@ public class UpdateStationActivity extends AppCompatActivity {
 
     //button click method for post notice button
     public void postNoticeButtonClick(View view){
-        Log.d(TAG, "Post notice button click");
-        //handle logic here
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeCreateActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
+        startActivity(intent);
     }
 
     //button click method for view notices button
     public  void viewNoticesInUpdateStationButtonClick(View view){
-        Log.d(TAG, "View notices button click");
-        Intent intent = new Intent(UpdateStationActivity.this, NoticeListCustomerActivity.class);
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeListStationActivity.class);
         intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
