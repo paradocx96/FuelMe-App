@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
+import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +42,8 @@ public class AddFeedback extends AppCompatActivity {
     private final OkHttpClient client = new OkHttpClient();
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private static String ADD_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback";
+    SharedPreferences sharedPreferences;
+    private String username;
 
     String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
@@ -52,6 +55,13 @@ public class AddFeedback extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_feedback);
+
+        Intent intent = getIntent();
+        String stationId = intent.getStringExtra("stationId");
+
+        //Get current logged username
+        sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
+        username = sharedPreferences.getString("user_username", "");
 
         //instantiate toolbar and set the back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_feedback_toolbar);
@@ -76,8 +86,8 @@ public class AddFeedback extends AppCompatActivity {
                     Feedback feedback = new Feedback();
                     feedback.setSubject(editTxtSubject.getText().toString());
                     feedback.setDescription(editTxtDescription.getText().toString());
-                    feedback.setStationId("1");
-                    feedback.setUsername("Gimhan");
+                    feedback.setStationId(stationId);
+                    feedback.setUsername(username);
                     feedback.setCreateAt(currentDateTimeString);
 
                     addFeedback(feedback);
@@ -112,7 +122,7 @@ public class AddFeedback extends AppCompatActivity {
 
         RequestBody requestBody = RequestBody.create(jsonString, JSON);
 
-        HttpUrl url = HttpUrl.parse(ADD_FEEDBACK_URL).newBuilder().build();
+        HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL_ADD_FEEDBACK_STATIONS).newBuilder().build();
 
         Request request = new Request.Builder()
                 .url(url)
