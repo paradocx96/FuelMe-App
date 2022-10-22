@@ -29,7 +29,12 @@ import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,13 +57,15 @@ public class StationSingleViewActivity extends AppCompatActivity {
             textViewPetrolAvailabilityStatus, textViewDieselAvailabilityStatus, textViewPetrolQueueLength, textViewDieselQueueLength;
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton, favouriteButton;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, sharedPreferencesForUser;
 
     FuelStation fuelStation;
 
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
 
+    String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +94,14 @@ public class StationSingleViewActivity extends AppCompatActivity {
         viewFeedbackButton = findViewById(R.id.btnViewFeedback_station_single_view);
         viewNoticesButton = findViewById(R.id.btnViewNotices_station_single_view);
         favouriteButton = findViewById(R.id.btnFavourite_station_single_view);
+        favouriteButton.setEnabled(true);
 
         //instantiate shared preferences
         //sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         //get the extras
-        Bundle extras  = getIntent().getExtras();
-        if (extras != null){
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
             FuelStation fuelStation = (FuelStation) extras.getSerializable("selected_fuel_station"); //get the serializable and cast into fuel station object
             this.fuelStation = fuelStation;
 
@@ -104,29 +112,26 @@ public class StationSingleViewActivity extends AppCompatActivity {
             //open status
             String openStatus = "Not Assigned";
 
-            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")) {
                 openStatus = "Open";
-            }
-            else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+            } else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")) {
                 openStatus = "Closed";
             }
 
             //availability strings
             String petrolAvailabilityStatus = "Not Assigned";
-            String dieselAvailabilityStatus  = "Not Assigned";
+            String dieselAvailabilityStatus = "Not Assigned";
 
             //set availability strings based on the availability to maintain capitalization
-            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")) {
                 petrolAvailabilityStatus = "Available";
-            }
-            else if(fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+            } else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")) {
                 petrolAvailabilityStatus = "Unavailable";
             }
 
-            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")) {
                 dieselAvailabilityStatus = "Available";
-            }
-            else if(fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+            } else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")) {
                 dieselAvailabilityStatus = "Unavailable";
             }
 
@@ -143,37 +148,34 @@ public class StationSingleViewActivity extends AppCompatActivity {
             websiteButton.setText(fuelStation.getStationWebsite());
 
             //change station open text view color based on open status
-            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")){
+            if (fuelStation.getOpenStatus().equalsIgnoreCase("open")) {
                 //change color to green
                 textViewOpenStatus.setTextColor(Color.parseColor("#0E8921"));
-            }
-            else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")){
+            } else if (fuelStation.getOpenStatus().equalsIgnoreCase("closed")) {
                 //change color to red
                 textViewOpenStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
             //change petrol status text view color based on petrol availability
-            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")){
+            if (fuelStation.getPetrolStatus().equalsIgnoreCase("available")) {
                 //change color to green
                 textViewPetrolAvailabilityStatus.setTextColor(Color.parseColor("#0E8921"));
-            }
-            else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")){
+            } else if (fuelStation.getPetrolStatus().equalsIgnoreCase("unavailable")) {
                 //change color to red
                 textViewPetrolAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
             //change diesel status text view color based on diesel availability
-            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")){
+            if (fuelStation.getDieselStatus().equalsIgnoreCase("available")) {
                 //change color to green
                 textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#0E8921"));
-            }
-            else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")){
+            } else if (fuelStation.getDieselStatus().equalsIgnoreCase("unavailable")) {
                 //change color to red
                 textViewDieselAvailabilityStatus.setTextColor(Color.parseColor("#FF0000"));
             }
 
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
             String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
             Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId);
@@ -182,24 +184,94 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
 
-
+            //Get current logged username
+            sharedPreferencesForUser = getSharedPreferences("login_data", MODE_PRIVATE);
+            username = sharedPreferencesForUser.getString("user_username", "");
         }
 
 
     }
 
     //button click for favourite button
-    public void favouriteButtonClick(View view){
+    public void favouriteButtonClick(View view) {
         Log.d(TAG, "Favourite Button Clicked");
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("stationId", fuelStation.getId());
+            jsonObject.put("username", username);
+            jsonObject.put("stationName", fuelStation.getStationName());
+            jsonObject.put("stationAddress", fuelStation.getStationAddress());
+            jsonObject.put("createAt", currentDateTimeString);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String jsonString = jsonObject.toString();
+
+        RequestBody requestBody = RequestBody.create(jsonString, JSON);
+
+        HttpUrl baseUrl = HttpUrl.parse(CommonConstants.REMOTE_URL).newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("Favourite")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(baseUrl)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.d(TAG, "onResponse success : " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+
+                    ResponseBody responseBody = response.body();
+                    if (responseBody != null) {
+                        String responseString = responseBody.string();
+
+                        Log.d(TAG, "onResponse success : " + responseString);
+
+                        try {
+                            JSONObject jsonResponse = new JSONObject(responseString);
+
+                            String message = jsonResponse.getString("message");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                    favouriteButton.setEnabled(false);
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                } else {
+                    Log.d(TAG, "onResponse failure : " + response.message());
+                }
+            }
+        });
+
     }
 
+
     //button click for view feedback button
-    public void feedbackButtonClick(View view){
+    public void feedbackButtonClick(View view) {
         Log.d(TAG, "Feedback Button Clicked");
     }
 
     //button click for view notices button
-    public void viewNoticesButtonClick(View view){
+    public void viewNoticesButtonClick(View view) {
         Log.d(TAG, "Notices Button Clicked");
         Intent intent = new Intent(StationSingleViewActivity.this, NoticeListCustomerActivity.class);
         intent.putExtra("station_id", fuelStation.getId());
@@ -245,13 +317,13 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //update the queue buttons based on the shared preferences
-    public void updateQueueButtons(String currentlyJoinedQueueStationId, String queueType, String viewFuelStationId){
+    public void updateQueueButtons(String currentlyJoinedQueueStationId, String queueType, String viewFuelStationId) {
 
         //check if the currently joined queue's station id is this view's station id
-        if (viewFuelStationId.equalsIgnoreCase(currentlyJoinedQueueStationId)){
+        if (viewFuelStationId.equalsIgnoreCase(currentlyJoinedQueueStationId)) {
             //check which is the joined queue
 
-            if (queueType.equalsIgnoreCase("petrol")){
+            if (queueType.equalsIgnoreCase("petrol")) {
                 //user is in this station's petrol queue
                 //change the petrol queue button attributes
                 petrolQueueUpdateButton.setText("Leave the queue");
@@ -259,8 +331,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
                 //disable the diesel queue update button
                 dieselQueueUpdateButton.setEnabled(false);
-            }
-            else if (queueType.equalsIgnoreCase("diesel")){
+            } else if (queueType.equalsIgnoreCase("diesel")) {
                 //user is in this station's diesel queue
                 //change the diesel queue button attributes
                 dieselQueueUpdateButton.setText("Leave the queue");
@@ -269,14 +340,13 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 //disabled the petrol queue update button
                 petrolQueueUpdateButton.setEnabled(false);
             }
-        }
-        else {
+        } else {
             // if the currently joined queue's station id is not this view's station id, user is in a different queue
             //then the user cannot join these queues
             //disable both queue update buttons
 
             //check if currentlyJoinedQueueStationId is empty
-            if (currentlyJoinedQueueStationId.isEmpty()){
+            if (currentlyJoinedQueueStationId.isEmpty()) {
                 //if the currentlyJoinedQueueStationId is empty user is not in a queue
 
                 //reset button attributes
@@ -289,8 +359,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 //enable both the buttons
                 petrolQueueUpdateButton.setEnabled(true);
                 dieselQueueUpdateButton.setEnabled(true);
-            }
-            else {
+            } else {
                 //if the currentlyJoinedQueueStationId is not empty user is in a queue of different station
                 //disable both the buttons
                 petrolQueueUpdateButton.setEnabled(false);
@@ -300,30 +369,28 @@ public class StationSingleViewActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     //button click to update the petrol queue
-    public void  petrolQueueUpdateButtonClick(View view){
-        if (isUserNotInAQueue()){
+    public void petrolQueueUpdateButtonClick(View view) {
+        if (isUserNotInAQueue()) {
             //if user is not in a queue user is requesting to join this queue (the user can join the queue)
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
             //set the station id and queue type in ths shared preferences
             SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
             editor.putString(StationCommonConstants.IN_QUEUE_STATION_ID, this.fuelStation.getId()); //get this view's fuel station id
-            editor.putString(StationCommonConstants.QUEUE,"petrol"); //set the queue type
+            editor.putString(StationCommonConstants.QUEUE, "petrol"); //set the queue type
             editor.apply(); //apply the changes
 
-            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
             String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
             //make the remote call to increment the petrol queue length
             incrementPetrolQueue();
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
-        }
-        else {
+        } else {
             //the user is already in a queue
             //check whether it is this station's this queue
             //if it is this station's this queue, user is leaving
@@ -334,12 +401,12 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId[0]);
             Log.d(TAG, "User is in queue type : " + queueType[0]);
-            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())){
+            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())) {
                 //user is in a queue of this station
 
                 //check whether the user in this queue
                 queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
-                if (queueType[0].equalsIgnoreCase("petrol")){
+                if (queueType[0].equalsIgnoreCase("petrol")) {
                     //user is in this queue
                     //user is leaving the queue
 
@@ -359,7 +426,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     editor.remove(StationCommonConstants.QUEUE); //remove queue
                                     editor.apply(); //apply the changes
 
-                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the petrol queue length
@@ -380,7 +447,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     editor.remove(StationCommonConstants.QUEUE); //remove queue
                                     editor.apply(); //apply the changes
 
-                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the petrol queue length
@@ -417,8 +484,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
                     updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());*/
                 }
-            }
-            else {
+            } else {
                 //if the user is not in this station's this queue, user cannot join this queue too
                 //display the related messages
                 Toast.makeText(this, "You are already in a different queue", Toast.LENGTH_SHORT).show();
@@ -429,32 +495,31 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     }
 
-    public void updateSharedPreferences(){
+    public void updateSharedPreferences() {
 
     }
 
     //button click to update the diesel queue
-    public void dieselQueueUpdateButtonClick(View view){
+    public void dieselQueueUpdateButtonClick(View view) {
 
-        if (isUserNotInAQueue()){
+        if (isUserNotInAQueue()) {
             //if user is not in a queue user is requesting to and can join this queue
             sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
             //set the station id and queue type in ths shared preferences
             SharedPreferences.Editor editor = sharedPreferences.edit(); //get the editor
             editor.putString(StationCommonConstants.IN_QUEUE_STATION_ID, this.fuelStation.getId()); //get this view's fuel station id
-            editor.putString(StationCommonConstants.QUEUE,"diesel"); //set the queue type
+            editor.putString(StationCommonConstants.QUEUE, "diesel"); //set the queue type
             editor.apply(); //apply the changes
 
-            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+            String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
             String queueType = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
             //make the remote call to increment the diesel queue length
             incrementDieselQueue();
 
             updateQueueButtons(currentlyJoinedQueueStationId, queueType, fuelStation.getId());
-        }
-        else {
+        } else {
             //the user is already in a queue
             //check whether it is this station's this queue
             //if it is this station's this queue, user is leaving
@@ -465,12 +530,12 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             Log.d(TAG, "User is in queue in station with id : " + currentlyJoinedQueueStationId[0]);
             Log.d(TAG, "User is in queue type : " + queueType[0]);
-            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())){
+            if (currentlyJoinedQueueStationId[0].equalsIgnoreCase(this.fuelStation.getId())) {
                 //user is in a queue of this station
 
                 //check whether the user in this queue
                 queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
-                if (queueType[0].equalsIgnoreCase("diesel")){
+                if (queueType[0].equalsIgnoreCase("diesel")) {
                     //user is in this queue
                     //user is leaving the queue
 
@@ -491,7 +556,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     editor.remove(StationCommonConstants.QUEUE); //remove queue
                                     editor.apply(); //apply the changes
 
-                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the diesel queue length
@@ -514,7 +579,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     editor.remove(StationCommonConstants.QUEUE); //remove queue
                                     editor.apply(); //apply the changes
 
-                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+                                    currentlyJoinedQueueStationId[0] = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the diesel queue length
@@ -543,8 +608,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
 
                 }
-            }
-            else {
+            } else {
                 //if the user is not in this station's this queue, user cannot join this queue too
                 //display the related messages
                 Toast.makeText(this, "You are already in a different queue", Toast.LENGTH_SHORT).show();
@@ -554,7 +618,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //method to remote increment petrol queue
-    public void incrementPetrolQueue(){
+    public void incrementPetrolQueue() {
 
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
@@ -589,7 +653,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     //if response is successful handle success logic
                     runOnUiThread(new Runnable() {
                         @Override
@@ -597,8 +661,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                             Toast.makeText(StationSingleViewActivity.this, "Successfully joined the queue", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-                else {
+                } else {
                     //handle failure response logic
 
                     ResponseBody responseBody = response.body();
@@ -620,7 +683,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //method to remote decrement petrol queue
-    public void decrementPetrolQueue(){
+    public void decrementPetrolQueue() {
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
                 .newBuilder()
@@ -654,7 +717,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     //if response is successful handle success logic
                     runOnUiThread(new Runnable() {
                         @Override
@@ -662,8 +725,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                             Toast.makeText(StationSingleViewActivity.this, "Successfully left the queue", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-                else {
+                } else {
                     //handle failure response logic
 
                     ResponseBody responseBody = response.body();
@@ -684,7 +746,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //method to remote increment diesel queue
-    public void incrementDieselQueue(){
+    public void incrementDieselQueue() {
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
                 .newBuilder()
@@ -718,7 +780,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     //if response is successful handle success logic
                     runOnUiThread(new Runnable() {
                         @Override
@@ -726,8 +788,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                             Toast.makeText(StationSingleViewActivity.this, "Successfully joined the queue", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-                else {
+                } else {
                     //handle failure response logic
 
                     ResponseBody responseBody = response.body();
@@ -748,7 +809,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //method to remote decrement diesel queue
-    public void decrementDieselQueue(){
+    public void decrementDieselQueue() {
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
                 .newBuilder()
@@ -782,7 +843,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     //if response is successful handle success logic
                     runOnUiThread(new Runnable() {
                         @Override
@@ -790,8 +851,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
                             Toast.makeText(StationSingleViewActivity.this, "Successfully left the queue", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-                else {
+                } else {
                     //handle failure response logic
 
                     ResponseBody responseBody = response.body();
@@ -814,21 +874,20 @@ public class StationSingleViewActivity extends AppCompatActivity {
     //method to check whether the user is not in a queue
     //returns true of user is not in a queue
     //returns false if user is in a queue
-    public boolean isUserNotInAQueue(){
+    public boolean isUserNotInAQueue() {
         sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID,"");
+        String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
 
-        if (currentlyJoinedQueueStationId.isEmpty()){
+        if (currentlyJoinedQueueStationId.isEmpty()) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     //progress bar in an alert dialog
-    public AlertDialog.Builder getDialogProgressBar(){
-        if (progressDialogBuilder == null){
+    public AlertDialog.Builder getDialogProgressBar() {
+        if (progressDialogBuilder == null) {
             progressDialogBuilder = new AlertDialog.Builder(this);
             progressDialogBuilder.setTitle("Joining Queue");
 
@@ -843,7 +902,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
         return progressDialogBuilder;
     }
 
-    public AlertDialog.Builder getAlertDialog(String title, String message){
+    public AlertDialog.Builder getAlertDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
