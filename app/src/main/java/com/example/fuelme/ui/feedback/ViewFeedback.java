@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
+import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -64,6 +65,7 @@ public class ViewFeedback extends AppCompatActivity {
         username = intent.getStringExtra("feedback_username"); //4 - Get feedback username from intent
         dateTime = intent.getStringExtra("feedback_dateTime"); //5 - Get feedback dateTime from intent
 
+        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL_DELETE_FEEDBACK_STATIONS + id;
 
         if (id != null) {
             //2 - Get feedback from database
@@ -107,7 +109,7 @@ public class ViewFeedback extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Delete feedback
-                                deleteFeedbackById(id);
+                                deleteFeedbackById();
                                 Toast.makeText(getApplicationContext(), "Successfully deleted!", Toast.LENGTH_LONG).show();
                             }
                         })
@@ -125,10 +127,8 @@ public class ViewFeedback extends AppCompatActivity {
 
     }
 
-    private void deleteFeedbackById(String id) {
-        //6 - Set DELETE_FEEDBACK_URL
-        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/" + id;
-
+    private void deleteFeedbackById() {
+        //1 - Create HttpUrl object
         HttpUrl url = HttpUrl.parse(DELETE_FEEDBACK_URL).newBuilder().build();
 
         Request request = new Request.Builder()
