@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
+import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -33,6 +35,9 @@ public class ViewFeedback extends AppCompatActivity {
 
     TextView txtToolbarTitle;
 
+    SharedPreferences sharedPreferences;
+    private String currentUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class ViewFeedback extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //Get current logged username
+        sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
+        currentUsername = sharedPreferences.getString("user_username", "");
 
         txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_singleFeedback);
         txtToolbarTitle.setText("Feedback");
@@ -64,6 +73,7 @@ public class ViewFeedback extends AppCompatActivity {
         username = intent.getStringExtra("feedback_username"); //4 - Get feedback username from intent
         dateTime = intent.getStringExtra("feedback_dateTime"); //5 - Get feedback dateTime from intent
 
+        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL_DELETE_FEEDBACK_STATIONS + id;
 
         if (id != null) {
             //2 - Get feedback from database
@@ -77,6 +87,12 @@ public class ViewFeedback extends AppCompatActivity {
             txtDescriptionView.setText("Error");
             txtUsernameView.setText("Error");
             txtDateTimeView.setText("Error");
+        }
+
+        //If the current logged user is not the owner of the feedback, then hide the edit and delete buttons
+        if (!currentUsername.equals(username)) {
+            btnEditFeedback.setVisibility(View.GONE);
+            btnDeleteFeedback.setVisibility(View.GONE);
         }
 
         btnEditFeedback.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +123,7 @@ public class ViewFeedback extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Delete feedback
-                                deleteFeedbackById(id);
+                                deleteFeedbackById();
                                 Toast.makeText(getApplicationContext(), "Successfully deleted!", Toast.LENGTH_LONG).show();
                             }
                         })
@@ -125,10 +141,8 @@ public class ViewFeedback extends AppCompatActivity {
 
     }
 
-    private void deleteFeedbackById(String id) {
-        //6 - Set DELETE_FEEDBACK_URL
-        DELETE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/" + id;
-
+    private void deleteFeedbackById() {
+        //1 - Create HttpUrl object
         HttpUrl url = HttpUrl.parse(DELETE_FEEDBACK_URL).newBuilder().build();
 
         Request request = new Request.Builder()

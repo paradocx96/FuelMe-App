@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
+import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +70,7 @@ public class EditFeedback extends AppCompatActivity {
         username = intent.getStringExtra("feedback_username");
         dateTime = intent.getStringExtra("feedback_dateTime");
 
-        UPDATE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/"+id;
+        UPDATE_FEEDBACK_URL = CommonConstants.REMOTE_URL_UPDATE_FEEDBACK_STATIONS + id;
 
         txtSubjectEdit.setText(subject);
         txtDescriptionEdit.setText(description);

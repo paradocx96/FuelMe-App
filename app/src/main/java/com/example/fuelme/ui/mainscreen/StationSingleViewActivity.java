@@ -27,6 +27,7 @@ import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.feedback.FeedbackList;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -58,6 +59,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     Button petrolQueueUpdateButton, dieselQueueUpdateButton, stationPhoneNumberButton, stationEmailButton, websiteButton,
             viewFeedbackButton, viewNoticesButton, favouriteButton;
     SharedPreferences sharedPreferences, sharedPreferencesForUser;
+    SharedPreferences.Editor editor;
 
     FuelStation fuelStation;
 
@@ -187,6 +189,12 @@ public class StationSingleViewActivity extends AppCompatActivity {
             //Get current logged username
             sharedPreferencesForUser = getSharedPreferences("login_data", MODE_PRIVATE);
             username = sharedPreferencesForUser.getString("user_username", "");
+
+            sharedPreferencesForUser = getSharedPreferences("feedback_data", MODE_PRIVATE);
+            editor = sharedPreferencesForUser.edit();
+
+            editor.putString("feedback_station_id", fuelStation.getId());
+            editor.apply();
         }
 
 
@@ -268,6 +276,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
     //button click for view feedback button
     public void feedbackButtonClick(View view) {
         Log.d(TAG, "Feedback Button Clicked");
+        Intent intent = new Intent(this, FeedbackList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     //button click for view notices button
