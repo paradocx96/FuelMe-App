@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ import okhttp3.ResponseBody;
 public class FeedbackList extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient();
-    private String GET_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/station/1";
+    private String GET_FEEDBACK_URL;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private HttpUrl url;
 
@@ -52,11 +53,22 @@ public class FeedbackList extends AppCompatActivity {
     private ArrayList<Feedback> feedbackArrayList;
 
     TextView txtToolbarTitle;
+    private String stationId;
+
+    SharedPreferences fuelStationIdSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_list);
+
+//            Intent intent = getIntent();
+//            stationId = intent.getStringExtra("stationId");
+
+        fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
+        stationId = fuelStationIdSharedPref.getString("feedback_station_id", "");
+
+        GET_FEEDBACK_URL = CommonConstants.REMOTE_URL_GET_FEEDBACK_STATIONS + stationId;
 
         //instantiate toolbar and set the back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.view_feedbackList_toolbar);
@@ -87,6 +99,7 @@ public class FeedbackList extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(FeedbackList.this, AddFeedback.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("stationId", stationId);
                 startActivity(intent);
             }
         });
