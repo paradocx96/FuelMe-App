@@ -54,10 +54,6 @@ public class ViewFeedback extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
         currentUsername = sharedPreferences.getString("user_username", "");
 
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_singleFeedback);
-        txtToolbarTitle.setText("Feedback");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         txtSubjectView = findViewById(R.id.txtSubjectView);
         txtDescriptionView = findViewById(R.id.txtDescriptionView);
         txtUsernameView = findViewById(R.id.txtUsernameView);
@@ -79,7 +75,7 @@ public class ViewFeedback extends AppCompatActivity {
             //2 - Get feedback from database
             txtSubjectView.setText(subject);
             txtDescriptionView.setText(description);
-            txtUsernameView.setText(username);
+            txtUsernameView.setText(username.toUpperCase());
             txtDateTimeView.setText(dateTime);
         } else {
             //3 - If feedback id is null, then show error message
