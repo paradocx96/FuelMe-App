@@ -62,9 +62,6 @@ public class FeedbackList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_list);
 
-//            Intent intent = getIntent();
-//            stationId = intent.getStringExtra("stationId");
-
         fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
         stationId = fuelStationIdSharedPref.getString("feedback_station_id", "");
 
@@ -75,10 +72,6 @@ public class FeedbackList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_feedbackList);
-        txtToolbarTitle.setText("All Feedbacks");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerViewFeedback = findViewById(R.id.feedbackList_recycle_view);
         recyclerViewFeedback.setLayoutManager(new LinearLayoutManager(this));
