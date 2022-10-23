@@ -14,6 +14,17 @@
     <string name="add_feedback_btn">Submit</string>
     <string name="edit_feedback_btn">Update</string>
     <string name="toolbar_title">Toolbar Title</string>
+    <string name="add_feedback_subject_hint">Enter your subject</string>
+    <string name="add_feedback_description_hint">Enter your description</string>
+    <string name="add_feedback_list_txt">All Feedbacks</string>
+    <string name="edit_feedback_txt">Edit Feedback</string>
+    <string name="single_item_feedback_subject_txt">Subject </string>
+    <string name="single_item_feedback_description_txt">Description</string>
+    <string name="single_item_feedback_dateTime_txt">Date and Time</string>
+    <string name="single_item_feedback_username_txt">Username</string>
+    <string name="delete_single_feedback_btn_txt">Delete</string>
+    <string name="edit_single_feedback_btn_txt">Edit</string>
+    <string name="single_feedback_txt">Feedback</string>
 
     <string name="sample_station_name">Eheliyagoda Associates</string>
     <string name="sample_station_address">41/8, Sangabo Mawatha, Colombo.</string>
