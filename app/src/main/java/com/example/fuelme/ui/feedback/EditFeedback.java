@@ -53,10 +53,6 @@ public class EditFeedback extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_editFeedback);
-        txtToolbarTitle.setText("Edit Feedback");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         txtSubjectEdit = findViewById(R.id.editTxt_subject_edit);
         txtDescriptionEdit = findViewById(R.id.editTxt_description_edit);
