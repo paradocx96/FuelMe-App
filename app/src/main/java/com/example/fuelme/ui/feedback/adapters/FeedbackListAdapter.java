@@ -83,7 +83,7 @@ public class FeedbackListAdapter extends RecyclerView.Adapter<FeedbackListAdapte
         void setDetails(Feedback feedback) {
             txtSubject.setText(feedback.getSubject());
             txtDescription.setText(feedback.getDescription());
-            txtUsername.setText(feedback.getUsername());
+            txtUsername.setText(feedback.getUsername().toUpperCase());
             txtTimeDate.setText(feedback.getCreateAt());
         }
     }
