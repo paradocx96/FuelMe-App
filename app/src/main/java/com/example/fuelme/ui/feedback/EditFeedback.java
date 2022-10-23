@@ -53,10 +53,6 @@ public class EditFeedback extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_editFeedback);
-        txtToolbarTitle.setText("Edit Feedback");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         txtSubjectEdit = findViewById(R.id.editTxt_subject_edit);
         txtDescriptionEdit = findViewById(R.id.editTxt_description_edit);
@@ -88,10 +84,30 @@ public class EditFeedback extends AppCompatActivity {
                 feedback.setSubject(txtSubjectEdit.getText().toString());
                 feedback.setDescription(txtDescriptionEdit.getText().toString());
 
-                updateFeedback(feedback);
+                if(validateFeedbackForm(feedback)){
+                    updateFeedback(feedback);
+                    Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
 
+    }
+
+    //Validate the feedback form
+    private boolean validateFeedbackForm(Feedback feedback) {
+        if (feedback.getSubject().isEmpty()) {
+            txtSubjectEdit.setError("Subject is required");
+            txtSubjectEdit.requestFocus();
+            return false;
+        }
+        if (feedback.getDescription().isEmpty()) {
+            txtDescriptionEdit.setError("Description is required");
+            txtDescriptionEdit.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     private void updateFeedback(Feedback feedback) {
@@ -143,11 +159,7 @@ public class EditFeedback extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
                             Toast.makeText(EditFeedback.this, myResponse, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
                         }
                     });
 

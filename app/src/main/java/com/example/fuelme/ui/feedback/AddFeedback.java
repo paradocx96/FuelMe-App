@@ -69,10 +69,6 @@ public class AddFeedback extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_addFeedback);
-        txtToolbarTitle.setText("Add Feedback");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         editTxtSubject = findViewById(R.id.editTxt_subject);
         editTxtDescription = findViewById(R.id.editTxt_description);
 
@@ -90,10 +86,12 @@ public class AddFeedback extends AppCompatActivity {
                     feedback.setUsername(username);
                     feedback.setCreateAt(currentDateTimeString);
 
-                    addFeedback(feedback);
-                    Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if(validateFeedback(feedback)){
+                        addFeedback(feedback);
+                        Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -101,6 +99,20 @@ public class AddFeedback extends AppCompatActivity {
         });
     }
 
+    //Validate the feedback form
+    private boolean validateFeedback(Feedback feedback) {
+        if (feedback.getSubject().isEmpty()) {
+            editTxtSubject.setError("Subject is required");
+            editTxtSubject.requestFocus();
+            return false;
+        }
+        if (feedback.getDescription().isEmpty()) {
+            editTxtDescription.setError("Description is required");
+            editTxtDescription.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
 
     private void addFeedback(Feedback feedback){
