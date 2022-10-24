@@ -628,6 +628,11 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     }
 
+    //method to remote call to create logs when joining and leaving the queues
+    public void createLogEntry(String refuelStatus){
+
+    }
+
     //method to remote increment petrol queue
     public void incrementPetrolQueue() {
 
@@ -640,9 +645,22 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 .addPathSegment(fuelStation.getId()) //set this view's station id to path
                 .build();
 
-        String sampleString = "sample";
+
+        //create JSON object for queue log request
+        JSONObject queueLogRequestJsonObject = new JSONObject();
+        try {
+            queueLogRequestJsonObject.put("customerUsername", username);
+            queueLogRequestJsonObject.put("stationId", fuelStation.getId());
+            queueLogRequestJsonObject.put("stationLicense", fuelStation.getLicense());
+            queueLogRequestJsonObject.put("stationName", fuelStation.getStationName());
+            queueLogRequestJsonObject.put("refuelStatus", "not-applicable");
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String queueLogRequestString = queueLogRequestJsonObject.toString();
         //empty request body
-        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+        RequestBody requestBody = RequestBody.create(queueLogRequestString, JSON);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -767,9 +785,21 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 .addPathSegment(fuelStation.getId()) //set this view's station id to path
                 .build();
 
-        String sampleString = "sample";
+        //create JSON object for queue log request
+        JSONObject queueLogRequestJsonObject = new JSONObject();
+        try {
+            queueLogRequestJsonObject.put("customerUsername", username);
+            queueLogRequestJsonObject.put("stationId", fuelStation.getId());
+            queueLogRequestJsonObject.put("stationLicense", fuelStation.getLicense());
+            queueLogRequestJsonObject.put("stationName", fuelStation.getStationName());
+            queueLogRequestJsonObject.put("refuelStatus", "not-applicable");
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String queueLogRequestString = queueLogRequestJsonObject.toString();
         //empty request body
-        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+        RequestBody requestBody = RequestBody.create(queueLogRequestString, JSON);
 
         Request request = new Request.Builder()
                 .url(url)
