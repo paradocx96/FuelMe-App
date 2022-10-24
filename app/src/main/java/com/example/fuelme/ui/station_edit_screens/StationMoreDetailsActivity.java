@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.owner_dashboard_screen.StationHistoryActivity;
 import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
 import org.json.JSONException;
@@ -91,6 +92,13 @@ public class StationMoreDetailsActivity extends AppCompatActivity {
     public void editButtonClick(View view){
         Intent intent = new Intent(StationMoreDetailsActivity.this, EditStationActivity.class);
         intent.putExtra("selected_fuel_station",fuelStation);
+        startActivity(intent);
+    }
+
+    //navigate to station logs
+    public void navigateToStationHistory(View view){
+        Intent intent = new Intent(StationMoreDetailsActivity.this, StationHistoryActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
 
