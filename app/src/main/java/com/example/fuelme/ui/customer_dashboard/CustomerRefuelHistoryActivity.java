@@ -146,22 +146,24 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                             //add the log item to the list
                             queueLogItems.add(queueLogItem);
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (queueLogItems.isEmpty()){
-                                        //if the queue logs are empty show a toast
-                                        Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
-                                    }
-                                    else {
-                                        //if not populate adapter
-                                        adapter = new CustomerRefuelHistoryRecyclerViewAdapter(context, queueLogItems);
-                                        recyclerView.setAdapter(adapter);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                                    }
-                                }
-                            });
+
                         }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (queueLogItems.isEmpty()){
+                                    //if the queue logs are empty show a toast
+                                    Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
+                                }
+                                else {
+                                    //if not populate adapter
+                                    adapter = new CustomerRefuelHistoryRecyclerViewAdapter(context, queueLogItems);
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                }
+                            }
+                        });
                     }
                     catch (JSONException e){
                         Log.d(TAG, "JSON Exception : " + e);

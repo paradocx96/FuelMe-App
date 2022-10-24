@@ -144,22 +144,26 @@ public class StationHistoryActivity extends AppCompatActivity {
                             //add the log item to the list
                             fuelStationLogItems.add(fuelStationLogItem);
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (fuelStationLogItems.isEmpty()){
-                                        //if the station logs are empty show a toast
-                                        Toast.makeText(StationHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
-                                    }
-                                    else {
-                                        //if not populate adapter
-                                        adapter = new StationHistoryRecyclerViewAdapter(context, fuelStationLogItems);
-                                        recyclerView.setAdapter(adapter);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                                    }
-                                }
-                            });
+
                         }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (fuelStationLogItems.isEmpty()){
+                                    //if the station logs are empty show a toast
+                                    Log.d(TAG, "No log items");
+                                    Toast.makeText(StationHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    //if not populate adapter
+                                    Log.d(TAG, "Log items are there");
+                                    adapter = new StationHistoryRecyclerViewAdapter(context, fuelStationLogItems);
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                }
+                            }
+                        });
 
                     }catch (JSONException e){
                         Log.d(TAG, "JSON Exception : " + e);

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
@@ -192,9 +193,16 @@ public class AllStationsFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
-                                recyclerView.setAdapter(adapter);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                                if (fuelStations.isEmpty()){
+                                    Toast.makeText(getActivity(), "No stations found", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                }
+
                             }
                         });
 
