@@ -40,7 +40,8 @@
             android:id="@+id/btn_viewStation_customer_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/view_station"/>
+            android:onClick="viewStationButtonClick"
+            android:text="@string/view_station" />
     </LinearLayout>
 
     <LinearLayout

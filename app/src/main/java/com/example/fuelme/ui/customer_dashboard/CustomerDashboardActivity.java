@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.commonconstants.StationCommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +87,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     //button click method for view station button
     public  void  viewStationButtonClick(View view){
-
+        Intent intent = new Intent(this, StationSingleViewActivity.class);
+        intent.putExtra("selected_fuel_station", fuelStation);
+        startActivity(intent);
     }
 
     //set text views to loading
