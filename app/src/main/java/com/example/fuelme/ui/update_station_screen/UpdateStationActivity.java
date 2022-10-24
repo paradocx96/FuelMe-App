@@ -115,8 +115,9 @@ public class UpdateStationActivity extends AppCompatActivity {
 
     //button click method for view feedback button
     public void viewFeedbackInUpdateStationButtonClick(View view){
-        Log.d(TAG, "View Feedback button click");
-        //handle logic here
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeListCustomerActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
+        startActivity(intent);
     }
 
     //button click for delete station button click
