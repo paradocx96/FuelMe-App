@@ -1,9 +1,10 @@
-/*
- * IT19180526
- * Chandrasiri S.A.N.L.D.
+/**
+ * FuelMe APP
  * Enterprise Application Development - SE4040
- * Update User Profile UI for FuelMe Application
- * */
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 package com.example.fuelme.ui.auth;
 
@@ -35,6 +36,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Update User Profile UI for FuelMe Application
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class ProfileUpdateActivity extends AppCompatActivity {
 
     // Defined object and variables
