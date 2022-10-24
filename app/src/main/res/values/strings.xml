@@ -113,5 +113,8 @@
     <string name="license_with_colon">License : </string>
     <string name="station_id_with_colon">ID : </string>
     <string name="more">More</string>
+    <string name="address">Address</string>
+    <string name="website">Website</string>
+    <string name="more_setails_notice">The email and phone number are related to the station. They are not necessarily your personal ones.</string>
 
 </resources>
