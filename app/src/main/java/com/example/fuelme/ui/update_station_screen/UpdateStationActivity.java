@@ -24,6 +24,7 @@ import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
 import com.example.fuelme.ui.delete_station_screen.DeleteStationActivity;
+import com.example.fuelme.ui.feedback.FeedbackList;
 import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 import com.example.fuelme.ui.notice.NoticeCreateActivity;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
@@ -115,7 +116,7 @@ public class UpdateStationActivity extends AppCompatActivity {
 
     //button click method for view feedback button
     public void viewFeedbackInUpdateStationButtonClick(View view){
-        Intent intent = new Intent(UpdateStationActivity.this, NoticeListCustomerActivity.class);
+        Intent intent = new Intent(UpdateStationActivity.this, FeedbackList.class);
         intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
