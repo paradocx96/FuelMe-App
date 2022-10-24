@@ -11,13 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
-import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +25,6 @@ import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -36,6 +33,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+ * @author H.G. Malwatta - IT19240848
+ * This class is used to add feedback(s) to respective stations
+ */
 
 public class AddFeedback extends AppCompatActivity {
 
@@ -44,22 +45,23 @@ public class AddFeedback extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     private String username;
+    private String stationId;
 
     String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
     EditText editTxtSubject, editTxtDescription;
     Button btnSubmit;
-    TextView txtToolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_feedback);
 
+        //get the username from the intent
         Intent intent = getIntent();
-        String stationId = intent.getStringExtra("stationId");
+        stationId = intent.getStringExtra("stationId");
 
-        //Get current logged username
+        //get current logged username
         sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
         username = sharedPreferences.getString("user_username", "");
 
@@ -69,37 +71,43 @@ public class AddFeedback extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //instantiate the edit text and button
         editTxtSubject = findViewById(R.id.editTxt_subject);
         editTxtDescription = findViewById(R.id.editTxt_description);
-
         btnSubmit = findViewById(R.id.btn_submit);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-
-                    Feedback feedback = new Feedback();
-                    feedback.setSubject(editTxtSubject.getText().toString());
-                    feedback.setDescription(editTxtDescription.getText().toString());
-                    feedback.setStationId(stationId);
-                    feedback.setUsername(username);
-                    feedback.setCreateAt(currentDateTimeString);
-
-                    if(validateFeedback(feedback)){
-                        addFeedback(feedback);
-                        Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
-    //Validate the feedback form
+    /**
+     * This method is used to add feedback(s) to respective stations when clicking the submit button
+     * @param view
+     * @throws Exception
+     */
+    public void addFeedbackButtonClick(View view){
+        try {
+
+            Feedback feedback = new Feedback();
+            feedback.setSubject(editTxtSubject.getText().toString());
+            feedback.setDescription(editTxtDescription.getText().toString());
+            feedback.setStationId(stationId);
+            feedback.setUsername(username);
+            feedback.setCreateAt(currentDateTimeString);
+
+            if(validateFeedback(feedback)){
+                addFeedback(feedback);
+                Intent intent = new Intent(AddFeedback.this, FeedbackList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is used to validate the feedback
+     * @param feedback
+     * @return true if the form is valid
+     */
     private boolean validateFeedback(Feedback feedback) {
         if (feedback.getSubject().isEmpty()) {
             editTxtSubject.setError("Subject is required");
@@ -114,9 +122,14 @@ public class AddFeedback extends AppCompatActivity {
         return true;
     }
 
-
+    /**
+     * This method is used to add feedback(s) to respective stations
+     * @param feedback
+     * @throws JSONException
+     */
     private void addFeedback(Feedback feedback){
 
+        //create a json object
         JSONObject jsonObject = new JSONObject();
 
         try {
@@ -132,14 +145,19 @@ public class AddFeedback extends AppCompatActivity {
 
         String jsonString = jsonObject.toString();
 
+        //create the request body
         RequestBody requestBody = RequestBody.create(jsonString, JSON);
 
+        //create the request for add feedback
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL_ADD_FEEDBACK_STATIONS).newBuilder().build();
 
+        //create the request
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
+
+        //create the call
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {

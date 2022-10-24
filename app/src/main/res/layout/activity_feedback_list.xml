@@ -14,6 +14,7 @@
         android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="@string/add_feedback_btn"
+        android:onClick="addFeedbackFabButtonClick"
         app:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
