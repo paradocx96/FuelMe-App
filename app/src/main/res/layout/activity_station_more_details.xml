@@ -44,14 +44,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="@string/license"/>
 
         <TextView
             android:id="@+id/txtView_license_station_more_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="@string/sample_license"/>
     </LinearLayout>
 
@@ -66,14 +66,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="@string/address"/>
 
         <TextView
             android:id="@+id/txtView_stationAddress_station_more_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="@string/sample_station_address"/>
     </LinearLayout>
 
@@ -88,14 +88,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="@string/phone_number"/>
 
         <TextView
             android:id="@+id/txtView_stationPhoneNumber_station_more_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="@string/sample_phone_number"/>
     </LinearLayout>
 
@@ -110,14 +110,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="@string/email"/>
 
         <TextView
             android:id="@+id/txtView_stationEmail_station_more_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="@string/sample_email"/>
     </LinearLayout>
 
@@ -132,14 +132,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="@string/website"/>
 
         <TextView
             android:id="@+id/txtView_stationWebsite_station_more_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="@string/sample_website"/>
     </LinearLayout>
 
