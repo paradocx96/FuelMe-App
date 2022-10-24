@@ -123,5 +123,9 @@
     <string name="more_setails_notice">The email and phone number are related to the station. They are not necessarily your personal ones.</string>
     <string name="edit_station_details">Edit Station Details</string>
     <string name="save_changes">Save Changes</string>
+    <string name="current_station_message">You are currently in Eheliyagoda Associates</string>
+    <string name="view_station">View Station</string>
+    <string name="current_station">Current Station</string>
+    <string name="view_history">View History</string>
 
 </resources>
