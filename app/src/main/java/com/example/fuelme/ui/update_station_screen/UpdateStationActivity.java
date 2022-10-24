@@ -94,13 +94,7 @@ public class UpdateStationActivity extends AppCompatActivity {
         viewNoticesButton = findViewById(R.id.btn_viewAllNotices_update_station);
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
         deleteStationButton = findViewById(R.id.btnDelete_update_station);
-
-        fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
-        editor = fuelStationIdSharedPref.edit();
-
-        editor.putString("feedback_station_id", fuelStation.getId());
-        editor.apply();
-
+        
         //get the extras
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -108,6 +102,13 @@ public class UpdateStationActivity extends AppCompatActivity {
             this.fuelStation = fuelStation; //assign the fuel station to view's fuel station object
         }
         syncAllViews();
+
+        //set station id to shared preference object
+        fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
+        editor = fuelStationIdSharedPref.edit();
+
+        editor.putString("feedback_station_id", fuelStation.getId());
+        editor.apply();
     }
 
     //button click method for post notice button
