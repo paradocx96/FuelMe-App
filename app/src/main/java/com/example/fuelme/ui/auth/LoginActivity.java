@@ -103,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject();
 
                         // Add data to JSON object
-                        jsonObject.put("username", username.getText().toString());
-                        jsonObject.put("password", password.getText().toString());
+                        jsonObject.put("username", (username.getText().toString()).trim());
+                        jsonObject.put("password", (password.getText().toString()).trim());
 
                         // Convert JSON object to String and Make Response body
                         String jsonString = jsonObject.toString();
