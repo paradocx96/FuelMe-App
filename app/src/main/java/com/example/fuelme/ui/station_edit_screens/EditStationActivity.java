@@ -141,7 +141,6 @@ public class EditStationActivity extends AppCompatActivity {
             fuelStationToUpdate.setLocationLongitude(fuelStation.getLocationLongitude());
 
 
-
             //setting other data is not necessary since they are manually set in JSON object
 
             Log.d(TAG, "All fields are valid. Fuel station object is set.");
@@ -259,6 +258,7 @@ public class EditStationActivity extends AppCompatActivity {
     public void navigateToMoreDetails(){
         Intent intent = new Intent(EditStationActivity.this, StationMoreDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //clear the top
+        intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
 
