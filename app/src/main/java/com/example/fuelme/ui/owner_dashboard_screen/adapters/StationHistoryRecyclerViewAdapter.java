@@ -23,6 +23,11 @@ public class StationHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Stat
     ArrayList<FuelStationLogItem> fuelStationLogItems = new ArrayList<>();
     String TAG = "demo";
 
+    public StationHistoryRecyclerViewAdapter(Context context, ArrayList<FuelStationLogItem> fuelStationLogItems){
+        this.context = context;
+        this.fuelStationLogItems = fuelStationLogItems;
+    }
+
 
     @NonNull
     @Override
