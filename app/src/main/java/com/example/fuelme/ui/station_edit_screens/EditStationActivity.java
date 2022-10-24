@@ -233,6 +233,7 @@ public class EditStationActivity extends AppCompatActivity {
                                         }
                                     }
                             );
+                            builder.show();
                         }
                     });
                 }
