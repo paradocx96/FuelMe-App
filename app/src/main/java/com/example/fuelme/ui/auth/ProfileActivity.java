@@ -1,9 +1,10 @@
-/*
- * IT19180526
- * Chandrasiri S.A.N.L.D.
+/**
+ * FuelMe APP
  * Enterprise Application Development - SE4040
- * User Profile UI for FuelMe Application
- * */
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 package com.example.fuelme.ui.auth;
 
@@ -37,6 +38,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+ * User Profile UI for FuelMe Application
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     // Defined object and variables
@@ -87,6 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Redirect to User profile update UI
                 Intent intent = new Intent(ProfileActivity.this, ProfileUpdateActivity.class);
                 intent.putExtra("user_id", logged_id);
                 intent.putExtra("user_full_name", textViewFullName.getText().toString());
@@ -103,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
      * This method used for getting user data by logged user id.
      * Then call the reassign user data method for set user data to be display in layout.
      *
-     * @throws IOException - Handle the Exception produced by failed or interrupted I/O operations.
+     * @throws IOException   - Handle the Exception produced by failed or interrupted I/O operations.
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #getUserData()
      */
