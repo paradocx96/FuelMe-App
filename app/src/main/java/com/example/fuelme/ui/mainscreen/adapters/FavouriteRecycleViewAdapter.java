@@ -1,3 +1,10 @@
+/**
+ * EAD - FuelMe Mobile App
+ *
+ * @author H.G. Malwatta - IT19240848
+ * @version 1.0.0
+ */
+
 package com.example.fuelme.ui.mainscreen.adapters;
 
 import android.content.Context;
