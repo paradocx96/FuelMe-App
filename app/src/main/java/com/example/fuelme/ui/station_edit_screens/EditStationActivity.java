@@ -1,12 +1,15 @@
 package com.example.fuelme.ui.station_edit_screens;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -16,11 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
+import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.helpers.NightModeHelper;
 import com.example.fuelme.models.FuelStation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class EditStationActivity extends AppCompatActivity {
 
@@ -71,6 +87,8 @@ public class EditStationActivity extends AppCompatActivity {
         }
     }
 
+
+
     //set the edit texts with fuel station current fuel station details
     public void setEditTextsWithFuelStationObject(){
         editTextLicense.setText(fuelStation.getLicense());
@@ -83,6 +101,164 @@ public class EditStationActivity extends AppCompatActivity {
 
     public void saveChangesButtonClick(View view){
         boolean validStatus = validateAllFields();
+
+        if (validStatus){
+            // if the status is valid
+            //get the strings from edit texts
+            String licenseString = editTextLicense.getText().toString();
+            String stationNameString = editTextStationName.getText().toString();
+            String stationAddressString = editTextStationAddress.getText().toString();
+            String stationPhoneNumberString = editTextPhoneNumber.getText().toString();
+            String stationEmailString = editTextStationEmail.getText().toString();
+            String stationWebsiteString = editTextStationWebsite.getText().toString();
+
+            //if website is empty reassign it
+            if (stationWebsiteString.isEmpty()){
+                stationWebsiteString = "not-given";
+            }
+
+            //instantiate and set the fuel station instance
+            FuelStation fuelStationToUpdate = new FuelStation();
+            //set fuel station attributes
+            fuelStationToUpdate.setId(fuelStation.getId());
+
+            //get items from edit texts
+            fuelStationToUpdate.setLicense(licenseString);
+            fuelStationToUpdate.setStationName(stationNameString);
+            fuelStationToUpdate.setStationAddress(stationAddressString);
+            fuelStationToUpdate.setStationPhoneNumber(stationPhoneNumberString);
+            fuelStationToUpdate.setStationEmail(stationEmailString);
+            fuelStationToUpdate.setStationWebsite(stationWebsiteString);
+
+            //get items from object
+            fuelStationToUpdate.setOwnerUsername(fuelStation.getOwnerUsername());
+            fuelStationToUpdate.setOpenStatus(fuelStation.getOpenStatus());
+            fuelStationToUpdate.setPetrolQueueLength(fuelStation.getPetrolQueueLength());
+            fuelStationToUpdate.setDieselQueueLength(fuelStation.getDieselQueueLength());
+            fuelStationToUpdate.setPetrolStatus(fuelStation.getPetrolStatus());
+            fuelStationToUpdate.setDieselStatus(fuelStation.getDieselStatus());
+            fuelStationToUpdate.setLocationLatitude(fuelStation.getLocationLatitude());
+            fuelStationToUpdate.setLocationLongitude(fuelStation.getLocationLongitude());
+
+
+
+            //setting other data is not necessary since they are manually set in JSON object
+
+            Log.d(TAG, "All fields are valid. Fuel station object is set.");
+
+            updateStation(fuelStationToUpdate); //call remote with created station object
+        }
+    }
+
+    //method to call the remote to update the station
+    public void updateStation(FuelStation fuelStation){
+        //instantiate a JSON object
+        JSONObject stationJsonObject = new JSONObject();
+        try {
+            //put the data in the JSON object
+            stationJsonObject.put("id", "dummy");
+            stationJsonObject.put("license", fuelStation.getLicense());
+            stationJsonObject.put("ownerUsername", fuelStation.getOwnerUsername());
+            stationJsonObject.put("stationName", fuelStation.getStationName());
+            stationJsonObject.put("stationAddress", fuelStation.getStationAddress());
+            stationJsonObject.put("stationPhoneNumber", fuelStation.getStationPhoneNumber());
+            stationJsonObject.put("stationEmail", fuelStation.getStationEmail());
+            stationJsonObject.put("stationWebsite", fuelStation.getStationWebsite());
+            stationJsonObject.put("openStatus", fuelStation.getOpenStatus());
+            stationJsonObject.put("petrolQueueLength", fuelStation.getPetrolQueueLength());
+            stationJsonObject.put("dieselQueueLength", fuelStation.getDieselQueueLength());
+            stationJsonObject.put("petrolStatus", fuelStation.getPetrolStatus());
+            stationJsonObject.put("dieselStatus", fuelStation.getDieselStatus());
+            stationJsonObject.put("locationLatitude", fuelStation.getLocationLatitude());
+            stationJsonObject.put("locationLongitude", fuelStation.getLocationLongitude());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String stationJsonString = stationJsonObject.toString(); //get the string of the json object
+        RequestBody requestBody = RequestBody.create(stationJsonString, JSON); //add the json string to request body
+
+        String baseUrl = CommonConstants.REMOTE_URL;
+
+        //build the url using Url builder
+        HttpUrl url = HttpUrl.parse(baseUrl).newBuilder()
+                .addPathSegment("api")
+                .addPathSegment("FuelStations")
+                .addPathSegment(fuelStation.getId())
+                .build();
+
+        //build the request
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+
+        //create and show progress dialog
+        progressDialog = getDialogProgressBar().create();
+        progressDialog.show();
+
+        //make the call with okhttp client
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        //show failure alert dialog
+                        getAlertDialog("Error", "Failed to make the call. Check your network connection").show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(EditStationActivity.this);
+                            builder.setTitle("Success");
+                            builder.setMessage("Saved the changes");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton(
+                                    "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            navigateToMoreDetails(); //navigate to more details
+                                            dialogInterface.dismiss(); // dismiss the dialog interface
+                                        }
+                                    }
+                            );
+                        }
+                    });
+                }
+                else {
+                    //handle failed response
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            //show the response error
+                            getAlertDialog("Failure in response", "Message : " + body).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //method to navigate back to more details
+    public void navigateToMoreDetails(){
+        Intent intent = new Intent(EditStationActivity.this, StationMoreDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //clear the top
+        startActivity(intent);
     }
 
     //method to validate all the fields
@@ -152,7 +328,7 @@ public class EditStationActivity extends AppCompatActivity {
         if (progressDialogBuilder == null){
             progressDialogBuilder = new AlertDialog.Builder(this);
             progressDialogBuilder.setCancelable(false);
-            progressDialogBuilder.setTitle("Registering Station");
+            progressDialogBuilder.setTitle("Saving Your Changes");
             progressDialogBuilder.setMessage("Please wait");
 
             final ProgressBar progressBar = new ProgressBar(this);
