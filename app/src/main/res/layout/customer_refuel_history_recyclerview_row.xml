@@ -32,6 +32,8 @@
                 android:text="@string/sample_date"
                 android:textSize="22sp"
                 android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -40,6 +42,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sample_time"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -47,6 +51,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/station_id"
                 android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -55,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sample_station_id"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -62,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/station_name"
                 android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -70,6 +80,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sample_station_name"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -77,6 +89,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/queue"
                 android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -85,6 +99,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/petrol"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -92,6 +108,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action"
                 android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -100,6 +118,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/join"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -107,6 +127,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/refuel_status"
                 android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -115,6 +137,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/refueled"
                 android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
