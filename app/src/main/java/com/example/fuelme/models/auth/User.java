@@ -1,7 +1,22 @@
+/**
+ * FuelMe APP
+ * Enterprise Application Development - SE4040
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 package com.example.fuelme.models.auth;
 
+/**
+ * Model class for User
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class User {
 
+    // Defined variables
     private String id;
     private String username;
     private String fullName;
@@ -9,9 +24,11 @@ public class User {
     private String password;
     private String role;
 
+    // Default constructor
     public User() {
     }
 
+    // Overload constructor
     public User(String id, String username, String fullName, String email, String password, String role) {
         this.id = id;
         this.username = username;
@@ -21,6 +38,7 @@ public class User {
         this.role = role;
     }
 
+    // String print method
     @Override
     public String toString() {
         return "User{" +
@@ -33,6 +51,7 @@ public class User {
                 '}';
     }
 
+    // Getters and Setters for User
     public String getId() {
         return id;
     }
