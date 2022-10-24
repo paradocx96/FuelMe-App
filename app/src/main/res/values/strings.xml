@@ -128,5 +128,13 @@
     <string name="current_station">Current Station</string>
     <string name="view_history">View History</string>
     <string name="customer_dashboard">Customer Dashboard</string>
+    <string name="sample_date">2022-10-15</string>
+    <string name="sample_time">09:45</string>
+    <string name="sample_station_id">asdf1242q4</string>
+    <string name="queue">Queue</string>
+    <string name="action">Action</string>
+    <string name="join">Join</string>
+    <string name="refuel_status">Refuel Status</string>
+    <string name="refueled">Refueled</string>
 
 </resources>
