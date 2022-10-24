@@ -92,6 +92,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //navigate to history view
+    public void navigateToViewHistory(View view){
+        Intent intent  = new Intent(this, CustomerRefuelHistoryActivity.class);
+        startActivity(intent);
+    }
+
     //set text views to loading
     public void setTextViewsToLoading(){
         textViewStationName.setText("Loading");

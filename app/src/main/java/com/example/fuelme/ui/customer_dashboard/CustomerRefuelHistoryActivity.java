@@ -68,6 +68,13 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //assign the recycler view
+        recyclerView = (RecyclerView) findViewById(R.id.customer_refuel_history_recyclerview);
+
+        adapter = new CustomerRefuelHistoryRecyclerViewAdapter(this, queueLogItems);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     //method to get queue log items from remote
