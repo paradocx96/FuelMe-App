@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,8 @@ public class UpdateStationActivity extends AppCompatActivity {
     Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton, deleteStationButton;
     FuelStation fuelStation;
 
+    SharedPreferences fuelStationIdSharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,12 @@ public class UpdateStationActivity extends AppCompatActivity {
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
         deleteStationButton = findViewById(R.id.btnDelete_update_station);
 
+        fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
+        editor = fuelStationIdSharedPref.edit();
+
+        editor.putString("feedback_station_id", fuelStation.getId());
+        editor.apply();
+
         //get the extras
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -118,7 +127,6 @@ public class UpdateStationActivity extends AppCompatActivity {
     //button click method for view feedback button
     public void viewFeedbackInUpdateStationButtonClick(View view){
         Intent intent = new Intent(UpdateStationActivity.this, FeedbackList.class);
-        intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
 
