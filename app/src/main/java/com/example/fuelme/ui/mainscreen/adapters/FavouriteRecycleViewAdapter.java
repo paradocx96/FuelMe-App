@@ -17,17 +17,32 @@ import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 
 import java.util.ArrayList;
 
+/**
+ * H.G. Malwatta - IT19240848
+ *
+ * This class is used to create the recycler view for the favourite fuel stations
+ */
 public class FavouriteRecycleViewAdapter extends RecyclerView.Adapter<FavouriteRecycleViewAdapter.FavouriteViewHolder> {
-
 
     Context context;
     ArrayList<FuelStation> fuelStations = new ArrayList<>();
 
+    /**
+     * Constructor
+     * @param context
+     * @param fuelStations
+     */
     public FavouriteRecycleViewAdapter(Context context, ArrayList<FuelStation> fuelStations) {
         this.context = context;
         this.fuelStations = fuelStations;
     }
 
+    /**
+     * This method is used to create the view holder
+     * @param parent
+     * @param viewType
+     * @return FavouriteViewHolder
+     */
     @NonNull
     @Override
     public FavouriteRecycleViewAdapter.FavouriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,6 +54,11 @@ public class FavouriteRecycleViewAdapter extends RecyclerView.Adapter<FavouriteR
         return new FavouriteRecycleViewAdapter.FavouriteViewHolder(view);
     }
 
+    /**
+     * This method is used to bind the view holder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull FavouriteViewHolder holder, int position) {
 
@@ -76,21 +96,31 @@ public class FavouriteRecycleViewAdapter extends RecyclerView.Adapter<FavouriteR
 
     }
 
+    /**
+     * This method is used to get the item count
+     * @return int
+     */
     @Override
     public int getItemCount() {
         return fuelStations.size();
     }
 
-    // View Holder
+    /**
+     * This class is used to create the view holder
+     */
     public static class FavouriteViewHolder extends RecyclerView.ViewHolder {
 
         TextView favouriteFuelStationName, favouriteFuelStationAddress, favouriteFuelStationOpenStatus, favouriteOpenClosedIcon;
         CardView favouriteStationCardView;
 
+        /**
+         * Constructor
+         * @param itemView
+         */
         public FavouriteViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            //Assign the views to the layout components
+            //assign the views to the layout components
             favouriteFuelStationName = itemView.findViewById(R.id.txtView_StationName_favourite_row);
             favouriteFuelStationAddress = itemView.findViewById(R.id.txtView_stationAddress_favourite_row);
             favouriteFuelStationOpenStatus = itemView.findViewById(R.id.txtView_stationOpenStatus_favourite_row);

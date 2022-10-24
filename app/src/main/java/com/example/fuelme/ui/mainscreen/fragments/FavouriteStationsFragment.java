@@ -105,12 +105,11 @@ public class FavouriteStationsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //Get current login user details
-        //preferences = getSharedPreferences("login_data", MODE_PRIVATE);
-
+        //get username from shared preferences
         preferences = getActivity().getSharedPreferences("login_data", MODE_PRIVATE);
         username = preferences.getString("user_username", "");
 
+        //get favourite stations from database
         fetchFavouriteStations(username);
     }
 
@@ -128,9 +127,14 @@ public class FavouriteStationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Swipe to refresh
+        //swipe to refresh layout
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_favourite);
 
+        /**
+         * H.G. Malwatta - IT19240848
+         *
+         * Swipe to refresh
+         */
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -140,9 +144,19 @@ public class FavouriteStationsFragment extends Fragment {
             }
         });
 
+        /**
+         * H.G. Malwatta - IT19240848
+         *
+         * This method is used to delete a favourite station from the favourite list by swiping right to left
+         */
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
 
-
+            /**
+             * This method is used to set the swipe direction
+             * @param recyclerView
+             * @param viewHolder
+             * @return int
+             */
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(
@@ -151,24 +165,41 @@ public class FavouriteStationsFragment extends Fragment {
                 );
             }
 
+            /**
+             * This method is used to move the item in the recycler view
+             * @param recyclerView
+             * @param viewHolder
+             * @param target
+             * @return true if the item is moved
+             */
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
+            /**
+             * This method is used to delete the item from the recycler view
+             * @param viewHolder
+             * @param direction
+             * @return view
+             */
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
+                //get the position of the item
                 int position = viewHolder.getAdapterPosition();
                 FuelStation fuelStation = fuelStations.get(position);
 
+                //check the direction of the swipe
                 if (direction == ItemTouchHelper.LEFT) {
 
+                    //create a alert dialog to confirm the delete
                     AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
                     alert.setCancelable(false);
                     alert.setTitle("Are you sure?");
                     alert.setMessage("Do you want to delete this station from your favourite list?");
 
+                    //set the positive button and its action to delete the item
                     alert.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -177,6 +208,8 @@ public class FavouriteStationsFragment extends Fragment {
                             deleteFavourite(fuelStation.getId());
                         }
                     });
+
+                    //set the negative button and its action to cancel the delete
                     alert.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -190,13 +223,22 @@ public class FavouriteStationsFragment extends Fragment {
             }
         });
 
+        //attach the helper to the recycler view
         helper.attachToRecyclerView(recyclerView);
 
         return view;
     }
 
-    //Fetch all the favourite stations from remote async
+    /**
+     * H.G. Malwatta - IT19240848
+     *
+     * This method is used to fetch the favourite stations of the current login user
+     *
+     * @param username
+     */
     public void fetchFavouriteStations(String username) {
+
+        //set the username to the URI
         String BASE_URL = CommonConstants.REMOTE_URL_GET_FAVORITE_STATIONS + username;
 
         //build the url using Url builder
@@ -224,10 +266,12 @@ public class FavouriteStationsFragment extends Fragment {
 
                         //iterate through the JSON array
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            //JSONObject jsonObject = new JSONObject(body);
-                            JSONObject jsonObject = jsonArray.getJSONObject(i); //get the json object by index
 
-                            FuelStation fuelStation = new FuelStation();//instantiate fuel station object
+                            //get the json object by index
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            //instantiate fuel station object
+                            FuelStation fuelStation = new FuelStation();
 
                             //assign attributes to the fuel station object
                             fuelStation.setId(jsonObject.getString("id"));
@@ -277,9 +321,16 @@ public class FavouriteStationsFragment extends Fragment {
         });
     }
 
-    //Delete favourite station from remote async
+    /**
+     * H.G. Malwatta - IT19240848
+     *
+     * This method is used to delete the favourite station
+     *
+     * @param id
+     */
     public void deleteFavourite(String id) {
 
+        //set the id to the URI
         String BASE_URL = CommonConstants.REMOTE_URL_DELETE_FAVORITE_STATIONS + id;
 
         //build the url using Url builder
@@ -301,7 +352,11 @@ public class FavouriteStationsFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
+                //check the response status
                 if (response.isSuccessful()) {
+
+                    //get the response body
                     final String myResponse = response.body().string();
                     Log.d("API_CALL_DELETE", "onSuccess: " + myResponse);
 
