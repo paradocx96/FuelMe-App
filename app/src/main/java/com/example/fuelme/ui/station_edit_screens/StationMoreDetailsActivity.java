@@ -159,6 +159,7 @@ public class StationMoreDetailsActivity extends AppCompatActivity {
                         fuelStation.setStationPhoneNumber(jsonObject.getString("stationPhoneNumber"));
                         fuelStation.setStationEmail(jsonObject.getString("stationEmail"));
                         fuelStation.setStationWebsite(jsonObject.getString("stationWebsite"));
+                        fuelStation.setOpenStatus(jsonObject.getString("openStatus"));
                         fuelStation.setPetrolQueueLength(jsonObject.getInt("petrolQueueLength"));
                         fuelStation.setDieselQueueLength(jsonObject.getInt("dieselQueueLength"));
                         fuelStation.setPetrolStatus(jsonObject.getString("petrolStatus"));
