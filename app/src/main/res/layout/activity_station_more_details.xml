@@ -173,6 +173,12 @@
             android:layout_height="wrap_content"
             android:onClick="editButtonClick"
             android:text="@string/edit" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_logs"
+            />
     </LinearLayout>
 
 </LinearLayout>
