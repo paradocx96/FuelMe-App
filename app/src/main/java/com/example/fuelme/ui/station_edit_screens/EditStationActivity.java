@@ -1,10 +1,14 @@
 package com.example.fuelme.ui.station_edit_screens;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.fuelme.R;
 import com.example.fuelme.models.FuelStation;
@@ -21,6 +25,8 @@ public class EditStationActivity extends AppCompatActivity {
 
     EditText editTextLicense, editTextStationName, editTextStationAddress, editTextStationEmail, editTextPhoneNumber, editTextStationWebsite;
     FuelStation fuelStation;
+    AlertDialog.Builder progressDialogBuilder;
+    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,40 @@ public class EditStationActivity extends AppCompatActivity {
         editTextStationEmail.setText(fuelStation.getStationEmail());
         editTextPhoneNumber.setText(fuelStation.getStationPhoneNumber());
         editTextStationWebsite.setText(fuelStation.getStationWebsite());
+    }
+
+
+    //progress bar in an alert dialog
+    public AlertDialog.Builder getDialogProgressBar(){
+        if (progressDialogBuilder == null){
+            progressDialogBuilder = new AlertDialog.Builder(this);
+            progressDialogBuilder.setCancelable(false);
+            progressDialogBuilder.setTitle("Registering Station");
+            progressDialogBuilder.setMessage("Please wait");
+
+            final ProgressBar progressBar = new ProgressBar(this);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progressBar.setLayoutParams(layoutParams);
+            progressDialogBuilder.setView(progressBar);
+
+        }
+        return progressDialogBuilder;
+    }
+
+    //generic alert dialog with OK button
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
     }
 
     @Override
