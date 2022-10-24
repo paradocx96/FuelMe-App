@@ -45,24 +45,7 @@
                 android:paddingRight="10dp"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/station_id"
-                android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                />
 
-            <TextView
-                android:id="@+id/txtView_stationId_station_history_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sample_station_id"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                />
 
             <TextView
                 android:layout_width="match_parent"
