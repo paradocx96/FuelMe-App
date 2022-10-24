@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -237,8 +238,16 @@ public class StationMoreDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    //override the back press to send an updated fuel station object back
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
+
+        //override the default back functionality
+        //navigate to UpdateStationActivity with an updated FuelStation object
+        Intent intent = new Intent(StationMoreDetailsActivity.this, UpdateStationActivity.class);
+        intent.putExtra("selected_fuel_station", fuelStation);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //clear the top
+        startActivity(intent);
     }
 }
