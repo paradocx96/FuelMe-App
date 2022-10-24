@@ -130,6 +130,7 @@ public class UpdateStationActivity extends AppCompatActivity {
     //button click to go to more view
     public void  moreButtonClick(View view){
         Intent intent = new Intent(UpdateStationActivity.this, StationMoreDetailsActivity.class);
+        intent.putExtra("station_id",fuelStation.getId());
         startActivity(intent);
     }
 
