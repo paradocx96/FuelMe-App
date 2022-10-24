@@ -1,7 +1,22 @@
+/**
+ * FuelMe APP
+ * Enterprise Application Development - SE4040
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 package com.example.fuelme.models.notice;
 
+/**
+ * Model class for Notice
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class Notice {
 
+    // Defined variables
     private String id;
     private String stationId;
     private String title;
@@ -9,9 +24,11 @@ public class Notice {
     private String author;
     private String createAt;
 
+    // Default constructor
     public Notice() {
     }
 
+    // Overload constructor
     public Notice(String id, String stationId, String title, String description, String author, String createAt) {
         this.id = id;
         this.stationId = stationId;
@@ -21,6 +38,7 @@ public class Notice {
         this.createAt = createAt;
     }
 
+    // String print method
     @Override
     public String toString() {
         return "Notice{" +
@@ -33,6 +51,7 @@ public class Notice {
                 '}';
     }
 
+    // Getters and Setters for Notice
     public String getId() {
         return id;
     }
