@@ -44,7 +44,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     String TAG = "demo";
 
     SharedPreferences sharedPreferences;
-    FuelStation fuelStation;
+    FuelStation fuelStation = new FuelStation();
 
     TextView textViewStationName;
     Button viewStationButton;
