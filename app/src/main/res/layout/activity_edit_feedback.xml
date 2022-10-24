@@ -65,6 +65,7 @@
         android:layout_marginEnd="35dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="sans-serif-black"
+        android:onClick="editFeedbackButtonClick"
         android:text="@string/edit_feedback_btn"
         android:textSize="16sp"
         app:cornerRadius="@dimen/btn_submit_rounded"
