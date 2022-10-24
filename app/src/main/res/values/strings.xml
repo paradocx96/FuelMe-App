@@ -112,5 +112,6 @@
     <string name="delete_station">Delete Station</string>
     <string name="license_with_colon">License : </string>
     <string name="station_id_with_colon">ID : </string>
+    <string name="more">More</string>
 
 </resources>
