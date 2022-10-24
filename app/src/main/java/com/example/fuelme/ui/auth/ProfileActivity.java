@@ -12,6 +12,7 @@ import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_USER
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
     String logged_id, logged_name, logged_username, logged_role, logged_email;
     TextView textViewFullName, textViewUsername, textViewRole, textViewEmail;
     ImageView viewProfileImage;
+    Toolbar toolbar;
     Button btnUpdate;
     private final OkHttpClient client = new OkHttpClient();
 
@@ -75,6 +77,12 @@ public class ProfileActivity extends AppCompatActivity {
         textViewRole = findViewById(R.id.auth_profile_role);
         textViewEmail = findViewById(R.id.auth_profile_email);
         btnUpdate = findViewById(R.id.auth_profile_button_update);
+        toolbar = findViewById(R.id.toolbar_auth_profile);
+
+        // Setup back button for toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Get logged user's data
         preferences = getSharedPreferences("login_data", MODE_PRIVATE);
@@ -184,5 +192,26 @@ public class ProfileActivity extends AppCompatActivity {
         textViewUsername.setText(user.getUsername());
         textViewRole.setText(user.getRole());
         textViewEmail.setText(user.getEmail());
+    }
+
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onSupportNavigateUp()
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onBackPressed()
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

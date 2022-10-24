@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelme.R;
-import com.example.fuelme.models.auth.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
