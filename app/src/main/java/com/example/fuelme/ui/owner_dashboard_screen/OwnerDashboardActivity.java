@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.fuelme.R;
+import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
 import com.example.fuelme.ui.register_station_screen.RegisterStationActivity;
 import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
@@ -47,6 +48,11 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
     public void navigateToViewAllOwnedStations(View view){
         Intent intent = new Intent(this, OwnerStationsActivity.class);
+        startActivity(intent);
+    }
+
+    public void navigateToCustomerDashboard(View view){
+        Intent intent = new Intent(this, CustomerDashboardActivity.class);
         startActivity(intent);
     }
 

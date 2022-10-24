@@ -12,6 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
         <activity
+            android:name=".ui.customer_dashboard.CustomerRefuelHistoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.customer_dashboard.CustomerDashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.station_edit_screens.EditStationActivity"
             android:exported="false">
             <meta-data

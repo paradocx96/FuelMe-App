@@ -123,5 +123,18 @@
     <string name="more_setails_notice">The email and phone number are related to the station. They are not necessarily your personal ones.</string>
     <string name="edit_station_details">Edit Station Details</string>
     <string name="save_changes">Save Changes</string>
+    <string name="current_station_message">You are currently in Eheliyagoda Associates</string>
+    <string name="view_station">View Station</string>
+    <string name="current_station">Current Station</string>
+    <string name="view_history">View History</string>
+    <string name="customer_dashboard">Customer Dashboard</string>
+    <string name="sample_date">2022-10-15</string>
+    <string name="sample_time">09:45</string>
+    <string name="sample_station_id">asdf1242q4</string>
+    <string name="queue">Queue</string>
+    <string name="action">Action</string>
+    <string name="join">Join</string>
+    <string name="refuel_status">Refuel Status</string>
+    <string name="refueled">Refueled</string>
 
 </resources>
