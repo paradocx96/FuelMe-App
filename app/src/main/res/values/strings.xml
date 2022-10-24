@@ -136,5 +136,9 @@
     <string name="join">Join</string>
     <string name="refuel_status">Refuel Status</string>
     <string name="refueled">Refueled</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
 
 </resources>
