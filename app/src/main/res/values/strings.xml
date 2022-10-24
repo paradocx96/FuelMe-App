@@ -127,5 +127,6 @@
     <string name="view_station">View Station</string>
     <string name="current_station">Current Station</string>
     <string name="view_history">View History</string>
+    <string name="customer_dashboard">Customer Dashboard</string>
 
 </resources>
