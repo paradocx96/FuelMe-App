@@ -441,7 +441,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the petrol queue length
-                                    decrementPetrolQueue();
+                                    //user is leaving after refueling
+                                    //set the relevant refuel status
+                                    decrementPetrolQueue("refueled");
 
                                     updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
                                 }
@@ -462,7 +464,8 @@ public class StationSingleViewActivity extends AppCompatActivity {
                                     queueType[0] = sharedPreferences.getString(StationCommonConstants.QUEUE, "");
 
                                     //make the remote call to decrement the petrol queue length
-                                    decrementPetrolQueue();
+                                    //user is leaving without refueling
+                                    decrementPetrolQueue("not-refueled");
 
                                     updateQueueButtons(currentlyJoinedQueueStationId[0], queueType[0], fuelStation.getId());
                                 }
@@ -712,7 +715,7 @@ public class StationSingleViewActivity extends AppCompatActivity {
     }
 
     //method to remote decrement petrol queue
-    public void decrementPetrolQueue() {
+    public void decrementPetrolQueue(String refuelStatus) {
         //create an instance of HTTPUrl
         HttpUrl url = HttpUrl.parse(CommonConstants.REMOTE_URL)
                 .newBuilder()
@@ -722,9 +725,21 @@ public class StationSingleViewActivity extends AppCompatActivity {
                 .addPathSegment(fuelStation.getId()) //set this view's station id to path
                 .build();
 
-        String sampleString = "sample";
+        //create JSON object for queue log request
+        JSONObject queueLogRequestJsonObject = new JSONObject();
+        try {
+            queueLogRequestJsonObject.put("customerUsername", username);
+            queueLogRequestJsonObject.put("stationId", fuelStation.getId());
+            queueLogRequestJsonObject.put("stationLicense", fuelStation.getLicense());
+            queueLogRequestJsonObject.put("stationName", fuelStation.getStationName());
+            queueLogRequestJsonObject.put("refuelStatus", refuelStatus);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String queueLogRequestString = queueLogRequestJsonObject.toString();
         //empty request body
-        RequestBody requestBody = RequestBody.create(sampleString, JSON);
+        RequestBody requestBody = RequestBody.create(queueLogRequestString, JSON);
 
         Request request = new Request.Builder()
                 .url(url)
