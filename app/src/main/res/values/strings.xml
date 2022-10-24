@@ -137,5 +137,9 @@
     <string name="refuel_status">Refuel Status</string>
     <string name="refueled">Refueled</string>
     <string name="view_logs">View Logs</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="sample_fuel_type">Petrol</string>
+    <string name="fuel_status">Fuel Status</string>
+    <string name="sample_fuel_status">Available</string>
 
 </resources>
