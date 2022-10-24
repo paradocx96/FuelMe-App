@@ -55,7 +55,7 @@ public class DateTimeHelper {
 
         int newHour = hour + 5; //increase hours by five
 
-        if (hour >= 24){
+        if (newHour >= 24){
             day++;
             hour = newHour - 24;
         }
