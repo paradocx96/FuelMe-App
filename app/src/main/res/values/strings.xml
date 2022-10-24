@@ -116,5 +116,7 @@
     <string name="address">Address</string>
     <string name="website">Website</string>
     <string name="more_setails_notice">The email and phone number are related to the station. They are not necessarily your personal ones.</string>
+    <string name="edit_station_details">Edit Station Details</string>
+    <string name="save_changes">Save Changes</string>
 
 </resources>

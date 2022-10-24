@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -79,6 +81,12 @@ public class StationMoreDetailsActivity extends AppCompatActivity {
             //make remote call to get station details by id
             getStation();
         }
+    }
+
+    public void editButtonClick(View view){
+        Intent intent = new Intent(StationMoreDetailsActivity.this, EditStationActivity.class);
+        intent.putExtra("selected_fuel_station",fuelStation);
+        startActivity(intent);
     }
 
     //set every textview to loading
