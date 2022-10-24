@@ -12,13 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
         <activity
-            android:name=".ui.delete_station_screen.DeleteStationActivity"
+            android:name=".ui.station_edit_screens.StationMoreDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!-- Auth Activities -->
+        <activity
+            android:name=".ui.delete_station_screen.DeleteStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- Auth Activities -->
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="true">
@@ -153,6 +159,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
