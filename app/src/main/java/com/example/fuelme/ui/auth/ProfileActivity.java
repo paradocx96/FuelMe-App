@@ -142,11 +142,11 @@ public class ProfileActivity extends AppCompatActivity {
                             // Create user object with database data
                             User user = new User(
                                     logged_id,
-                                    jsonResponse.getString("Username"),
-                                    jsonResponse.getString("FullName"),
-                                    jsonResponse.getString("Email"),
+                                    jsonResponse.getString("username"),
+                                    jsonResponse.getString("fullName"),
+                                    jsonResponse.getString("email"),
                                     null,
-                                    jsonResponse.getString("Role")
+                                    jsonResponse.getString("role")
                             );
 
                             // Calling reassign method for view user data
