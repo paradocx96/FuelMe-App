@@ -154,10 +154,17 @@ public class StationMoreDetailsActivity extends AppCompatActivity {
                         fuelStation.setId(jsonObject.getString("id"));
                         fuelStation.setStationName(jsonObject.getString("stationName"));
                         fuelStation.setLicense(jsonObject.getString("license"));
+                        fuelStation.setOwnerUsername(jsonObject.getString("ownerUsername"));
                         fuelStation.setStationAddress(jsonObject.getString("stationAddress"));
                         fuelStation.setStationPhoneNumber(jsonObject.getString("stationPhoneNumber"));
                         fuelStation.setStationEmail(jsonObject.getString("stationEmail"));
                         fuelStation.setStationWebsite(jsonObject.getString("stationWebsite"));
+                        fuelStation.setPetrolQueueLength(jsonObject.getInt("petrolQueueLength"));
+                        fuelStation.setDieselQueueLength(jsonObject.getInt("dieselQueueLength"));
+                        fuelStation.setPetrolStatus(jsonObject.getString("petrolStatus"));
+                        fuelStation.setDieselStatus(jsonObject.getString("dieselStatus"));
+                        fuelStation.setLocationLatitude(jsonObject.getInt("locationLatitude"));
+                        fuelStation.setLocationLongitude(jsonObject.getInt("locationLongitude"));
                     }
                     catch (JSONException e){
                         e.printStackTrace();
