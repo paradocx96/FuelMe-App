@@ -28,6 +28,7 @@ import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 import com.example.fuelme.ui.notice.NoticeCreateActivity;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 import com.example.fuelme.ui.notice.NoticeListStationActivity;
+import com.example.fuelme.ui.station_edit_screens.StationMoreDetailsActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -123,6 +124,12 @@ public class UpdateStationActivity extends AppCompatActivity {
     public void deleteStationButtonClick(View view){
         Intent intent = new Intent(UpdateStationActivity.this, DeleteStationActivity.class);
         intent.putExtra("selected_fuel_station", fuelStation);
+        startActivity(intent);
+    }
+
+    //button click to go to more view
+    public void  moreButtonClick(View view){
+        Intent intent = new Intent(UpdateStationActivity.this, StationMoreDetailsActivity.class);
         startActivity(intent);
     }
 
