@@ -8,6 +8,7 @@
 
 package com.example.fuelme.ui.mainscreen;
 import com.example.fuelme.ui.auth.LoginActivity;
+import com.example.fuelme.ui.auth.ProfileActivity;
 import com.example.fuelme.ui.mainscreen.adapters.PageAdapter;
 
 import androidx.annotation.NonNull;
@@ -130,9 +131,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.navMenu_login:
-                //handle login here
-                //Log.d(TAG, "Login Clicked");
-                Toast.makeText(this, "Login Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent_profile = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent_profile);
                 break;
             case R.id.navMenu_logout:
                 //handle logout here
