@@ -34,24 +34,28 @@
             android:id="@+id/txtSubjectView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="35dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/single_item_feedback_subject_txt"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_editFeedback" />
 
-        <TextView
+        <me.biubiubiu.justifytext.library.JustifyTextView
             android:id="@+id/txtDescriptionView"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="65dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="35dp"
             android:text="@string/single_item_feedback_description_txt"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSubjectView" />
 
         <TextView
@@ -59,34 +63,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
+            android:layout_marginTop="35dp"
             android:layout_marginBottom="52dp"
             android:fontFamily="@font/carter_one"
             android:text="@string/single_item_feedback_dateTime_txt"
             android:textColor="#C62828"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescriptionView" />
 
         <TextView
             android:id="@+id/txtUsernameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="52dp"
             android:fontFamily="@font/carter_one"
             android:text="@string/single_item_feedback_username_txt"
             android:textColor="#C62828"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescriptionView" />
 
         <Button
             android:id="@+id/btn_editFeedback"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginStart="35dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue"
             android:onClick="editFeedbackButtonClick"
             android:text="@string/edit_single_feedback_btn_txt"
+            android:textAllCaps="false"
+            android:scaleType="center"
             app:cornerRadius="10dp"
             app:icon="@android:drawable/ic_menu_edit"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,14 +105,15 @@
 
         <Button
             android:id="@+id/btn_deleteFeedback"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="35dp"
             android:backgroundTint="@color/btn_feedback_submit"
             android:onClick="deleteFeedbackButtonClick"
             android:text="@string/delete_single_feedback_btn_txt"
-            android:textColor="#212121"
+            android:textAllCaps="false"
+            android:scaleType="center"
             app:cornerRadius="10dp"
             app:icon="@android:drawable/ic_menu_delete"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +130,8 @@
         android:layout_marginEnd="151dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/single_feedback_txt"
-        android:textSize="25dp"
+        android:textAlignment="center"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_single_feedback_toolbar" />
