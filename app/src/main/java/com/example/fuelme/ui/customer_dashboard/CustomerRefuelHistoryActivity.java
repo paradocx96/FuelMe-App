@@ -93,6 +93,9 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                 //clear the log item list
                 queueLogItems.clear();
                 //notify the recyclerview adapter that the dataset has changed
+                /*
+                 * Solution to crash referenced from, https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
+                 * */
                 adapter.notifyDataSetChanged();
                 //get the log items from remote
                 getQueueLogItems(CustomerRefuelHistoryActivity.this);

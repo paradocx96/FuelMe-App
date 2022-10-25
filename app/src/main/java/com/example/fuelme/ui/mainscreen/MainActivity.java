@@ -199,6 +199,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_settings:
                 //settings here
+                /*
+                * Emoji referenced from, https://stackoverflow.com/questions/69630124/how-to-configure-toast-icon-in-android-12
+                * */
                 Toast.makeText(this, "No settings yet " + ("\ud83d\ude01"), Toast.LENGTH_SHORT).show();
                 break;
             default:
