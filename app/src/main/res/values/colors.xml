@@ -20,4 +20,6 @@
     <color name="grey_second">#F8F8F8</color>
     <color name="yellow_light">#F1E0AD</color>
     <color name="orange_white">#f7efe4</color>
+    <color name="light_blue">#c5dafc</color>
+    <color name="blue_grey">#747e8c</color>
 </resources>
