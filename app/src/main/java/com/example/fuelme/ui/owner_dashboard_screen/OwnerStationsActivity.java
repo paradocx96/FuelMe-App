@@ -87,6 +87,9 @@ public class OwnerStationsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 fuelStations.clear();
+                /*
+                 * Solution to crash referenced from, https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
+                 * */
                 adapter.notifyDataSetChanged();
                 fetchOwnerFuelStationsAsync(OwnerStationsActivity.this);
             }

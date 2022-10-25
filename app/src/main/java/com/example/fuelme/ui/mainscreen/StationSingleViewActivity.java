@@ -305,6 +305,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
+    * Open phone app referenced from, https://stackoverflow.com/questions/11699819/how-do-i-get-the-dialer-to-open-with-phone-number-displayed
+    * */
     //button click for phone number button
     public void phoneNumberButtonClick(View view){
         //get the phone number
@@ -317,6 +320,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
 
     }
 
+    /*
+     * Open email client referenced from, https://stackoverflow.com/questions/2734749/opening-an-email-client-on-clicking-a-button
+     * */
     //button click for email button
     public void emailButtonClick(View view){
         //get the email address of the station
@@ -331,6 +337,9 @@ public class StationSingleViewActivity extends AppCompatActivity {
         startActivity(intent); //start the activity
     }
 
+    /*
+     * Open web browser referenced from, https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
+     * */
     //button click for website button
     public void websiteButtonClick(View view){
         //get the station website
