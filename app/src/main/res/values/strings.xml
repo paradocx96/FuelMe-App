@@ -145,5 +145,8 @@
     <string name="sample_fuel_type">Petrol</string>
     <string name="fuel_status">Fuel Status</string>
     <string name="sample_fuel_status">Available</string>
+    <string name="hello">Hello</string>
+    <string name="space"> </string>
+    <string name="sample_user_full_name">Jayantha Gunathilaka</string>
 
 </resources>
