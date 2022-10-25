@@ -40,6 +40,17 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+/*
+ *  FuelMe
+ *  Enterprise Application Development
+ *
+ *  IT19014128 - A.M.W.W.R.L. Wataketiya
+ *  IT19180526 - S.A.N.L.D. Chandrasiri
+ *  H.G. Malwatta - IT19240848
+ *
+ *  Main Activity of the app
+ * */
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferences preferences;
