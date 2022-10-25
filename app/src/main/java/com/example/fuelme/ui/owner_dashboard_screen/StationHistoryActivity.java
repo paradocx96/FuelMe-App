@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,6 +55,8 @@ public class StationHistoryActivity extends AppCompatActivity {
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     String stationId;
 
     @Override
@@ -83,6 +86,19 @@ public class StationHistoryActivity extends AppCompatActivity {
         adapter = new StationHistoryRecyclerViewAdapter(this, fuelStationLogItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //set swipe refresh layout
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_station_history);
+        //set listener
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //clear the log item list
+                fuelStationLogItems.clear();
+                //get the log items from remote
+                getStationLogItems(stationId, StationHistoryActivity.this);
+            }
+        });
     }
 
     //method to get station log items from remote
@@ -109,6 +125,7 @@ public class StationHistoryActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                         getAlertDialog("Error", "Check your network connection").show();
                     }
                 });
@@ -150,6 +167,7 @@ public class StationHistoryActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                                 if (fuelStationLogItems.isEmpty()){
                                     //if the station logs are empty show a toast
                                     Log.d(TAG, "No log items");
@@ -178,6 +196,7 @@ public class StationHistoryActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                             getAlertDialog("Error", "Message : " + body).show();
                         }
                     });
