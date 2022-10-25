@@ -28,6 +28,7 @@ import java.util.ArrayList;
  * References:
  *  https://developer.android.com/docs
  *  https://square.github.io/okhttp/
+ *  https://youtu.be/Mc0XT58A1Z4
  * */
 
 public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStationsRecyclerViewAdapter.MyViewHolder> {
