@@ -95,6 +95,8 @@ public class StationHistoryActivity extends AppCompatActivity {
             public void onRefresh() {
                 //clear the log item list
                 fuelStationLogItems.clear();
+                //notify the recyclerview adapter that the dataset has changed
+                adapter.notifyDataSetChanged();
                 //get the log items from remote
                 getStationLogItems(stationId, StationHistoryActivity.this);
             }
