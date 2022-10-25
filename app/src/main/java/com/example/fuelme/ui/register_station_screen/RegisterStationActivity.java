@@ -89,6 +89,7 @@ public class RegisterStationActivity extends AppCompatActivity {
         editTextStationEmail = findViewById(R.id.edtText_stationEmail_register_station);
         editTextStationWebsite = findViewById(R.id.edtText_stationWebsite_register_station);
 
+        //set the edit text background colors
         setEditTextColors();
 
     }
