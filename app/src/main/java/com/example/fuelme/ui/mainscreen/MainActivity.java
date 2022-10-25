@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_settings:
                 //settings here
-                Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No settings yet " + ("\ud83d\ude01"), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Log.d(TAG,"Default ran in onNavigationItemSelected");
