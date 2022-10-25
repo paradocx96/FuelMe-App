@@ -67,12 +67,6 @@
                 android:onClick="navigateToViewAllOwnedStations"
                 android:text="@string/view_all_owned_stations" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="navigateToCustomerDashboard"
-                android:text="@string/customer_dashboard" />
-
         </LinearLayout>
 
 

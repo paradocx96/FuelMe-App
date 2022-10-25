@@ -171,7 +171,7 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                                 swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                                 if (queueLogItems.isEmpty()){
                                     //if the queue logs are empty show a toast
-                                    Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
+                                    Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                     //if not populate adapter
