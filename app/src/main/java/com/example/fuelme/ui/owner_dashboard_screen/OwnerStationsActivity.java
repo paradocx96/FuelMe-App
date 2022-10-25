@@ -1,12 +1,15 @@
 package com.example.fuelme.ui.owner_dashboard_screen;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +48,7 @@ public class OwnerStationsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     OwnerStationsRecyclerViewAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,18 @@ public class OwnerStationsActivity extends AppCompatActivity {
         adapter = new OwnerStationsRecyclerViewAdapter(this, fuelStations);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //assign swipe refresh view
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_owner_stations);
+        //set listener for swipe refresh
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fuelStations.clear();
+                fetchOwnerFuelStationsAsync(OwnerStationsActivity.this);
+            }
+        });
+
     }
 
     //fetch owner's stations from remote
@@ -97,6 +113,13 @@ public class OwnerStationsActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to make call");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+                        getAlertDialog("Error when getting data", "Check your network connection").show();
+                    }
+                });
                 e.printStackTrace();
             }
 
@@ -145,6 +168,7 @@ public class OwnerStationsActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                                 if (fuelStations.isEmpty()){
                                     Toast.makeText(context, "You do not have registered any stations yet",Toast.LENGTH_SHORT).show();
                                 }
@@ -170,12 +194,34 @@ public class OwnerStationsActivity extends AppCompatActivity {
                     ResponseBody responseBody = response.body();
                     String body = responseBody.string();
                     Log.d(TAG, "onResponse failure : " + body);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+                            getAlertDialog("Error in response", "Message : " + body).show();
+                        }
+                    });
                 }
             }
         });
 
         Log.d(TAG, "URL : " +url);
 
+    }
+
+    //generic alert dialog builder
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
     }
 
     @Override
