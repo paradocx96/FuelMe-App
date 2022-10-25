@@ -40,7 +40,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-/*
+/**
  *  FuelMe
  *  Enterprise Application Development
  *
@@ -49,6 +49,10 @@ import com.google.android.material.tabs.TabLayout;
  *  H.G. Malwatta - IT19240848
  *
  *  Main Activity of the app
+ *
+ *  References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
  * */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

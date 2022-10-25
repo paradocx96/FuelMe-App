@@ -39,11 +39,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
 *  IT19014128
 *  A.M.W.W.R.L. Wataketiya
 *
 * Activity class for station history
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
 * */
 public class StationHistoryActivity extends AppCompatActivity {
 

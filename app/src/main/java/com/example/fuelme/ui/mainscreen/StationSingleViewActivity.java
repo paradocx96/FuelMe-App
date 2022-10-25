@@ -47,11 +47,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
  *  IT19014128
  *  A.M.W.W.R.L. Wataketiya
  *
  * Activity for station single view
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
  * */
 
 
