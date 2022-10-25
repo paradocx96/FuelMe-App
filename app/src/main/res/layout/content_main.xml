@@ -34,24 +34,25 @@
             android:id="@+id/all_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All" />
+            android:text="@string/all" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/favourites_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favourites" />
+            android:text="@string/favourites" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="409dp"
-        android:layout_height="625dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="1dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
