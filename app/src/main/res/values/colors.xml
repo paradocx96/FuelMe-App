@@ -24,4 +24,6 @@
     <color name="orange_white">#f7efe4</color>
     <color name="light_blue">#c5dafc</color>
     <color name="blue_grey">#747e8c</color>
+    <color name="dark_grey">#46474f</color>
+    <color name="dark_blue">#5f75fa</color>
 </resources>

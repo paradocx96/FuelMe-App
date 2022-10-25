@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
+import com.example.fuelme.helpers.NightModeHelper;
 import com.example.fuelme.models.FuelStation;
 import com.example.fuelme.ui.owner_dashboard_screen.OwnerStationsActivity;
 
@@ -71,6 +73,9 @@ public class DeleteStationActivity extends AppCompatActivity {
             this.fuelStation = fuelStation; //assign the fuel station to view's fuel station object
             updateTextViews(); //update the text views with new data
         }
+
+        //set the edit text background colors
+        setEditTextColors();
     }
 
     //button click method for delete station
@@ -282,6 +287,31 @@ public class DeleteStationActivity extends AppCompatActivity {
         txtViewStationAddress.setText(fuelStation.getStationAddress());
         txtViewLicense.setText(fuelStation.getLicense());
         txtViewStationId.setText(fuelStation.getId());
+    }
+
+    //set the colors of edit texts
+    public void setEditTextColors(){
+        changeEditTextColorBasedOnTheme(editTextStationId);
+    }
+
+
+    //method takes in an edit text and sets its background color to a grey tone of dark mode is enabled
+    public void changeEditTextColorBasedOnTheme(EditText editText){
+        String theme = NightModeHelper.getMode(this);
+        switch (theme){
+            case "light":
+                //night mode is not enabled.
+                //leave default background colors
+                break;
+            case "dark":
+                //night mode is enabled
+                //set the background color to a grey tone
+                editText.setBackgroundColor(Color.parseColor("#606478"));
+                break;
+            default:
+                //not defined
+                break;
+        }
     }
 
     @Override
