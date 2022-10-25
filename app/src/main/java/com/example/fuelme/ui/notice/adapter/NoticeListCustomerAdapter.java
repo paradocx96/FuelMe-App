@@ -47,11 +47,11 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
     /**
      * This method used to defined and binding view object with list view layout.
      *
-     * @return NoticeListCustomerAdapter.NoticeListCustomerHolder
-     * @param parent - @NonNull ViewGroup
+     * @param parent   - @NonNull ViewGroup
      * @param viewType - Integer
+     * @return NoticeListCustomerAdapter.NoticeListCustomerHolder
      * @see #onCreateViewHolder(ViewGroup, int)
-     * */
+     */
     @NonNull
     @Override
     public NoticeListCustomerAdapter.NoticeListCustomerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,10 +64,10 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
     /**
      * This method used to make recycle list view in List view UI
      *
-     * @param holder - @NonNull NoticeListCustomerAdapter.NoticeListCustomerHolder
+     * @param holder   - @NonNull NoticeListCustomerAdapter.NoticeListCustomerHolder
      * @param position - Integer
      * @see #onBindViewHolder(NoticeListCustomerHolder, int)
-     * */
+     */
     @Override
     public void onBindViewHolder(@NonNull NoticeListCustomerAdapter.NoticeListCustomerHolder holder, @SuppressLint("RecyclerView") int position) {
         // Create notice item using arraylist position
@@ -98,7 +98,7 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
      *
      * @return Integer
      * @see #getItemCount()
-     * */
+     */
     @Override
     public int getItemCount() {
         return noticeArrayList.size();
@@ -108,7 +108,7 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
      * This class used to defined local variables and assign that with List view objects
      *
      * @see NoticeListCustomerHolder
-     * */
+     */
     public static class NoticeListCustomerHolder extends RecyclerView.ViewHolder {
         // Defined object and variables
         TextView title, author, createdAt;
@@ -128,7 +128,7 @@ public class NoticeListCustomerAdapter extends RecyclerView.Adapter<NoticeListCu
          *
          * @param notice - Notice
          * @see #setCardViewData(Notice)
-         * */
+         */
         void setCardViewData(Notice notice) {
             title.setText(notice.getTitle());
             author.setText(notice.getAuthor());
