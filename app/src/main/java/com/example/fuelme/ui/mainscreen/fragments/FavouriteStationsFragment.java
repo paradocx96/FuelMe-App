@@ -3,6 +3,13 @@
  *
  * @author H.G. Malwatta - IT19240848
  * @version 1.0.0
+ * @references
+ *  - https://square.github.io/okhttp/
+ *  - https://www.digitalocean.com/community/tutorials/retrofit-android-example-tutorial
+ *  - https://developer.android.com/docs
+ *  - https://www.youtube.com/watch?v=GIDTH6Y0qds
+ *  - https://www.youtube.com/watch?v=1D4XCJegizs&t=59s
+ *  - https://www.youtube.com/watch?v=yua1exHtFB4
  */
 
 package com.example.fuelme.ui.mainscreen.fragments;
