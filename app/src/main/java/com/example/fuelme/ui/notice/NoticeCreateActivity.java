@@ -45,6 +45,12 @@ import okhttp3.ResponseBody;
  *
  * @author IT19180526 - S.A.N.L.D. Chandrasiri
  * @version 1.0
+ *
+ * Reference:
+ * https://square.github.io/okhttp/
+ * https://www.digitalocean.com/community/tutorials/retrofit-android-example-tutorial
+ * https://developer.android.com/docs
+ * https://www.youtube.com/watch?v=lBzzL7ZLT7c
  */
 public class NoticeCreateActivity extends AppCompatActivity {
 
