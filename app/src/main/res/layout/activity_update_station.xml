@@ -44,10 +44,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
+                android:onClick="moreButtonClick"
+                android:text="@string/more"
                 android:textColor="@color/text_button_blue"
-                android:textSize="15sp"
-                android:text="@string/edit"
-                />
+                android:textSize="15sp" />
 
 
 
@@ -92,7 +92,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:background="@color/teal_200"
+                android:background="?colorSecondary"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -173,7 +173,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:background="@color/teal_200"
+                android:background="?colorSecondary"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -279,12 +279,13 @@
         android:paddingRight="10dp"
         android:paddingTop="20dp"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/btnDelete_update_station"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
-            />
+            android:onClick="deleteStationButtonClick"
+            android:text="@string/delete" />
     </LinearLayout>
 
 </LinearLayout>

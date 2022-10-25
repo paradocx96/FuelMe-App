@@ -1,16 +1,33 @@
+/**
+ * FuelMe APP
+ * Enterprise Application Development - SE4040
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 package com.example.fuelme.models.auth;
 
+/**
+ * Model class for Register
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class Register {
 
+    // Defined variables
     private String username;
     private String fullName;
     private String email;
     private String password;
     private String role;
 
+    // Default constructor
     public Register() {
     }
 
+    // Overload constructor
     public Register(String username, String fullName, String email, String password, String role) {
         this.username = username;
         this.fullName = fullName;
@@ -19,6 +36,7 @@ public class Register {
         this.role = role;
     }
 
+    // String print method
     @Override
     public String toString() {
         return "Register{" +
@@ -30,6 +48,7 @@ public class Register {
                 '}';
     }
 
+    // Getters and Setters for registration
     public String getUsername() {
         return username;
     }

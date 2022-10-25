@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group >
+    <group>
         <item
             android:id="@+id/navMenu_login"
-            android:title="Login" />
-        <item
-            android:id="@+id/navMenu_logout"
-            android:title="Logout" />
-    </group>
-    <group >
-        <item
-            android:id="@+id/navMenu_settings"
-            android:title="Settings" />
+            android:title="@string/profile" />
         <item
             android:id="@+id/navMenu_ownerDashboard"
-            android:title="Owner Dashboard" />
+            android:title="@string/dashboard" />
+    </group>
+    <group>
+        <item
+            android:id="@+id/navMenu_settings"
+            android:title="@string/settings" />
         <item
             android:id="@+id/navMenu_about"
-            android:title="About" />
+            android:title="@string/about" />
+        <item
+            android:id="@+id/navMenu_logout"
+            android:title="@string/logout" />
     </group>
 
 </menu>

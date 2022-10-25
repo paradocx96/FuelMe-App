@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="FuelMe"
-        android:background="@color/teal_700"
+        android:background="@color/light_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,9 +23,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
-        android:background="@color/teal_700"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorColor="@color/white"
+        android:background="?colorSecondary"
+        app:tabTextColor="@color/blue_grey"
+        app:tabSelectedTextColor="@color/blue_black"
+        app:tabIndicatorColor="@color/blue_black"
         app:tabIndicatorHeight="4dp"
         >
 

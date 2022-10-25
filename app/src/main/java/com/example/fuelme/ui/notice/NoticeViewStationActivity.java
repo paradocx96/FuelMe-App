@@ -1,15 +1,29 @@
 package com.example.fuelme.ui.notice;
 
+import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_NOTICE;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fuelme.R;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class NoticeViewStationActivity extends AppCompatActivity {
 
@@ -17,6 +31,8 @@ public class NoticeViewStationActivity extends AppCompatActivity {
     String id, stationId, title, description, author, created;
     Button btnUpdate, btnDelete;
     Toolbar toolbar;
+
+    private final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +90,53 @@ public class NoticeViewStationActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(NoticeViewStationActivity.this)
+                        .setIcon(R.drawable.ic_warning)
+                        .setTitle("Are you sure ?")
+                        .setMessage("This action cannot be undone! If you click 'Yes', this notice will be deleted permanently.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteNotice(id);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(getApplicationContext(), "Delete cancelled!", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
 
+    void deleteNotice(String id) {
+        Request request = new Request.Builder()
+                .url(REMOTE_URL_NOTICE + id)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Toast.makeText(NoticeViewStationActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(NoticeViewStationActivity.this, "Notice deleted!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(NoticeViewStationActivity.this, NoticeListStationActivity.class);
+                            intent.putExtra("station_id", stationId);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
     }

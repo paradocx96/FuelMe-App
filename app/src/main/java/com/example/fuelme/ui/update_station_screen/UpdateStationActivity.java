@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,10 +24,13 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.FuelStation;
+import com.example.fuelme.ui.delete_station_screen.DeleteStationActivity;
+import com.example.fuelme.ui.feedback.FeedbackList;
 import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 import com.example.fuelme.ui.notice.NoticeCreateActivity;
 import com.example.fuelme.ui.notice.NoticeListCustomerActivity;
 import com.example.fuelme.ui.notice.NoticeListStationActivity;
+import com.example.fuelme.ui.station_edit_screens.StationMoreDetailsActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -41,6 +45,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/*
+* IT19014128
+* A.M.W.W.R.L. Wataketiya
+* Activity class for updating a station
+*
+* */
+
 public class UpdateStationActivity extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
@@ -54,6 +65,8 @@ public class UpdateStationActivity extends AppCompatActivity {
     Button editButton, petrolStatusUpdateButton, dieselStatusUpdateButton, stationOpenStatusUpdateButton, postNoticeButton, viewNoticesButton, viewFeedbackButton, deleteStationButton;
     FuelStation fuelStation;
 
+    SharedPreferences fuelStationIdSharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +94,7 @@ public class UpdateStationActivity extends AppCompatActivity {
         viewNoticesButton = findViewById(R.id.btn_viewAllNotices_update_station);
         viewFeedbackButton = findViewById(R.id.btn_viewFeedback_update_station);
         deleteStationButton = findViewById(R.id.btnDelete_update_station);
-
+        
         //get the extras
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -89,26 +102,47 @@ public class UpdateStationActivity extends AppCompatActivity {
             this.fuelStation = fuelStation; //assign the fuel station to view's fuel station object
         }
         syncAllViews();
+
+        //set station id to shared preference object
+        fuelStationIdSharedPref = getSharedPreferences("feedback_data", MODE_PRIVATE);
+        editor = fuelStationIdSharedPref.edit();
+
+        editor.putString("feedback_station_id", fuelStation.getId());
+        editor.apply();
     }
 
     //button click method for post notice button
     public void postNoticeButtonClick(View view){
-        Log.d(TAG, "Post notice button click");
-        //handle logic here
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeCreateActivity.class);
+        intent.putExtra("station_id", fuelStation.getId());
+        startActivity(intent);
     }
 
     //button click method for view notices button
     public  void viewNoticesInUpdateStationButtonClick(View view){
-        Log.d(TAG, "View notices button click");
-        Intent intent = new Intent(UpdateStationActivity.this, NoticeListCustomerActivity.class);
+        Intent intent = new Intent(UpdateStationActivity.this, NoticeListStationActivity.class);
         intent.putExtra("station_id", fuelStation.getId());
         startActivity(intent);
     }
 
     //button click method for view feedback button
     public void viewFeedbackInUpdateStationButtonClick(View view){
-        Log.d(TAG, "View Feedback button click");
-        //handle logic here
+        Intent intent = new Intent(UpdateStationActivity.this, FeedbackList.class);
+        startActivity(intent);
+    }
+
+    //button click for delete station button click
+    public void deleteStationButtonClick(View view){
+        Intent intent = new Intent(UpdateStationActivity.this, DeleteStationActivity.class);
+        intent.putExtra("selected_fuel_station", fuelStation);
+        startActivity(intent);
+    }
+
+    //button click to go to more view
+    public void  moreButtonClick(View view){
+        Intent intent = new Intent(UpdateStationActivity.this, StationMoreDetailsActivity.class);
+        intent.putExtra("station_id",fuelStation.getId());
+        startActivity(intent);
     }
 
     //method to sync all the views

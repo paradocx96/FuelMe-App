@@ -14,6 +14,17 @@
     <string name="add_feedback_btn">Submit</string>
     <string name="edit_feedback_btn">Update</string>
     <string name="toolbar_title">Toolbar Title</string>
+    <string name="add_feedback_subject_hint">Enter your subject</string>
+    <string name="add_feedback_description_hint">Enter your description</string>
+    <string name="add_feedback_list_txt">All Feedbacks</string>
+    <string name="edit_feedback_txt">Edit Feedback</string>
+    <string name="single_item_feedback_subject_txt">Subject </string>
+    <string name="single_item_feedback_description_txt">Description</string>
+    <string name="single_item_feedback_dateTime_txt">Date and Time</string>
+    <string name="single_item_feedback_username_txt">Username</string>
+    <string name="delete_single_feedback_btn_txt">Delete</string>
+    <string name="edit_single_feedback_btn_txt">Edit</string>
+    <string name="single_feedback_txt">Feedback</string>
 
     <string name="sample_station_name">Eheliyagoda Associates</string>
     <string name="sample_station_address">41/8, Sangabo Mawatha, Colombo.</string>
@@ -83,10 +94,60 @@
     <string name="icon_plus">+</string>
     <string name="create_new_notice">Create New Notice</string>
     <string name="select_station">Select Station</string>
+    <string name="profile">Profile</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="sample_data">Sample Data</string>
+    <string name="user_type">User Type</string>
+    <string name="edit_profile">Edit Profile</string>
 
     <string name="phone_number">Phone Number</string>
     <string name="station_phone_hint">Enter the phone number for the station</string>
     <string name="ok">OK</string>
     <string name="add_to_favourites">Add to favourites</string>
     <string name="add_to_favourites_description">Add this station to your favourites</string>
+
+    <string name="special_notice">Special Notice</string>
+
+    <string name="danger_zone">Danger Zone</string>
+    <string name="sample_license">l0001</string>
+    <string name="sample_id">esae51254sawe151</string>
+    <string name="station_delete_warning">Warning: Deleting this station will permenantly remove its records from the system</string>
+    <string name="delete_field_header">To delete the station, enter the station License below and press delete</string>
+    <string name="station_id">Station ID</string>
+    <string name="delete_station">Delete Station</string>
+    <string name="license_with_colon">License : </string>
+    <string name="station_id_with_colon">ID : </string>
+    <string name="more">More</string>
+    <string name="address">Address</string>
+    <string name="website">Website</string>
+    <string name="more_setails_notice">The email and phone number are related to the station. They are not necessarily your personal ones.</string>
+    <string name="edit_station_details">Edit Station Details</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="current_station_message">You are currently in Eheliyagoda Associates</string>
+    <string name="view_station">View Station</string>
+    <string name="current_station">Current Station</string>
+    <string name="view_history">View History</string>
+    <string name="customer_dashboard">Customer Dashboard</string>
+    <string name="sample_date">2022-10-15</string>
+    <string name="sample_time">09:45</string>
+    <string name="sample_station_id">asdf1242q4</string>
+    <string name="queue">Queue</string>
+    <string name="action">Action</string>
+    <string name="join">Join</string>
+    <string name="refuel_status">Refuel Status</string>
+    <string name="refueled">Refueled</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="view_logs">View Logs</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="sample_fuel_type">Petrol</string>
+    <string name="fuel_status">Fuel Status</string>
+    <string name="sample_fuel_status">Available</string>
+    <string name="hello">Hello</string>
+    <string name="space"> </string>
+    <string name="sample_user_full_name">Jayantha Gunathilaka</string>
+    <string name="view_customer_history">You can view your queue history</string>
+
 </resources>

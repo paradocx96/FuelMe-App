@@ -278,7 +278,9 @@ public class RegisterStationActivity extends AppCompatActivity {
     public AlertDialog.Builder getDialogProgressBar(){
         if (progressDialogBuilder == null){
             progressDialogBuilder = new AlertDialog.Builder(this);
+            progressDialogBuilder.setCancelable(false);
             progressDialogBuilder.setTitle("Registering Station");
+            progressDialogBuilder.setMessage("Please wait");
 
             final ProgressBar progressBar = new ProgressBar(this);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

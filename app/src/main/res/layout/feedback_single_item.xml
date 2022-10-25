@@ -18,7 +18,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="TextView"
+        android:text="@string/single_item_feedback_subject_txt"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
+        android:text="@string/single_item_feedback_description_txt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSubject" />
 
@@ -39,9 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
+        android:fontFamily="@font/carter_one"
         android:paddingBottom="20dp"
-        android:text="TextView"
-        android:textColor="@color/btn_feedback_submit"
+        android:text="@string/single_item_feedback_dateTime_txt"
+        android:textColor="#D32F2F"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
@@ -51,8 +53,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        android:text="TextView"
-        android:textColor="@color/btn_feedback_submit"
+        android:fontFamily="@font/carter_one"
+        android:text="@string/single_item_feedback_username_txt"
+        android:textColor="#D32F2F"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

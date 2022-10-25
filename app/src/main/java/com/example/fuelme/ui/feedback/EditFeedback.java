@@ -1,3 +1,10 @@
+/**
+ * EAD - FuelMe Mobile App
+ *
+ * @author H.G. Malwatta - IT19240848
+ * @version 1.0.0
+ */
+
 package com.example.fuelme.ui.feedback;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +22,7 @@ import android.widget.Toast;
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
 import com.example.fuelme.models.Feedback;
+import com.example.fuelme.ui.mainscreen.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +36,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/**
+ * @author H.G. Malwatta - IT19240848
+ * This class is used to edit feedback(s) to respective stations
+ */
+
 public class EditFeedback extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient();
@@ -36,11 +49,10 @@ public class EditFeedback extends AppCompatActivity {
 
     EditText txtSubjectEdit, txtDescriptionEdit;
     Button btnUpdateFeedback;
-    TextView txtToolbarTitle;
 
     private String id, stationId, username, subject, description, dateTime;
     private String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +64,12 @@ public class EditFeedback extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        txtToolbarTitle = (TextView) toolbar.findViewById(R.id.txtToolbar_title_editFeedback);
-        txtToolbarTitle.setText("Edit Feedback");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
+        //instantiate the edit text and button
         txtSubjectEdit = findViewById(R.id.editTxt_subject_edit);
         txtDescriptionEdit = findViewById(R.id.editTxt_description_edit);
         btnUpdateFeedback = findViewById(R.id.btn_submit_edit);
 
+        //get the feedback details from the intent
         Intent intent = getIntent();
         id = intent.getStringExtra("feedback_id");
         stationId = intent.getStringExtra("feedback_stationId");
@@ -69,11 +78,13 @@ public class EditFeedback extends AppCompatActivity {
         username = intent.getStringExtra("feedback_username");
         dateTime = intent.getStringExtra("feedback_dateTime");
 
-        UPDATE_FEEDBACK_URL = CommonConstants.REMOTE_URL + "api/Feedback/"+id;
+        //set the station id to the URI
+        UPDATE_FEEDBACK_URL = CommonConstants.REMOTE_URL_UPDATE_FEEDBACK_STATIONS + id;
 
+        //set the feedback details to the edit text
         txtSubjectEdit.setText(subject);
         txtDescriptionEdit.setText(description);
-        
+
 
         btnUpdateFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,16 +98,77 @@ public class EditFeedback extends AppCompatActivity {
                 feedback.setSubject(txtSubjectEdit.getText().toString());
                 feedback.setDescription(txtDescriptionEdit.getText().toString());
 
-                updateFeedback(feedback);
+                if (validateFeedbackForm(feedback)) {
+                    updateFeedback(feedback);
+                    Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
 
     }
 
+    /**
+     * This method is used to validate the feedback form
+     *
+     * @param view
+     * @throws Exception
+     */
+    public void editFeedbackButtonClick(View view) {
+
+        try {
+            Feedback feedback = new Feedback();
+            feedback.setId(id);
+            feedback.setStationId(stationId);
+            feedback.setUsername(username);
+            feedback.setCreateAt(currentDateTimeString);
+
+            feedback.setSubject(txtSubjectEdit.getText().toString());
+            feedback.setDescription(txtDescriptionEdit.getText().toString());
+
+            if (validateFeedbackForm(feedback)) {
+                updateFeedback(feedback);
+                Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is used to validate the feedback form
+     *
+     * @param feedback
+     * @return true if the form is valid
+     */
+    private boolean validateFeedbackForm(Feedback feedback) {
+        if (feedback.getSubject().isEmpty()) {
+            txtSubjectEdit.setError("Subject is required");
+            txtSubjectEdit.requestFocus();
+            return false;
+        }
+        if (feedback.getDescription().isEmpty()) {
+            txtDescriptionEdit.setError("Description is required");
+            txtDescriptionEdit.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This method is used to update the feedback
+     *
+     * @param feedback
+     */
     private void updateFeedback(Feedback feedback) {
+        //create a JSON object
         JSONObject jsonObject = new JSONObject();
 
-        try{
+        try {
+            //add the feedback details to the JSON object
             jsonObject.put("id", feedback.getId());
             jsonObject.put("stationId", feedback.getStationId());
             jsonObject.put("subject", feedback.getSubject());
@@ -104,14 +176,17 @@ public class EditFeedback extends AppCompatActivity {
             jsonObject.put("description", feedback.getDescription());
             jsonObject.put("createAt", feedback.getCreateAt());
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         String jsonString = jsonObject.toString();
+
+        //create a request body
         RequestBody body = RequestBody.create(jsonString, JSON);
 
-       HttpUrl url = HttpUrl.parse(UPDATE_FEEDBACK_URL).newBuilder()
+        //create a request and set the URL with the update feedback details
+        HttpUrl url = HttpUrl.parse(UPDATE_FEEDBACK_URL).newBuilder()
                 .addQueryParameter("id", feedback.getId())
                 .addQueryParameter("stationId", feedback.getStationId())
                 .addQueryParameter("subject", feedback.getSubject())
@@ -120,11 +195,13 @@ public class EditFeedback extends AppCompatActivity {
                 .addQueryParameter("createAt", feedback.getCreateAt())
                 .build();
 
+        //create a request
         Request request = new Request.Builder()
                 .url(url)
                 .put(body)
                 .build();
 
+        //create a call
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
@@ -142,11 +219,7 @@ public class EditFeedback extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
                             Toast.makeText(EditFeedback.this, myResponse, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EditFeedback.this, FeedbackList.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
                         }
                     });
 

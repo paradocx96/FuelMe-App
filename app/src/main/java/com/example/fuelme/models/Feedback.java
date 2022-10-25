@@ -1,4 +1,16 @@
+/**
+ * EAD - FuelMe Mobile App
+ *
+ * @author H.G. Malwatta - IT19240848
+ * @version 1.0.0
+ */
+
 package com.example.fuelme.models;
+
+/**
+ * @author H.G. Malwatta - IT19240848
+ * This class is used to create feedback objects
+ */
 
 public class Feedback {
 
@@ -9,10 +21,22 @@ public class Feedback {
     public String description;
     public String createAt;
 
-
+    /**
+     * overloaded constructor
+     */
     public Feedback() {
     }
 
+    /**
+     * overloaded constructor
+     *
+     * @param id
+     * @param stationId
+     * @param username
+     * @param subject
+     * @param description
+     * @param createAt
+     */
     public Feedback(String id, String stationId, String username, String subject, String description, String createAt) {
         this.id = id;
         this.stationId = stationId;
@@ -21,6 +45,15 @@ public class Feedback {
         this.description = description;
         this.createAt = createAt;
     }
+
+    /**
+     * overloaded constructor
+     *
+     * @param username
+     * @param subject
+     * @param description
+     * @param createAt
+     */
     public Feedback(String username, String subject,String description, String createAt){
         this.username = username;
         this.subject = subject;

@@ -11,15 +11,71 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelMe.NoActionBar">
-
-        <!-- Auth Activities -->
+        <activity
+            android:name=".ui.owner_dashboard_screen.StationHistoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.customer_dashboard.CustomerRefuelHistoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.customer_dashboard.CustomerDashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.station_edit_screens.EditStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.station_edit_screens.StationMoreDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.delete_station_screen.DeleteStationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- Auth Activities -->
+        <activity
+            android:name=".ui.auth.ProfileUpdateActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.auth.ProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -30,10 +86,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-
-        <!-- Special Notice Activities -->
+        </activity> <!-- Special Notice Activities -->
         <activity
             android:name=".ui.notice.NoticeViewCustomerActivity"
             android:exported="false">
@@ -75,10 +128,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-
-        <!-- Station Owner Activities -->
+        </activity> <!-- Station Owner Activities -->
         <activity
             android:name=".ui.owner_dashboard_screen.OwnerStationsActivity"
             android:exported="false">
@@ -113,10 +163,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-
-        <!-- Feedback Activities -->
+        </activity> <!-- Feedback Activities -->
         <activity
             android:name=".ui.feedback.AddFeedback"
             android:exported="false">
@@ -124,7 +171,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-         <activity
+        <activity
             android:name=".ui.feedback.EditFeedback"
             android:exported="false">
             <meta-data
@@ -142,20 +189,19 @@
             android:name=".ui.feedback.FeedbackList"
             android:exported="false">
             <meta-data
-               android:name="android.app.lib_name"
-               android:value="" />
-        </activity>
-    
-
-        <!-- Main Activities -->
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- Main Activities -->
         <activity
             android:name=".ui.mainscreen.MainActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

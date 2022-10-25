@@ -16,29 +16,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:orientation="vertical">
 
-
-        <Button
-            android:id="@+id/btn_registerStation"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="navigateToRegisterStation"
-            android:text="@string/register_station" />
+            android:layout_weight="5"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_updateStation"
+            <TextView
+                android:id="@+id/txtView_fullName_owner_dashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_user_full_name"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/txtView_email_owner_dashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_email"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="navigateToUpdateStation"
-            android:text="@string/update_station" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_viewAllStations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="navigateToViewAllOwnedStations"
-            android:text="@string/view_all_owned_stations" />
+            <Button
+                android:id="@+id/btn_registerStation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="navigateToRegisterStation"
+                android:text="@string/register_station" />
+
+
+
+            <Button
+                android:id="@+id/btn_viewAllStations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="navigateToViewAllOwnedStations"
+                android:text="@string/view_all_owned_stations" />
+
+        </LinearLayout>
+
+
+
 
     </LinearLayout>
 

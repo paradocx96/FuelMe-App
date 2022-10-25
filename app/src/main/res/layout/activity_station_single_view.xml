@@ -92,7 +92,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/teal_200"
+                android:background="?colorSecondary"
                 android:orientation="vertical">
 
                 <TextView
@@ -188,7 +188,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/teal_200"
+                android:background="?colorSecondary"
                 android:orientation="vertical">
 
                 <TextView
@@ -284,6 +284,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/yellow"
                 android:onClick="feedbackButtonClick"
                 android:text="@string/view_feedback" />
         </LinearLayout>
@@ -301,6 +302,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="viewNoticesButtonClick"
+                android:backgroundTint="@color/yellow"
                 android:text="@string/view_notices" />
         </LinearLayout>
 
@@ -330,14 +332,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
-            android:text="@string/sample_phone_number"
-            />
+            android:onClick="phoneNumberButtonClick"
+            android:text="@string/sample_phone_number" />
 
         <Button
             android:id="@+id/btn_email_station_single_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
+            android:onClick="emailButtonClick"
             android:text="@string/sample_email" />
 
         <Button
@@ -345,6 +348,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_black"
+            android:onClick="websiteButtonClick"
             android:text="@string/sample_website" />
     </LinearLayout>
 
