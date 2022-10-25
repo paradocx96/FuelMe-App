@@ -1,8 +1,10 @@
 package com.example.fuelme.ui.mainscreen.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -167,7 +169,15 @@ public class AllStationsFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to make call");
-                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+                        getAlertDialog("Error in making call", "Check your network connection").show();
+                    }
+                });
+
                 e.printStackTrace();
             }
 
@@ -239,9 +249,18 @@ public class AllStationsFragment extends Fragment {
                 }
                 else {
                     //handle unsuccessful response
-                    swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+
                     ResponseBody responseBody = response.body();
                     String body = responseBody.string();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
+                            getAlertDialog("Error in response" , " Message: " + body).show();
+                        }
+                    });
+
                     Log.d(TAG, "onResponse failure : " + body);
                 }
             }
@@ -249,6 +268,19 @@ public class AllStationsFragment extends Fragment {
 
         Log.d(TAG, "URL : " +url);
 
+    }
+
+    public AlertDialog.Builder getAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder;
     }
 
 
