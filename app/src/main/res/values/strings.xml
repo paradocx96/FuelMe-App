@@ -111,7 +111,7 @@
     <string name="danger_zone">Danger Zone</string>
     <string name="sample_license">l0001</string>
     <string name="sample_id">esae51254sawe151</string>
-    <string name="station_delete_warning">Warning: Deleting this station will permenantly remove its records from the system</string>
+    <string name="station_delete_warning">Warning: Deleting this station will permanently remove its records from the system</string>
     <string name="delete_field_header">To delete the station, enter the station License below and press delete</string>
     <string name="station_id">Station ID</string>
     <string name="delete_station">Delete Station</string>
@@ -156,5 +156,7 @@
     <string name="lankesh_name">Navinda Chandrasiri</string>
     <string name="hirush_name">Hirush Malwatta</string>
     <string name="app_description">This app allows its users to view and update crowd sourced data regarding fuel queues in fuel stations in Sri Lanka. This app was developed as an assignment for the module Enterprise Application Development at Sri Lanka Institute of Information Technology (SLIIT). All rights regarding this app are reserved by its developers.</string>
+    <string name="all">All</string>
+    <string name="favourites">Favourites</string>
 
 </resources>
