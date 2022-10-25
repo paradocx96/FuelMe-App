@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.fuelme.R;
 import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
@@ -22,6 +23,7 @@ import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 * */
 public class OwnerDashboardActivity extends AppCompatActivity {
 
+    TextView textViewUserFullName, textViewUserEmail;
     Button btnRegisterStation;
     SharedPreferences sharedPreferences;
 
@@ -37,10 +39,22 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         btnRegisterStation = findViewById(R.id.btn_registerStation);
+        textViewUserFullName = findViewById(R.id.txtView_fullName_owner_dashboard);
+        textViewUserEmail = findViewById(R.id.txtView_email_owner_dashboard);
 
-        //get full name for the current user
+        //get full name and email for the current user
         sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
         String fullName = sharedPreferences.getString("user_full_name","");
+        String email = sharedPreferences.getString("user_email", "");
+
+        //set the full name and email
+
+        if (!fullName.isEmpty()){
+            textViewUserFullName.setText(fullName);
+        }
+        if (!email.isEmpty()){
+            textViewUserEmail.setText(email);
+        }
 
 
     }
