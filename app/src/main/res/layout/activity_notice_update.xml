@@ -9,7 +9,6 @@
         android:id="@+id/toolbar_notice_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/notice"
-        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,31 +35,19 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="32dp"
         android:autofillHints=""
+        android:background="@drawable/feedback_custom_input"
+        android:drawableStart="@drawable/ic_baseline_message_24"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/notice_title"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:textColorHint="#00838F"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notice_update_ui_title" />
-
-<!--    <EditText-->
-<!--        android:id="@+id/notice_update_description"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:ems="10"-->
-<!--        android:hint="@string/notice_description"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:textColorHint="#00838F"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.489"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/notice_update_title" />-->
 
     <EditText
         android:id="@+id/notice_update_description"
@@ -70,12 +56,18 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/feedback_custom_input"
+        android:drawableStart="@drawable/ic_baseline_library_books_24"
+        android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="@string/notice_description"
         android:gravity="start|top"
+        android:hint="@string/notice_description"
         android:inputType="textMultiLine"
         android:minHeight="100dp"
-        android:textColorHint="#00838F"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +80,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="32dp"
-        android:text="UPDATE"
+        android:text="@string/update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
