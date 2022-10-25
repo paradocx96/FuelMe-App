@@ -8,6 +8,7 @@
 
 package com.example.fuelme.ui.mainscreen;
 import com.example.fuelme.helpers.NightModeHelper;
+import com.example.fuelme.ui.about_screen.AboutActivity;
 import com.example.fuelme.ui.auth.LoginActivity;
 import com.example.fuelme.ui.auth.ProfileActivity;
 import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
@@ -171,8 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent_login);
                 break;
             case R.id.navMenu_about:
-                //handle about here
-                Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+                //navigate to about
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
                 break;
             case R.id.navMenu_ownerDashboard:
                 //navigate to dashboard here
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_settings:
                 //settings here
-                Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No settings yet " + ("\ud83d\ude01"), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Log.d(TAG,"Default ran in onNavigationItemSelected");
