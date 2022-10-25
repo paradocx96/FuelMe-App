@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
      * Also defined onclick listener for button login and register.
      * Also check the user logged or not and if logged redirect to Home UI.
      *
+     * @param savedInstanceState - Bundle
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #onCreate(Bundle savedInstanceState)
      */
@@ -134,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
      * This method used for validate user credentials and retrieve user data if user is valid.
      * Then call the responseHandler method to display the toast messages and redirect to Home UI.
      *
+     * @param requestBody - RequestBody
      * @throws IOException   - Handle the Exception produced by failed or interrupted I/O operations.
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #loginUser(RequestBody requestBody)
@@ -212,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
      * This method used to display error responses (toast messages).
      * Also change UI to Home UI.
      *
+     * @param message - String
      * @see #responseHandler(String message)
      */
     void responseHandler(String message) {

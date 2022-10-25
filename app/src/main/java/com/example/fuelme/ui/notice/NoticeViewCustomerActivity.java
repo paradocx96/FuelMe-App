@@ -1,3 +1,11 @@
+/**
+ * FuelMe APP
+ * Enterprise Application Development - SE4040
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 package com.example.fuelme.ui.notice;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,15 +17,32 @@ import android.widget.TextView;
 
 import com.example.fuelme.R;
 
+import org.json.JSONException;
+
+/**
+ * Notice Single view for Customer UI for FuelMe Application
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class NoticeViewCustomerActivity extends AppCompatActivity {
 
+    // Defined object and variables
     TextView textView_title, textView_description, textView_author, textView_created;
     String id, stationId, title, description, author, created;
     Toolbar toolbar;
 
+    /**
+     * This method used for bind the layout UI element with defined local object.
+     *
+     * @param savedInstanceState - Bundle
+     * @see #onCreate(Bundle savedInstanceState)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Binding relevant Layout UI with this class
         setContentView(R.layout.activity_notice_single_customer);
 
         // Define UI objects
@@ -32,6 +57,7 @@ public class NoticeViewCustomerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // Get intent and assign to local variable
         Intent intent = getIntent();
         id = intent.getStringExtra("notice_id");
         stationId = intent.getStringExtra("notice_station_id");
@@ -40,6 +66,7 @@ public class NoticeViewCustomerActivity extends AppCompatActivity {
         author = intent.getStringExtra("notice_author");
         created = intent.getStringExtra("notice_created");
 
+        // Check intent data is null or not
         if (id != null) {
             textView_title.setText(title);
             textView_description.setText(description);
@@ -53,12 +80,22 @@ public class NoticeViewCustomerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onSupportNavigateUp()
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onBackPressed()
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

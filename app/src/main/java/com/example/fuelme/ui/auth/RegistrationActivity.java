@@ -62,6 +62,7 @@ public class RegistrationActivity extends AppCompatActivity {
      * This method used for bind the layout UI element with defined local object.
      * Also defined onclick listener for button register and button cancel.
      *
+     * @param savedInstanceState - Bundle
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #onCreate(Bundle savedInstanceState)
      */
@@ -151,7 +152,8 @@ public class RegistrationActivity extends AppCompatActivity {
      * This method used for getting new user data and register new user.
      * Then execute HTTP request to register the new user.
      *
-     * @throws IOException - Handle the Exception produced by failed or interrupted I/O operations.
+     * @param body - RequestBody
+     * @throws IOException   - Handle the Exception produced by failed or interrupted I/O operations.
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #registerUser(RequestBody body)
      */
@@ -212,6 +214,7 @@ public class RegistrationActivity extends AppCompatActivity {
     /**
      * This method used for Clear text fields and change UI into Login UI
      *
+     * @param message - String
      * @see #responseHandler(String message)
      */
     void responseHandler(String message) {

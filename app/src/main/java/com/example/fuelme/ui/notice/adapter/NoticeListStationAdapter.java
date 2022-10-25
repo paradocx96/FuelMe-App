@@ -48,11 +48,11 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
     /**
      * This method used to defined and binding view object with list view layout.
      *
-     * @return NoticeListStationAdapter.NoticeListStationHolder
-     * @param parent - @NonNull ViewGroup
+     * @param parent   - @NonNull ViewGroup
      * @param viewType - Integer
+     * @return NoticeListStationAdapter.NoticeListStationHolder
      * @see #onCreateViewHolder(ViewGroup, int)
-     * */
+     */
     @NonNull
     @Override
     public NoticeListStationAdapter.NoticeListStationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,10 +66,10 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
     /**
      * This method used to make recycle list view in List view UI
      *
-     * @param holder - @NonNull NoticeListCustomerAdapter.NoticeListCustomerHolder
+     * @param holder   - @NonNull NoticeListCustomerAdapter.NoticeListCustomerHolder
      * @param position - Integer
      * @see #onBindViewHolder(NoticeListStationHolder, int)
-     * */
+     */
     @Override
     public void onBindViewHolder(@NonNull NoticeListStationAdapter.NoticeListStationHolder holder, @SuppressLint("RecyclerView") int position) {
         // Create notice item using arraylist position
@@ -100,7 +100,7 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
      *
      * @return Integer
      * @see #getItemCount()
-     * */
+     */
     @Override
     public int getItemCount() {
         return noticeArrayList.size();
@@ -110,7 +110,7 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
      * This class used to defined local variables and assign that with List view objects
      *
      * @see NoticeListStationHolder
-     * */
+     */
     public static class NoticeListStationHolder extends RecyclerView.ViewHolder {
         // Defined object and variables
         TextView title, author, createdAt;
@@ -132,7 +132,7 @@ public class NoticeListStationAdapter extends RecyclerView.Adapter<NoticeListSta
          *
          * @param notice - Notice
          * @see #setCardViewData(Notice)
-         * */
+         */
         void setCardViewData(Notice notice) {
             title.setText(notice.getTitle());
             author.setText(notice.getAuthor());

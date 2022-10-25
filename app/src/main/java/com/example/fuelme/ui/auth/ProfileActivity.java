@@ -61,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
      * Also defined onclick listener for button update.
      * Then call getUserData() method to get user data from API.
      *
+     * @param savedInstanceState - Bundle
      * @see #onCreate(Bundle savedInstanceState)
      */
     @Override
@@ -184,6 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * This method used for Re-Assign user data after retrieve from API
      *
+     * @param user - User
      * @see #reLoadUserData(User user)
      */
     void reLoadUserData(User user) {

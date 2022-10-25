@@ -58,6 +58,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
      * This method used for bind the layout UI element with defined local object.
      * Also defined onclick listener for button update and button cancel.
      *
+     * @param savedInstanceState - Bundle
      * @throws JSONException - Handle the Exception produced by JSON manipulation operations.
      * @see #onCreate(Bundle savedInstanceState)
      */
@@ -131,6 +132,8 @@ public class ProfileUpdateActivity extends AppCompatActivity {
      * This method used for getting updated user data and logged user id as parameter.
      * Then execute HTTP request to update the relevant user data.
      *
+     * @param id   - String
+     * @param body - RequestBody
      * @throws IOException - Handle the Exception produced by failed or interrupted I/O operations.
      * @see #updateUserData(String id, RequestBody body)
      */
