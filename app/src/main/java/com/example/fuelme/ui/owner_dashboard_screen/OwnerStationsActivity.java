@@ -80,6 +80,7 @@ public class OwnerStationsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 fuelStations.clear();
+                adapter.notifyDataSetChanged();
                 fetchOwnerFuelStationsAsync(OwnerStationsActivity.this);
             }
         });
