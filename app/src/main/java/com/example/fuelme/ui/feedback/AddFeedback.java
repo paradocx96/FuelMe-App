@@ -3,6 +3,10 @@
  *
  * @author H.G. Malwatta - IT19240848
  * @version 1.0.0
+ * @references
+ *  - https://square.github.io/okhttp/
+ *  - https://www.digitalocean.com/community/tutorials/retrofit-android-example-tutorial
+ *  - https://developer.android.com/docs
  */
 
 package com.example.fuelme.ui.feedback;
