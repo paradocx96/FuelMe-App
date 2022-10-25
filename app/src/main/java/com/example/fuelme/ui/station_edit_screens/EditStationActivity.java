@@ -85,6 +85,9 @@ public class EditStationActivity extends AppCompatActivity {
             //set the edit texts with fuel station object details
             setEditTextsWithFuelStationObject();
         }
+
+        //set the edit text background colors
+        setEditTextColors();
     }
 
 
@@ -484,6 +487,35 @@ public class EditStationActivity extends AppCompatActivity {
             default:
                 //not defined
                 textView.setTextColor(Color.parseColor("#FF000000"));
+                break;
+        }
+    }
+
+    //set the colors of edit texts
+    public void setEditTextColors(){
+        changeEditTextColorBasedOnTheme(editTextLicense);
+        changeEditTextColorBasedOnTheme(editTextStationName);
+        changeEditTextColorBasedOnTheme(editTextStationAddress);
+        changeEditTextColorBasedOnTheme(editTextStationEmail);
+        changeEditTextColorBasedOnTheme(editTextPhoneNumber);
+        changeEditTextColorBasedOnTheme(editTextStationWebsite);
+    }
+
+    //method takes in an edit text and sets its background color to a grey tone of dark mode is enabled
+    public void changeEditTextColorBasedOnTheme(EditText editText){
+        String theme = NightModeHelper.getMode(this);
+        switch (theme){
+            case "light":
+                //night mode is not enabled.
+                //leave default background colors
+                break;
+            case "dark":
+                //night mode is enabled
+                //set the background color to a grey tone
+                editText.setBackgroundColor(Color.parseColor("#606478"));
+                break;
+            default:
+                //not defined
                 break;
         }
     }
