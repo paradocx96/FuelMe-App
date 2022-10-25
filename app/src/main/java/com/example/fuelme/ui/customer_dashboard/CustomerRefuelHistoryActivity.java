@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,6 +53,7 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     CustomerRefuelHistoryRecyclerViewAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
@@ -75,6 +77,19 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
         adapter = new CustomerRefuelHistoryRecyclerViewAdapter(this, queueLogItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //set swipe refresh layout
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_customer_refuel_history);
+        //set the listener for on refresh
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //clear the log item list
+                queueLogItems.clear();
+                //get the log items from remote
+                getQueueLogItems(CustomerRefuelHistoryActivity.this);
+            }
+        });
     }
 
     //method to get queue log items from remote
@@ -106,6 +121,7 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                         getAlertDialog("Error", "Check your network connection").show();
                     }
                 });
@@ -152,6 +168,7 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                                 if (queueLogItems.isEmpty()){
                                     //if the queue logs are empty show a toast
                                     Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
@@ -178,6 +195,7 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                             getAlertDialog("Error", "Message : " + body).show();
                         }
                     });
