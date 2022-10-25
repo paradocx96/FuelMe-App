@@ -38,11 +38,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
 * IT19014128
 * A.M.W.W.R.L. Wataketiya
 * Activity class to view more details of station for the owner
 * The owner can then go to the edit screen from here
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/RGQ3_UpDzO0
 * */
 
 public class StationMoreDetailsActivity extends AppCompatActivity {

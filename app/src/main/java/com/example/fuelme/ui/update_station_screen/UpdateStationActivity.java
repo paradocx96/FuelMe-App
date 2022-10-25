@@ -45,11 +45,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
 * IT19014128
 * A.M.W.W.R.L. Wataketiya
 * Activity class for updating a station
 *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/RGQ3_UpDzO0
 * */
 
 public class UpdateStationActivity extends AppCompatActivity {

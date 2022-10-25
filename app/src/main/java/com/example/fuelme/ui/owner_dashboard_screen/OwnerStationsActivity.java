@@ -36,11 +36,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
  *  IT19014128
  *  A.M.W.W.R.L. Wataketiya
  *
  * Activity class for owner stations
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/Mc0XT58A1Z4
+ *  https://youtu.be/RGQ3_UpDzO0
  * */
 
 public class OwnerStationsActivity extends AppCompatActivity {

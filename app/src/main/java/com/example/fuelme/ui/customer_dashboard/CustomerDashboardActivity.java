@@ -37,10 +37,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
+/**
 *  IT19014128 - A.M.W.W.R.L. Wtaketiya
 *
 * Activity for customer dashboard
+ *
+ * References:
+ * https://developer.android.com/docs
+ * https://square.github.io/okhttp/
+ * https://youtu.be/RGQ3_UpDzO0
 * */
 public class CustomerDashboardActivity extends AppCompatActivity {
 

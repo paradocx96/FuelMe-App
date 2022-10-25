@@ -19,11 +19,16 @@ import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 
 import java.util.ArrayList;
 
-/*
+/**
  *  IT19014128
  *  A.M.W.W.R.L. Wataketiya
  *
  * Recyclerview adapter for all stations
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/Mc0XT58A1Z4
  * */
 
 public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStationsRecyclerViewAdapter.MyViewHolder> {

@@ -40,7 +40,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-/*
+/**
  *  FuelMe
  *  Enterprise Application Development
  *
@@ -49,6 +49,24 @@ import com.google.android.material.tabs.TabLayout;
  *  H.G. Malwatta - IT19240848
  *
  *  Main Activity of the app
+ *
+ *  References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/h2TVVMKkn7Y
+ *  https://youtu.be/jiD2fxn8iKA
+ *  https://stackoverflow.com/questions/56197563/okhttp-parse-and-recyclerview-fragment
+ *  https://www.vogella.com/tutorials/AndroidFileBasedPersistence/article.html
+ *  https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+ *  https://stackoverflow.com/questions/3517063/android-popping-off-the-activity-stack
+ *  https://stackoverflow.com/questions/11699819/how-do-i-get-the-dialer-to-open-with-phone-number-displayed
+ *  https://stackoverflow.com/questions/2734749/opening-an-email-client-on-clicking-a-button
+ *  https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
+ *  https://www.youtube.com/watch?v=lt6xbth-yQo&list=PL5jb9EteFAOD8dlG1Il3fCiaVNPD_P7gh&index=3
+ *  https://stackoverflow.com/questions/69630124/how-to-configure-toast-icon-in-android-12
+ *  https://stackoverflow.com/questions/26615889/how-do-you-change-the-launcher-logo-of-an-app-in-android-studio
+ *  https://stackoverflow.com/questions/63227292/make-viewpager-fill-the-remaining-space-in-a-constraintlayout
+ *  https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
  * */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
