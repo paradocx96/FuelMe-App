@@ -45,10 +45,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     String TAG = "demo";
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, userSharedPreferences;
     FuelStation fuelStation = new FuelStation();
 
-    TextView textViewStationName;
+    TextView textViewStationName, textViewUserFullName, textViewEmail;
     Button viewStationButton;
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
@@ -66,10 +66,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         //register the views
         textViewStationName = findViewById(R.id.txtView_stationName_customer_dashboard);
         viewStationButton = findViewById(R.id.btn_viewStation_customer_dashboard);
+        textViewUserFullName = findViewById(R.id.txtView_fullName_customer_dashboard);
+        textViewEmail = findViewById(R.id.txtView_email_customer_dashboard);
 
         setTextViewsToLoading();
         setButtonToLoading();
 
+        //get the currently joined queue
         sharedPreferences = getSharedPreferences(StationCommonConstants.STATION_SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String currentlyJoinedQueueStationId = sharedPreferences.getString(StationCommonConstants.IN_QUEUE_STATION_ID, "");
 
@@ -81,6 +84,20 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             //user is currently in a queue
             //get the current station by id from remote
             getCurrentStation(currentlyJoinedQueueStationId);
+        }
+
+        //get full name and email for the current user
+        userSharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
+        String fullName = userSharedPreferences.getString("user_full_name","");
+        String email = userSharedPreferences.getString("user_email", "");
+
+        //set the full name and email
+
+        if (!fullName.isEmpty()){
+            textViewUserFullName.setText(fullName);
+        }
+        if (!email.isEmpty()){
+            textViewEmail.setText(email);
         }
 
     }
