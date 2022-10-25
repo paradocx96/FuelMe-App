@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,11 @@ import okhttp3.ResponseBody;
  * A simple {@link Fragment} subclass.
  * Use the {@link AllStationsFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * IT19014128
+ * A.M.W.W.R.L. Watkaetiya
+ *
+ * Fragment for displaying al stations
  */
 public class AllStationsFragment extends Fragment {
 
@@ -51,6 +57,7 @@ public class AllStationsFragment extends Fragment {
 
     RecyclerView recyclerView;
     AllStationsRecyclerViewAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -113,6 +120,18 @@ public class AllStationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+        //set the swipe refresh layout
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_all_stations);
+        //set the listener for swipe refresh layout
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fuelStations.clear();
+                fetchFuelStationsAsync();
+            }
+        });
+
         return view;
     }
 
@@ -120,6 +139,9 @@ public class AllStationsFragment extends Fragment {
     //can be used after the remote call is complete
     public void syncRecyclerView(){
 
+        adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStationsList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }
 
@@ -145,6 +167,7 @@ public class AllStationsFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to make call");
+                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                 e.printStackTrace();
             }
 
@@ -194,6 +217,7 @@ public class AllStationsFragment extends Fragment {
                             @Override
                             public void run() {
 
+                                swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                                 if (fuelStations.isEmpty()){
                                     Toast.makeText(getActivity(), "No stations found", Toast.LENGTH_SHORT).show();
                                 }
@@ -215,6 +239,7 @@ public class AllStationsFragment extends Fragment {
                 }
                 else {
                     //handle unsuccessful response
+                    swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
                     ResponseBody responseBody = response.body();
                     String body = responseBody.string();
                     Log.d(TAG, "onResponse failure : " + body);
