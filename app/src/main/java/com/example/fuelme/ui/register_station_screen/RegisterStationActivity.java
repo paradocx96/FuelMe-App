@@ -504,6 +504,7 @@ public class RegisterStationActivity extends AppCompatActivity {
         }
     }
 
+    //set the colors of edit texts
     public void setEditTextColors(){
         changeEditTextColorBasedOnTheme(editTextLicense);
         changeEditTextColorBasedOnTheme(editTextStationName);
@@ -513,6 +514,7 @@ public class RegisterStationActivity extends AppCompatActivity {
         changeEditTextColorBasedOnTheme(editTextStationWebsite);
     }
 
+    //method takes in an edit text and sets its background color to a grey tone of dark mode is enabled
     public void changeEditTextColorBasedOnTheme(EditText editText){
         String theme = NightModeHelper.getMode(this);
         switch (theme){
