@@ -89,6 +89,8 @@ public class RegisterStationActivity extends AppCompatActivity {
         editTextStationEmail = findViewById(R.id.edtText_stationEmail_register_station);
         editTextStationWebsite = findViewById(R.id.edtText_stationWebsite_register_station);
 
+        setEditTextColors();
+
     }
 
     //button click for register station button
@@ -498,6 +500,33 @@ public class RegisterStationActivity extends AppCompatActivity {
             default:
                 //not defined
                 textView.setTextColor(Color.parseColor("#FF000000"));
+                break;
+        }
+    }
+
+    public void setEditTextColors(){
+        changeEditTextColorBasedOnTheme(editTextLicense);
+        changeEditTextColorBasedOnTheme(editTextStationName);
+        changeEditTextColorBasedOnTheme(editTextStationAddress);
+        changeEditTextColorBasedOnTheme(editTextStationEmail);
+        changeEditTextColorBasedOnTheme(editTextPhoneNumber);
+        changeEditTextColorBasedOnTheme(editTextStationWebsite);
+    }
+
+    public void changeEditTextColorBasedOnTheme(EditText editText){
+        String theme = NightModeHelper.getMode(this);
+        switch (theme){
+            case "light":
+                //night mode is not enabled.
+                //leave default background colors
+                break;
+            case "dark":
+                //night mode is enabled
+                //set the background color to a grey tone
+                editText.setBackgroundColor(Color.parseColor("#606478"));
+                break;
+            default:
+                //not defined
                 break;
         }
     }
