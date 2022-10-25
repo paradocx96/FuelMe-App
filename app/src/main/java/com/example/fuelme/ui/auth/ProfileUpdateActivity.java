@@ -1,9 +1,10 @@
-/*
- * IT19180526
- * Chandrasiri S.A.N.L.D.
+/**
+ * FuelMe APP
  * Enterprise Application Development - SE4040
- * Update User Profile UI for FuelMe Application
- * */
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 package com.example.fuelme.ui.auth;
 
@@ -11,6 +12,7 @@ import static com.example.fuelme.commonconstants.CommonConstants.REMOTE_URL_USER
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +37,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Update User Profile UI for FuelMe Application
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 public class ProfileUpdateActivity extends AppCompatActivity {
 
     // Defined object and variables
@@ -42,6 +50,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
     ImageView viewProfileImage;
     Button btnUpdate, btnCancel;
     String logged_id, logged_name, logged_email;
+    Toolbar toolbar;
     private final OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -65,6 +74,12 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         textViewEmail = findViewById(R.id.auth_profile_update_email);
         btnUpdate = findViewById(R.id.auth_profile_update_button);
         btnCancel = findViewById(R.id.auth_profile_update_button_cancel);
+        toolbar = findViewById(R.id.toolbar_auth_profile_update);
+
+        // Setup back button for toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Defined intent data
         Intent intent = getIntent();
@@ -164,5 +179,26 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onSupportNavigateUp()
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    /**
+     * This method used for handle the toolbar
+     *
+     * @see #onBackPressed()
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

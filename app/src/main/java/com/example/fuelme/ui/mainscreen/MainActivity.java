@@ -9,6 +9,7 @@
 package com.example.fuelme.ui.mainscreen;
 import com.example.fuelme.ui.auth.LoginActivity;
 import com.example.fuelme.ui.auth.ProfileActivity;
+import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
 import com.example.fuelme.ui.mainscreen.adapters.PageAdapter;
 
 import androidx.annotation.NonNull;
@@ -149,8 +150,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navMenu_ownerDashboard:
                 //navigate to dashboard here
-                Intent intent = new Intent(this, OwnerDashboardActivity.class);
-                startActivity(intent);
+                if (("Customer").equals(preferences.getString("user_role", ""))){
+                    Intent intent = new Intent(this, CustomerDashboardActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, OwnerDashboardActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.navMenu_settings:
                 //settings here
