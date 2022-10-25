@@ -331,7 +331,6 @@
             android:id="@+id/btn_phoneNumber_station_single_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?colorPrimary"
             android:onClick="phoneNumberButtonClick"
             android:text="@string/sample_phone_number" />
 
@@ -339,7 +338,6 @@
             android:id="@+id/btn_email_station_single_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?colorPrimary"
             android:onClick="emailButtonClick"
             android:text="@string/sample_email" />
 
@@ -347,7 +345,6 @@
             android:id="@+id/btn_website_station_single_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?colorPrimary"
             android:onClick="websiteButtonClick"
             android:text="@string/sample_website" />
     </LinearLayout>
