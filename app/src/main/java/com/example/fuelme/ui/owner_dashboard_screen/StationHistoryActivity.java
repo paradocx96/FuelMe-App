@@ -1,4 +1,4 @@
-package com.example.fuelme.ui.customer_dashboard;
+package com.example.fuelme.ui.owner_dashboard_screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -10,7 +10,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -19,9 +18,10 @@ import android.widget.Toast;
 
 import com.example.fuelme.R;
 import com.example.fuelme.commonconstants.CommonConstants;
-import com.example.fuelme.models.FuelStation;
-import com.example.fuelme.models.QueueLogItem;
+import com.example.fuelme.models.FuelStationLogItem;
+import com.example.fuelme.ui.customer_dashboard.CustomerRefuelHistoryActivity;
 import com.example.fuelme.ui.customer_dashboard.adapters.CustomerRefuelHistoryRecyclerViewAdapter;
+import com.example.fuelme.ui.owner_dashboard_screen.adapters.StationHistoryRecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,8 +39,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-
-public class CustomerRefuelHistoryActivity extends AppCompatActivity {
+public class StationHistoryActivity extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
     public static final MediaType JSON
@@ -48,65 +47,70 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
 
     String TAG = "demo";
 
-    ArrayList<QueueLogItem> queueLogItems = new ArrayList<>(); //array list for fuel stations
-    SharedPreferences preferences;
+    ArrayList<FuelStationLogItem> fuelStationLogItems = new ArrayList<>();
 
     RecyclerView recyclerView;
-    CustomerRefuelHistoryRecyclerViewAdapter adapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    StationHistoryRecyclerViewAdapter adapter;
 
     AlertDialog.Builder progressDialogBuilder;
     AlertDialog progressDialog;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    String stationId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_refuel_history);
+        setContentView(R.layout.activity_station_history);
 
-        //get the logs from remote
-        getQueueLogItems(this);
+        //get the extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            stationId = extras.getString("station_id");
+        }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.customer_refuel_history_toolbar);
+        //fetch the log items from remote
+        getStationLogItems(stationId, this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.station_history_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        //assign the recycler view
-        recyclerView = (RecyclerView) findViewById(R.id.customer_refuel_history_recyclerview);
 
-        adapter = new CustomerRefuelHistoryRecyclerViewAdapter(this, queueLogItems);
+
+        //assign the recycler view
+        recyclerView = (RecyclerView) findViewById(R.id.station_history_recyclerview);
+
+        adapter = new StationHistoryRecyclerViewAdapter(this, fuelStationLogItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //set swipe refresh layout
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_customer_refuel_history);
-        //set the listener for on refresh
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_station_history);
+        //set listener
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //clear the log item list
-                queueLogItems.clear();
+                fuelStationLogItems.clear();
                 //get the log items from remote
-                getQueueLogItems(CustomerRefuelHistoryActivity.this);
+                getStationLogItems(stationId, StationHistoryActivity.this);
             }
         });
     }
 
-    //method to get queue log items from remote
-    public void getQueueLogItems(Context context){
-
-        //get the current user's username
-        preferences = getSharedPreferences("login_data", MODE_PRIVATE); //assign preferences for login data
-        String currentUsername = preferences.getString("user_username", ""); //get the username from shared preferences
-
+    //method to get station log items from remote
+    public void getStationLogItems(String stationId, Context context){
         String baseUrl = CommonConstants.REMOTE_URL;
 
         //build the url using Url builder
         HttpUrl url = HttpUrl.parse(baseUrl).newBuilder()
                 .addPathSegment("api")
-                .addPathSegment("QueueLogs")
-                .addPathSegment("GetQueueLogItemsByUsername")
-                .addPathSegment(currentUsername)
+                .addPathSegment("FuelStationLogs")
+                .addPathSegment("GetByStationId")
+                .addPathSegment(stationId)
                 .build();
 
         //build the request
@@ -141,26 +145,21 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i); //get the json object by index
 
-                            QueueLogItem queueLogItem = new QueueLogItem();
+                            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
 
-                            //assign attributes to the queue log item object
-                            queueLogItem.setId(jsonObject.getString("id"));
-                            queueLogItem.setCustomerUsername(jsonObject.getString("customerUsername"));
-                            queueLogItem.setStationId(jsonObject.getString("stationId"));
-                            queueLogItem.setStationLicense(jsonObject.getString("stationLicense"));
-                            queueLogItem.setStationName(jsonObject.getString("stationName"));
-                            queueLogItem.setQueue(jsonObject.getString("queue"));
-                            queueLogItem.setAction(jsonObject.getString("action"));
-                            queueLogItem.setRefuelStatus(jsonObject.getString("refuelStatus"));
-                            queueLogItem.setYear(jsonObject.getInt("year"));
-                            queueLogItem.setMonth(jsonObject.getInt("month"));
-                            queueLogItem.setDayNumber(jsonObject.getInt("dayNumber"));
-                            queueLogItem.setHour(jsonObject.getInt("hour"));
-                            queueLogItem.setMinute(jsonObject.getInt("minute"));
-                            queueLogItem.setSecond(jsonObject.getInt("second"));
+                            fuelStationLogItem.setId(jsonObject.getString("id"));
+                            fuelStationLogItem.setStationId(jsonObject.getString("stationId"));
+                            fuelStationLogItem.setFuelType(jsonObject.getString("fuelType"));
+                            fuelStationLogItem.setFuelStatus(jsonObject.getString("fuelStatus"));
+                            fuelStationLogItem.setYear(jsonObject.getInt("year"));
+                            fuelStationLogItem.setMonth(jsonObject.getInt("month"));
+                            fuelStationLogItem.setDayNumber(jsonObject.getInt("dayNumber"));
+                            fuelStationLogItem.setHour(jsonObject.getInt("hour"));
+                            fuelStationLogItem.setMinute(jsonObject.getInt("minute"));
+                            fuelStationLogItem.setSecond(jsonObject.getInt("second"));
 
                             //add the log item to the list
-                            queueLogItems.add(queueLogItem);
+                            fuelStationLogItems.add(fuelStationLogItem);
 
 
                         }
@@ -169,20 +168,22 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 swipeRefreshLayout.setRefreshing(false); //stop displaying refreshing indicator
-                                if (queueLogItems.isEmpty()){
-                                    //if the queue logs are empty show a toast
-                                    Toast.makeText(CustomerRefuelHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT);
+                                if (fuelStationLogItems.isEmpty()){
+                                    //if the station logs are empty show a toast
+                                    Log.d(TAG, "No log items");
+                                    Toast.makeText(StationHistoryActivity.this, "No logs found", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                     //if not populate adapter
-                                    adapter = new CustomerRefuelHistoryRecyclerViewAdapter(context, queueLogItems);
+                                    Log.d(TAG, "Log items are there");
+                                    adapter = new StationHistoryRecyclerViewAdapter(context, fuelStationLogItems);
                                     recyclerView.setAdapter(adapter);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
                                 }
                             }
                         });
-                    }
-                    catch (JSONException e){
+
+                    }catch (JSONException e){
                         Log.d(TAG, "JSON Exception : " + e);
                         e.printStackTrace();
                     }
@@ -202,8 +203,8 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+
 
     //progress bar in an alert dialog
     public AlertDialog.Builder getDialogProgressBar(){
@@ -238,11 +239,10 @@ public class CustomerRefuelHistoryActivity extends AppCompatActivity {
         return builder;
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        return true;
+        return  true;
     }
 
     @Override

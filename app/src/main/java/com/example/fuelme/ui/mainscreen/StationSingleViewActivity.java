@@ -149,6 +149,14 @@ public class StationSingleViewActivity extends AppCompatActivity {
             stationEmailButton.setText(fuelStation.getStationEmail());
             websiteButton.setText(fuelStation.getStationWebsite());
 
+            if (fuelStation.getStationWebsite().equalsIgnoreCase("not-given")){
+                //website is not set
+                //set the button text
+                websiteButton.setText("No website");
+                //disable the button
+                websiteButton.setEnabled(false);
+            }
+
             //change station open text view color based on open status
             if (fuelStation.getOpenStatus().equalsIgnoreCase("open")) {
                 //change color to green
