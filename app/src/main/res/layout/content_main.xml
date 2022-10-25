@@ -44,6 +44,9 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <!--
+    Solution to view pager sizing found on, https://stackoverflow.com/questions/63227292/make-viewpager-fill-the-remaining-space-in-a-constraintlayout
+    -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="0dp"
