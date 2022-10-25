@@ -7,6 +7,7 @@
 * */
 
 package com.example.fuelme.ui.mainscreen;
+import com.example.fuelme.helpers.NightModeHelper;
 import com.example.fuelme.ui.auth.LoginActivity;
 import com.example.fuelme.ui.auth.ProfileActivity;
 import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
@@ -24,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -115,7 +117,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //set the tab layout color for themes
+        setTabLayoutColorForTheme();
+
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+    }
+
+    //set the tab layout color scheme for theme
+    public void setTabLayoutColorForTheme(){
+        String theme = NightModeHelper.getMode(this);
+        switch (theme){
+            case "light":
+                //night mode is not enabled.
+                //leave default background colors
+                break;
+            case "dark":
+                //night mode is enabled
+                //set the tab layout selected text to white
+                tabLayout.setTabTextColors(Color.parseColor("#8b8d99"), Color.parseColor("#FFFFFFFF")); //normal color, selected color
+                tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFFFF"));
+                break;
+            default:
+                //not defined
+                break;
+        }
     }
 
     //method for clicking the drawer button
