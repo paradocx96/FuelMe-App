@@ -21,6 +21,13 @@ import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
 import java.util.ArrayList;
 
+/*
+ *  IT19014128
+ *  A.M.W.W.R.L. Wataketiya
+ *
+ * Recyclerview adapter for owner stations recycler view
+ * */
+
 public class OwnerStationsRecyclerViewAdapter extends RecyclerView.Adapter<OwnerStationsRecyclerViewAdapter.MyViewHolder> {
 
     Context context;

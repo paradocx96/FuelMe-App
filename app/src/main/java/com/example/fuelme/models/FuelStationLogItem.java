@@ -1,5 +1,11 @@
 package com.example.fuelme.models;
 
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * Model class for fuel station log item
+ * */
+
 public class FuelStationLogItem {
     private String id;
     private String stationId;

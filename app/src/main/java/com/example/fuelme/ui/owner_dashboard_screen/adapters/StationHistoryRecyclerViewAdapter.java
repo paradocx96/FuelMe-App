@@ -17,6 +17,13 @@ import com.example.fuelme.models.time.CustomDateTime;
 
 import java.util.ArrayList;
 
+/*
+ *  IT19014128
+ *  A.M.W.W.R.L. Wataketiya
+ *
+ * Recyclerview adapter for station history recycler view
+ * */
+
 public class StationHistoryRecyclerViewAdapter extends RecyclerView.Adapter<StationHistoryRecyclerViewAdapter.MyViewHolder> {
 
     Context context;

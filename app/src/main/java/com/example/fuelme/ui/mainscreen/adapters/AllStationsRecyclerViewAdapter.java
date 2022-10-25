@@ -19,6 +19,13 @@ import com.example.fuelme.ui.mainscreen.StationSingleViewActivity;
 
 import java.util.ArrayList;
 
+/*
+ *  IT19014128
+ *  A.M.W.W.R.L. Wataketiya
+ *
+ * Recyclerview adapter for all stations
+ * */
+
 public class AllStationsRecyclerViewAdapter extends RecyclerView.Adapter<AllStationsRecyclerViewAdapter.MyViewHolder> {
 
     Context context;

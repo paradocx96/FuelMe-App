@@ -4,8 +4,17 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ *
+ * This class helps determine the color mode of the app
+ * */
+
+
 public class NightModeHelper {
 
+    //return the current mode of the app as a string
     public static String getMode(Context context){
         int nightModeFlags = context.getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK; //set night mode mask
         String mode;
