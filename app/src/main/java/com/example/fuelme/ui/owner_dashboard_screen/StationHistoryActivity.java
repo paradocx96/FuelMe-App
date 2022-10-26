@@ -39,6 +39,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+*  IT19014128
+*  A.M.W.W.R.L. Wataketiya
+*
+* Activity class for station history
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/Mc0XT58A1Z4
+ *  https://youtu.be/RGQ3_UpDzO0
+* */
 public class StationHistoryActivity extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
@@ -95,6 +107,11 @@ public class StationHistoryActivity extends AppCompatActivity {
             public void onRefresh() {
                 //clear the log item list
                 fuelStationLogItems.clear();
+                //notify the recyclerview adapter that the dataset has changed
+                /*
+                 * Solution to crash referenced from, https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
+                 * */
+                adapter.notifyDataSetChanged();
                 //get the log items from remote
                 getStationLogItems(stationId, StationHistoryActivity.this);
             }

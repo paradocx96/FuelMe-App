@@ -39,10 +39,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/*
-IT19014128
-A.M.W.W.R.L. Wataketiya
-Activity for registering a new station
+/**
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * Activity for registering a new station
+ *
+ * References:
+ * https://developer.android.com/docs
+ * https://square.github.io/okhttp/
+ * https://youtu.be/RGQ3_UpDzO0
 */
 
 

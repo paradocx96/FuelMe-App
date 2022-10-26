@@ -36,6 +36,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/**
+ *  IT19014128
+ *  A.M.W.W.R.L. Wataketiya
+ *
+ * Activity class for owner stations
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
+ *  https://youtu.be/Mc0XT58A1Z4
+ *  https://youtu.be/RGQ3_UpDzO0
+ * */
+
 public class OwnerStationsActivity extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
@@ -80,6 +93,10 @@ public class OwnerStationsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 fuelStations.clear();
+                /*
+                 * Solution to crash referenced from, https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
+                 * */
+                adapter.notifyDataSetChanged();
                 fetchOwnerFuelStationsAsync(OwnerStationsActivity.this);
             }
         });

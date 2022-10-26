@@ -17,10 +17,14 @@ import com.example.fuelme.models.time.CustomDateTime;
 
 import java.util.ArrayList;
 
-/*
+/**
 * IT19014128
 * A.M.W.W.R.L. Wataketiya
 * Adapter for customer history recycler view row
+ *
+ * References:
+ * https://developer.android.com/docs
+ * https://youtu.be/Mc0XT58A1Z4
 * */
 
 public class CustomerRefuelHistoryRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRefuelHistoryRecyclerViewAdapter.MyViewHolder> {

@@ -8,6 +8,17 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.fuelme.ui.mainscreen.fragments.AllStationsFragment;
 import com.example.fuelme.ui.mainscreen.fragments.FavouriteStationsFragment;
 
+/**
+ *  IT19014128
+ *  A.M.W.W.R.L. Wataketiya
+ *
+ * Page adapter for main screen view pager
+ *
+ * References:
+ * https://developer.android.com/docs
+ * */
+
+
 public class PageAdapter extends FragmentPagerAdapter {
 
     private int tabsCount;

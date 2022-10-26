@@ -15,11 +15,15 @@ import com.example.fuelme.ui.customer_dashboard.CustomerDashboardActivity;
 import com.example.fuelme.ui.register_station_screen.RegisterStationActivity;
 import com.example.fuelme.ui.update_station_screen.UpdateStationActivity;
 
-/*
+/**
 * IT19014128
 * A.M.W.W.R.L. Wataketiya
 *
 * Activity class for Owner Dashboard
+ *
+ * References:
+ *  https://developer.android.com/docs
+ *  https://square.github.io/okhttp/
 * */
 public class OwnerDashboardActivity extends AppCompatActivity {
 

@@ -3,6 +3,8 @@
  *
  * @author H.G. Malwatta - IT19240848
  * @version 1.0.0
+ * @references
+ *  - https://www.youtube.com/watch?v=GIDTH6Y0qds
  */
 
 package com.example.fuelme.ui.feedback.adapters;

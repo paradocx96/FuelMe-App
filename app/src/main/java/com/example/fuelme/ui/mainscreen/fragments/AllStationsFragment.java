@@ -51,7 +51,6 @@ public class AllStationsFragment extends Fragment {
 
     private final String TAG = "demo";
     ArrayList<FuelStation> fuelStations = new ArrayList<>(); //array list for fuel stations
-    ArrayList<FuelStation> fuelStationsList = new ArrayList<>(); //array list for fuel stations
     ArrayList<FuelStation> sampleFuelStations = new ArrayList<>(); //array list for sample fuel stations
     private final OkHttpClient client = new OkHttpClient(); //okhttp client instance
     public static final MediaType JSON
@@ -118,7 +117,7 @@ public class AllStationsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_allStations);
 
 
-        adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStationsList);
+        adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStations);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -130,21 +129,15 @@ public class AllStationsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 fuelStations.clear();
+                /*
+                * Solution to crash referenced from, https://stackoverflow.com/questions/38357479/recyclerview-and-swiperefreshlayout-crash-scroll-list
+                * */
+                adapter.notifyDataSetChanged();
                 fetchFuelStationsAsync();
             }
         });
 
         return view;
-    }
-
-    //method to sync the recycler view
-    //can be used after the remote call is complete
-    public void syncRecyclerView(){
-
-        adapter = new AllStationsRecyclerViewAdapter(getActivity(), fuelStationsList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
     }
 
 
